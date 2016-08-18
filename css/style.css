@@ -32,14 +32,6 @@ a:hover {
     text-decoration: none;
 }
 
-input,
-button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
 .svg-elem.big {
     width: 50%;
     max-width: 400px;
@@ -91,12 +83,17 @@ button {
     stroke-width: 1;
     stroke-dasharray: 2500;
     stroke-dashoffset: 2500;
-    animation: draw 7s 1s 1 linear forwards, show 2s 3s 1 linear forwards;
-    /*animation-name: draw;
-    animation-duration: 3s;
-    animation-fill-mode: forwards; // Stay on the last frame
-    animation-iteration-count: 1; // Run only once
-    animation-timing-function: linear;*/
+    animation: draw 4s .5s 1 linear forwards, show .5s 2s 1 linear forwards;
+}
+
+.svg-elem.big path {
+    fill-opacity: 0;
+    fill: #1faeff;
+    stroke: #6bc4f6;
+    stroke-width: 5;
+    stroke-dasharray: 4000;
+    stroke-dashoffset: 4000;
+    animation: draw 1s .5s 1 linear forwards, show .5s 1.8s 1 linear forwards;
 }
 
 @keyframes draw {
@@ -108,31 +105,8 @@ button {
 @keyframes show {
     to {
         fill-opacity: 1;
+        stroke-width: 2;
     }
-}
-
-@keyframes deg0 {
-    to {}
-}
-
-@keyframes deg45 {
-    to {}
-}
-
-@keyframes deg135 {
-    to {}
-}
-
-@keyframes deg180 {
-    to {}
-}
-
-@keyframes deg225 {
-    to {}
-}
-
-@keyframes deg315 {
-    to {}
 }
 
 .bg-global {
@@ -259,27 +233,35 @@ button {
 }
 
 .deg0 {
-    -moz-transform: rotate(360deg) translate(250%) rotate(-360deg);
-    -ms-transform: rotate(360deg) translate(250%) rotate(-360deg);
-    -webkit-transform: rotate(360deg) translate(250%) rotate(-360deg);
-    -o-transform: rotate(360deg) translate(250%) rotate(-360deg);
-    transform: rotate(360deg) translate(250%) rotate(-360deg);
+    -moz-transform: rotate(0deg) translate(250%) rotate(-0deg);
+    -ms-transform: rotate(0deg) translate(250%) rotate(-0deg);
+    -webkit-transform: rotate(0deg) translate(250%) rotate(-0deg);
+    -o-transform: rotate(0deg) translate(250%) rotate(-0deg);
+    transform: rotate(0deg) translate(250%) rotate(-0deg);
 }
 
 .deg45 {
-    -moz-transform: rotate(45deg) translate(250%) rotate(-45deg);
-    -ms-transform: rotate(45deg) translate(250%) rotate(-45deg);
-    -webkit-transform: rotate(45deg) translate(250%) rotate(-45deg);
-    -o-transform: rotate(45deg) translate(250%) rotate(-45deg);
-    transform: rotate(45deg) translate(250%) rotate(-45deg);
+    -moz-transform: rotate(45deg) translate(265%) rotate(-45deg);
+    -ms-transform: rotate(45deg) translate(265%) rotate(-45deg);
+    -webkit-transform: rotate(45deg) translate(265%) rotate(-45deg);
+    -o-transform: rotate(45deg) translate(265%) rotate(-45deg);
+    transform: rotate(45deg) translate(265%) rotate(-45deg);
+}
+
+.deg100 {
+    -moz-transform: rotate(90deg) translate(220%) rotate(-90deg);
+    -ms-transform: rotate(90deg) translate(220%) rotate(-90deg);
+    -webkit-transform: rotate(90deg) translate(220%) rotate(-90deg);
+    -o-transform: rotate(90deg) translate(220%) rotate(-90deg);
+    transform: rotate(90deg) translate(220%) rotate(-90deg);
 }
 
 .deg135 {
-    -moz-transform: rotate(135deg) translate(250%) rotate(-135deg);
-    -ms-transform: rotate(135deg) translate(250%) rotate(-135deg);
-    -webkit-transform: rotate(135deg) translate(250%) rotate(-135deg);
-    -o-transform: rotate(135deg) translate(250%) rotate(-135deg);
-    transform: rotate(135deg) translate(250%) rotate(-135deg);
+    -moz-transform: rotate(135deg) translate(265%) rotate(-135deg);
+    -ms-transform: rotate(135deg) translate(265%) rotate(-135deg);
+    -webkit-transform: rotate(135deg) translate(265%) rotate(-135deg);
+    -o-transform: rotate(135deg) translate(265%) rotate(-135deg);
+    transform: rotate(135deg) translate(265%) rotate(-135deg);
 }
 
 .deg180 {
@@ -290,20 +272,19 @@ button {
     transform: rotate(180deg) translate(250%) rotate(-180deg);
 }
 
-.deg225 {
-    -moz-transform: rotate(225deg) translate(250%) rotate(-225deg);
-    -ms-transform: rotate(225deg) translate(250%) rotate(-225deg);
-    -webkit-transform: rotate(225deg) translate(250%) rotate(-225deg);
-    -o-transform: rotate(225deg) translate(250%) rotate(-225deg);
-    transform: rotate(225deg) translate(250%) rotate(-225deg);
+.deg240 {
+    -moz-transform: rotate(240deg) translate(250%) rotate(-240deg);
+    -ms-transform: rotate(240deg) translate(250%) rotate(-240deg);
+    -webkit-transform: rotate(240deg) translate(250%) rotate(-240deg);
+    -o-transform: rotate(240deg) translate(250%) rotate(-240deg);
+    transform: rotate(240deg) translate(250%) rotate(-240deg);
 }
-
-.deg315 {
-    -moz-transform: rotate(315deg) translate(250%) rotate(-315deg);
-    -ms-transform: rotate(315deg) translate(250%) rotate(-315deg);
-    -webkit-transform: rotate(315deg) translate(250%) rotate(-315deg);
-    -o-transform: rotate(315deg) translate(250%) rotate(-315deg);
-    transform: rotate(315deg) translate(250%) rotate(-315deg);
+.deg300 {
+    -moz-transform: rotate(300deg) translate(250%) rotate(-300deg);
+    -ms-transform: rotate(300deg) translate(250%) rotate(-300deg);
+    -webkit-transform: rotate(300deg) translate(250%) rotate(-300deg);
+    -o-transform: rotate(300deg) translate(250%) rotate(-300deg);
+    transform: rotate(300deg) translate(250%) rotate(-300deg);
 }
 
 .circle {
@@ -351,21 +332,51 @@ button {
     height: 100%;
 }
 
-.form {
+.form,
+.indicators {
     display: inline-block;
-    width: 50%;
+    width: 25%;
+    color: #fff;
 }
 
 .submit {
     background: #1faeff;
 }
 
-.form .input-field,
-.form  .submit {
+.input-field,
+.output-field,
+.submit {
     display: block;
-    width: 50%;
+    width: 75%;
     margin: 15px auto;
     color: #fff;
+}
+
+.output,
+.input,
+.submit {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.output,
+.input {
+    background: #fff;
+    color: #000;
+}
+
+.notifications {
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    padding-bottom: 100%;
+    color: #000;
+    text-align: center;
+}
+
+.notifications-title {
+    font-size: 25px;
 }
 
 @media screen and (max-width: 1440px) {
