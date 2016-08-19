@@ -298,7 +298,7 @@
         border-radius: 5%;
         content: "";
         background: #024f7a url("../img/bg-item.png") repeat;
-        animation: turnon 1.5s 2s 1 linear forwards, bright 1.5s 3s 1 linear;
+        animation: turnon 1.5s 2.5s 1 linear forwards, bright 1.5s 3.5s 1 linear;
     }
     
     @keyframes turnon {
