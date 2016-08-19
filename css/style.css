@@ -297,7 +297,7 @@
         height: 0;
         border-radius: 5%;
         content: "";
-        background: #024f7a url("../img/bg-item.png") repeat;
+        background: #000 url("../img/bg-item.png") repeat;
         animation: turnon 1.5s 2.5s 1 linear forwards, bright 1.5s 3.5s 1 linear;
     }
     
