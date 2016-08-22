@@ -1,0 +1,79 @@
+.width-50 {
+    width: 50%;
+}
+
+.width-25 {
+    width: 25%;
+}
+
+.svg-elem.big {
+    max-width: 1000px;
+}
+
+.svg-elem.big path {
+    fill-opacity: 0;
+    fill: #1faeff;
+    stroke: #6bc4f6;
+    stroke-width: 100;
+    stroke-dasharray: 40000;
+    stroke-dashoffset: 40000;
+    animation: draw 1s 1s 1 linear forwards, show .5s 1.5s 1 linear forwards;
+}
+
+.form,
+.indicators {
+    color: #fff;
+}
+
+.submit {
+    background: #1faeff;
+}
+
+.input-field,
+.output-field,
+.submit {
+    display: block;
+    width: 75%;
+    margin: 15px auto;
+    color: #fff;
+}
+
+.output,
+.input,
+.submit {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+}
+
+.output,
+.input {
+    background: #fff;
+    color: #000;
+}
+
+.notifications {
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    padding-bottom: 100%;
+    color: #000;
+    text-align: center;
+}
+
+.notifications-title {
+    font-size: 25px;
+}
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes show {
+    to {
+        fill-opacity: 1;
+    }
+}
