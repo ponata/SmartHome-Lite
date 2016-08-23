@@ -20,17 +20,17 @@ function Forms(node) {
         program: []
     };
     this.washingOptions = {
-        sport: {
-            time: 0040
-	        , temperature: 40
-        }
-	    , cotton: {
-	        time: 0255
-	        , temperature: 90
-	    }
-	    , jeans: {
-	        time: 0040
-	        , temperature: 40
+        Sport: {
+            time: '00:40'
+	        , temperature: '40'
+        },
+	    Cotton: {
+	        time: '0255',
+	        temperature: '90'
+	    },
+         Jeans: {
+             time: '00:60'
+	        , temperature: '40'
 	    }
     };
     this.init();
@@ -161,8 +161,7 @@ Forms.prototype.submitForm = function () {
     var outputTimer = document.getElementById('panel');
 
     var programName = document.querySelector('input[name="program"]:checked').id;
-
-    var htmlTimer = '<div class="timer">' + programName + '</div>';
+    var htmlTimer = '<div class="timer">' + this.washingOptions[programName].time + '</div>';
     outputTimer.innerHTML = htmlTimer;
     
 }
