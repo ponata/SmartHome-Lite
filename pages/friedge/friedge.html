@@ -6,10 +6,6 @@
     <link rel="shortcut icon" href="img/icon.ico" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/friedge.css">
-    <!-- LiveReloader script. Delete on production! -->
-    <script>
-    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-    </script>
 </head>
 
 <body>
@@ -31,11 +27,11 @@
                 <div id="indicators" class="indicators">
                     <div class="output-field">
                         <span>Temperature in the freezer</span>
-                        <div id="temperature-freezer" class="output">-30</div>
+                        <div id="outputFreezeTemp" class="output">&nbsp;</div>
                     </div>
                     <div class="output-field">
                         <span>Temperature overall</span>
-                        <div id="temperature-freezer" class="output">-10</div>
+                        <div id="outputOverallTemp" class="output">&nbsp;</div>
                     </div>
                     <div id="notifications" class="notifications">
                         <p class="notifications-title">Notification message</p>
@@ -65,16 +61,17 @@
                         177 71 51 0 82 -6 115 -22z" />
                     </g>
                 </svg>
+                <div id="progressBar" class="progress-bar"></div>
             </div>
             <div class="width-25 dp-ib text-center">
                 <form action="" class="form">
                     <div class="input-field">
                         <span>New temperature in freezer</span>
-                        <input id="inFreezeTemp" type="number" class="input" min="-50" max="0" value="-15">
+                        <input id="inputFreezeTemp" type="number" class="input" min="-50" max="0" value="-20">
                     </div>
                     <div class="input-field">
                         <span>New overall temperature</span>
-                        <input type="number" class="input" min="-20" max="0" value="-5">
+                        <input id="inputOverallTemp" type="number" class="input" min="-20" max="0" value="-7">
                     </div>
                     <button id="make-ice" class="submit">Make Ice</button>
                     <button id="defrost" class="submit">Defrost</button>
@@ -85,7 +82,7 @@
     <footer class="footer">
         <div class="container copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="js/friedge.js"></script>
 </body>
 
 </html>
