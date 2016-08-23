@@ -1,0 +1,172 @@
+.layout-50-50 {
+    width:100%;
+    color:#fff;
+    font-size:1.25em;
+    letter-spacing:2px;
+}
+
+.layout-50-50 .col1,
+.layout-50-50 .col2{
+    width: 50%;
+    float: left;
+}
+.cf:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+/*optionals*/
+.panel{
+    border:5px solid #32B4FD;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding:15px;
+}
+.panel-option{
+    overflow: hidden;    
+    margin: 10px 0;
+    padding-bottom: 10px;
+}
+.panel .panel-value{
+    float: right;
+    border:none;
+}
+.panel-option > h3{
+    display: inline-block;
+    vertical-align: middle;
+}
+.panel input[type="radio"] {
+    width: 20px;
+    height: 20px;
+}
+.button{
+ font-size: 1.5em;
+  margin: 12px 0;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  padding: 9px 24px 10px;
+  background-color: darkred;
+  border:1px solid darkred;    
+  color: #fff;
+  border-radius: 4px;
+  -webkit-transition: all 120ms ease-out;
+  -moz-transition: all 80ms ease-out;
+  transition: all 120ms ease-out;
+  background-image: -webkit-linear-gradient(top,  hsla(0,0%,100%,0.12) 0%,hsla(0,0%,100%,0) 100%); /* Chrome10+,Safari5.1+ */
+
+}
+.button:hover {
+    box-shadow: 0 1px 4px hsla(0,0%,0%,.05);
+    background-image: -webkit-linear-gradient(top,  hsla(0,0%,100%,.2) 0%,hsla(0,0%,100%,.1) 100%); 
+    color: #fff;
+}
+.button:disabled,
+input:disabled,
+input:checked:disabled + .slider,
+input[type="radio"]:disabled + .time{
+    opacity: 0.5;
+}
+.actions-wrapper{
+    margin: 40px 0 20px;
+}
+
+
+.panel .time {
+    margin: 20px 0;
+    font-size: 3em;
+    position: absolute;
+    display: none;
+}
+
+.panel-option.control{
+    opacity: 1;
+}
+
+input[type="radio"]:checked + .time{
+    display: block;
+}
+
+/*switch*/
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 34px;
+}
+
+.switch input[type="checkbox"] {
+    visibility: hidden;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.control .slider{
+    background-color: red;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #87C540;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #87C540;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(46px);
+  -ms-transform: translateX(46px);
+  transform: translateX(46px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#washingMachine{
+    max-height: 62vh;
+}
+
+/*svg test*/
+.switch.active{
+    fill: yellow;
+}
+
+.program.active{
+    fill: #fff;
+}
+.status{
+     fill: red;
+}
+.status.active{
+    fill: #87C540;
+}
