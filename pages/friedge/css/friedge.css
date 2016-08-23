@@ -1,20 +1,15 @@
-input,
-button {
+input, button {
     font-family: 'DigitalSansEFMedium';
 }
-
 .width-50 {
     width: 50%;
 }
-
 .width-25 {
     width: 25%;
 }
-
 .svg-elem.big {
     max-width: 1000px;
 }
-
 .svg-elem.big path {
     fill-opacity: 0;
     fill: #1faeff;
@@ -24,40 +19,28 @@ button {
     stroke-dashoffset: 40000;
     animation: draw 1s 1s 1 linear forwards, show .5s 1.5s 1 linear forwards;
 }
-
-.form,
-.indicators {
+.form, .indicators {
     color: #fff;
 }
-
 .submit {
     background: #1faeff;
 }
-
-.input-field,
-.output-field,
-.submit {
+.input-field, .output-field, .submit {
     display: block;
     width: 75%;
     margin: 15px auto;
     color: #fff;
 }
-
-.output,
-.input,
-.submit {
+.output, .input, .submit {
     padding: 10px;
     border-radius: 5px;
     border: none;
     width: 100%;
 }
-
-.output,
-.input {
+.output, .input {
     background: #fff;
     color: #000;
 }
-
 .notifications {
     background: #fff;
     border-radius: 5px;
@@ -66,25 +49,37 @@ button {
     color: #000;
     text-align: center;
 }
-
 .notifications-title {
     font-size: 25px;
 }
-
 @keyframes draw {
     to {
         stroke-dashoffset: 0;
     }
 }
-
 @keyframes show {
     to {
         fill-opacity: 1;
     }
 }
-
 .progress-bar {
     width: 0;
-    height: 20px;
+    height: 100%;
     background: red;
+}
+
+.outer-progress-bar {
+    position: relative;
+    width: 100%;
+    height: 35px;
+    border: 5px solid #1faeff;
+    border-radius: 5px;
+}
+.percentage {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    z-index: 1;
+    color: #fff;
 }
