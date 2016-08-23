@@ -41,7 +41,7 @@ Forms.prototype.initValue = function (node) {
         this.initValueObject.switchNode = node.checked ;
     }
     else if (node.name === 'program') {
-        this.initValueObject.program[node.id] = node.checked;
+        this.initValueObject.program.push(node.checked);
     }
 
 }
@@ -50,8 +50,8 @@ Forms.prototype.initValue = function (node) {
 Forms.prototype.init = function () {
 
     if (this.node.name === 'status') {
-        //this.node.addEventListener('click', this.activeteFroms.bind(this));
-        this.activeteFroms();
+        //this.node.addEventListener('click', this.activeteForms.bind(this));
+        this.activeteForms();
 
     } else if (this.node.name === 'switch') {
         this.updateSwitchView();
@@ -71,7 +71,7 @@ Forms.prototype.SelectProgram = function(){
 }
 
 
-Forms.prototype.activeteFroms = function () {
+Forms.prototype.activeteForms = function () {
     var elements = document.querySelectorAll('input:not([name="status"])');
     for (var i = 0; i < elements.length; i++) {
         this.initValue(elements[i]);
@@ -83,8 +83,39 @@ Forms.prototype.activeteFroms = function () {
             elements[i].disabled = true;
         }
     }
-    this.updateActiveteFromsView();
+    this.updateActiveteFormsView();
 }
+
+
+
+Forms.prototype.updateActiveteFormsView = function () {
+    var svgClassName = this.node.name;
+    var svgControl = this.svg.getElementsByClassName(svgClassName);
+    var svgControlSwitch = this.svg.getElementsByClassName('switch');
+    var svgControlProgram = this.svg.getElementsByClassName('program');
+    for (var i = 0; i < svgControl.length; i++) {
+        if (this.node.checked) {
+            svgControl[i].classList.add('active');
+            if (this.initValueObject.switchNode) {
+                svgControlSwitch[0].classList.add('active');
+            }
+            for (var j = 0; j < this.initValueObject.program.length; j++) {
+                if (this.initValueObject.program[j] == true) {
+                        svgControlProgram[j].classList.add('active');
+                }
+            }
+
+        } else {
+            svgControl[i].classList.remove("active");
+            if (this.node.checked === false) {
+                this.defaultView();
+            }  
+        }
+
+    }
+
+}
+
 
 
 Forms.prototype.updateSwitchView = function () {
@@ -96,30 +127,6 @@ Forms.prototype.updateSwitchView = function () {
         svgControl[0].classList.remove("active");
     }
 }
-
-
-Forms.prototype.updateActiveteFromsView = function () {
-    var svgClassName = this.node.name;
-    var svgControl = this.svg.getElementsByClassName(svgClassName);
-    for (var i = 0; i < svgControl.length; i++) {
-        if (this.node.checked) {
-            svgControl[i].classList.add('active');
-            this.SelectProgram();
-
-        } else {
-            svgControl[i].classList.remove("active");
-            if (this.node.checked === false) {
-                this.defaultView();
-            }
-            // remove active at all
-        }
-
-    }
-
-
-}
-
-
 
 
 Forms.prototype.updateSelectProgramView = function (j) {
