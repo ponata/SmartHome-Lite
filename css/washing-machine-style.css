@@ -16,7 +16,7 @@
     display: block;
 }
 /*optionals*/
-.panel{
+.wrapper{
     border:5px solid #32B4FD;
     border-radius: 20px;
     margin-top: 10px;
@@ -98,7 +98,7 @@ input[type="radio"]:checked + .time{
 }
 
 .switch input[type="checkbox"] {
-    visibility: hidden;
+    margin:5px 0 0 10px;
 }
 
 /* The slider */

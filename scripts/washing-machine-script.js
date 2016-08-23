@@ -1,6 +1,6 @@
 
 window.onload = function () {
-    document.documentElement.addEventListener('click', function (event) {
+    document.forms.washingOptions.addEventListener('click', function (event) {
         if (event.target.nodeName === 'INPUT') {
             //event.preventDefault(); Отмена действия браузера по умолчанию              
             var control = event.target;
@@ -58,6 +58,10 @@ Forms.prototype.init = function () {
     }
     else if (this.node.name === 'program') {
         this.SelectProgram();
+    }
+    else if (this.node.name === 'button') {
+        event.preventDefault();
+        this.submitForm();
     }
 }
 
@@ -153,3 +157,12 @@ Forms.prototype.defaultView = function () {
     }
 }
 
+Forms.prototype.submitForm = function () {
+    var outputTimer = document.getElementById('panel');
+
+    var programName = document.querySelector('input[name="program"]:checked').id;
+
+    var htmlTimer = '<div class="timer">' + programName + '</div>';
+    outputTimer.innerHTML = htmlTimer;
+    
+}

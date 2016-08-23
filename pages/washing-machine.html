@@ -26,38 +26,40 @@
                 </diV>
                 <div class="col2">
                     <h3>Options:</h3>
-                    <form name="washingOptions">
-                        <div class="panel">
-                            <div class="panel-option control">
-                                <h3>Turn Off/On</h3>
-                                <label class="switch panel-value">
-                                    <input type="checkbox" name="status" />
-                                    <div class="slider round"></div>
-                                </label>
+                    <div class="wrapper">
+                        <form name="washingOptions">
+                            <div class="panel" id="panel">
+                                <div class="panel-option control">
+                                    <h3>Turn Off/On</h3>
+                                    <label class="switch panel-value">
+                                        <input type="checkbox" name="status" />
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                                <div class="panel-option">
+                                    <h3>Fill washing powder</h3>
+                                    <label class="switch panel-value">
+                                        <input type="checkbox" name="switch" disabled required />
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                                <div class="panel-option ">
+                                    <h3>Select program</h3>
+                                    <fieldset class="panel-value">
+                                        <input type="radio" name="program" id="Sport" checked="" disabled /> <span class="time">00:40  40C</span>
+                                        <label for="Sport">Sport</label>
+                                        <input type="radio" name="program" id="Cotton" disabled /> <span class="time">02:55  90C</span>
+                                        <label for="Cotton">Cotton</label>
+                                        <input type="radio" name="program" id="Jeans" disabled /> <span class="time">02:20  60C</span>
+                                        <label for="Jeans">Jeans</label>
+                                    </fieldset>
+                                </div>
                             </div>
-                            <div class="panel-option">
-                                <h3>Fill washing powder</h3>
-                                <label class="switch panel-value">
-                                    <input type="checkbox" name="switch" disabled required />
-                                    <div class="slider round"></div>
-                                </label>
-                            </div>
-                            <div class="panel-option ">
-                                <h3>Select program</h3>
-                                <fieldset class="panel-value">
-                                    <input type="radio" name="program" id="Sport" checked="" disabled /> <span class="time">00:40  40C</span>
-                                    <label for="Sport">Sport</label>
-                                    <input type="radio" name="program" id="Cotton" disabled /> <span class="time">02:55  90C</span>
-                                    <label for="Cotton">Cotton</label>
-                                    <input type="radio" name="program" id="Jeans" disabled /> <span class="time">02:20  60C</span>
-                                    <label for="Jeans">Jeans</label>
-                                </fieldset>
-                            </div>
-                            <div class="actions-wrapper">
-                                <input class="button" type="submit" name="button" Value="Start" disabled />
-                            </div>
-                        </div>
-                    </form>
+                                <div class="actions-wrapper">
+                                    <input class="button" type="submit" name="button" value="Start" disabled />
+                                </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
