@@ -1,92 +1,133 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    var htmlObjects = {
+        inputFreezeTemp: document.getElementById("inputFreezeTemp"),
+        inputOverallTemp: document.getElementById("inputOverallTemp"),
+        progressBar: document.getElementById("progressBar"),
+        outputPercentage: document.getElementById("outputPercentage"),
+        close: document.getElementById("close"),
+        modal: document.getElementById("modal"),
+        outputModalMessage: document.getElementById("outputModalMessage"),
+        defrost: document.getElementById("defrost")
+    }
 
-    var inputFreezeTemp = document.getElementById("inputFreezeTemp");
-    var outputFreezeTemp = document.getElementById("outputFreezeTemp");
-    var outputOverallTemp = document.getElementById("outputOverallTemp");
-    var inputOverallTemp = document.getElementById("inputOverallTemp");
+    var startingValues = {
+        currentWidth: 0,
+        stepForward: 0,
+        stepRevert: 1,
+        currentTemps: {}
+    }
 
-    updateTemp(inputFreezeTemp, outputFreezeTemp);
-    updateTemp(inputOverallTemp, outputOverallTemp);
+    var modalMessages = {
+        frozen: "Frozen!",
+        unfrozen: "Unfrozen!"
+    }
+    htmlObjects.defrost.onclick = function(e) {
+    	e.preventDefault();
+        Frost(htmlObjects, startingValues, modalMessages, 10);
+    }
 
-    inputFreezeTemp.onchange = function() {
-        updateTemp(inputFreezeTemp, outputFreezeTemp);
-    };
-    inputOverallTemp.onchange = function() {
-        updateTemp(inputOverallTemp, outputOverallTemp);
-    };
-
-    var valueX = 1000;
-    var valueCurrent = 0;
-    var currentWidth = 0;
-    var step = 0;
-    var per = 0;
-    var progressBar = document.getElementById("progressBar");
-    var currentTemps = getCurrentTemps();
-    var outputPercentage = document.getElementById("outputPercentage");
-    progressBar.classList.remove("defrost");
-
-
-    var timeoutID = setInterval(function() {
-        currentTemps = getCurrentTemps();
-        step = (-currentTemps.outputFreezeTemp) + (-currentTemps.outputOverallTemp);
-        per = (step / valueX) * 100;
-        if (valueCurrent + step < valueX) {
-            currentWidth += per;
-            valueCurrent += step;
-            console.log(valueCurrent);
-
-        } else {
-            currentWidth = 100;
-            deFrost();
-            clearTimeout(timeoutID);
-
-        }
-        outputPercentage.innerHTML = parseInt(currentWidth) + '%';
-        progressBar.style.width = parseInt(currentWidth) + '%';
-
-    }, 500);
+    Frost(htmlObjects, startingValues, modalMessages, 50);
 
 
 });
 
 
-function updateTemp(input, output) {
-    output.innerHTML = input.value;
-}
+function Frost(htmlObjects, startingValues, modalMessages, speed) {
+    var currentTemps;
 
-function getCurrentTemps() {
-    var array = {
-        outputFreezeTemp: parseInt(outputFreezeTemp.innerHTML),
-        outputOverallTemp: parseInt(outputOverallTemp.innerHTML)
-    }
-    return array;
-}
-
-function deFrost() {
     var timeoutID = setInterval(function() {
-        var valueX = 1000;
-        var valueCurrent = 0;
-        var currentWidth = 0;
-        var step = 0;
-        var per = 0;
-        var progressBar = document.getElementById("progressBar");
-        var outputPercentage = document.getElementById("outputPercentage");
-        var currentTemps = getCurrentTemps();
-        var valueX = 1000;
-        var step = (-currentTemps.outputFreezeTemp) + (-currentTemps.outputOverallTemp);
-        per = (step / valueX) * 100;
-        if (valueCurrent - step > 0) {
-            currentWidth -= per;
-            valueCurrent -= step;
-            console.log(valueCurrent);
+        startingValues.currentTemps = getCurrentTemps(htmlObjects);
+
+        startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 5000;
+        if (startingValues.currentWidth + startingValues.stepForward < 100) {
+            startingValues.currentWidth += startingValues.stepForward;
 
         } else {
-            currentWidth = 0;
-            clearTimeout(timeoutID);
-        }
-        outputPercentage.innerHTML = parseInt(currentWidth) + '%';
-        progressBar.style.width = parseInt(currentWidth) + '%';
+            startingValues.currentWidth = 100;
+            htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+            htmlObjects.progressBar.style.width = parseInt(startingValues.currentWidth) + '%';
 
-    }, 100);
+            showModal(htmlObjects, startingValues, modalMessages);
+            setTimeout(function() {
+
+                deFrost(htmlObjects, startingValues, modalMessages, 50);
+            }, 3000);
+
+            clearTimeout(timeoutID);
+
+        }
+        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+
+    }, speed);
+}
+
+function deFrost(htmlObjects, startingValues, modalMessages, speed) {
+
+    var timeoutID = setInterval(function() {
+
+        if (startingValues.currentWidth - startingValues.stepRevert > 0) {
+            startingValues.currentWidth -= startingValues.stepRevert;
+
+        } else {
+
+            startingValues.currentWidth = 0;
+            htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+            htmlObjects.progressBar.style.width = parseInt(startingValues.currentWidth) + '%';
+            showModal(htmlObjects, startingValues, modalMessages);
+
+            setTimeout(function() {
+
+                Frost(htmlObjects, startingValues, modalMessages, 50);
+            }, 3000);
+
+            clearTimeout(timeoutID);
+
+        }
+        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+
+    }, speed);
+
+
+}
+
+function getCurrentTemps(htmlObjects) {
+    var object = {
+        inputFreezeTemp: Math.abs(htmlObjects.inputFreezeTemp.value),
+        inputOverallTemp: Math.abs(htmlObjects.inputOverallTemp.value)
+    }
+    return object;
+}
+
+function showModal(htmlObjects, startingValues, modalMessages) {
+
+    switch (startingValues.currentWidth) {
+        case 100:
+            htmlObjects.outputModalMessage.classList.add("frozen");
+            htmlObjects.modal.style.display = "block";
+            htmlObjects.outputModalMessage.innerHTML = modalMessages.frozen;
+            setTimeout(function() {
+                htmlObjects.modal.style.display = "none";
+                htmlObjects.outputModalMessage.classList.remove("frozen");
+            }, 3000);
+            break;
+        case 0:
+            htmlObjects.outputModalMessage.classList.add("unfrozen");
+            htmlObjects.modal.style.display = "block";
+            setTimeout(function() {
+                htmlObjects.modal.style.display = "none";
+                htmlObjects.outputModalMessage.classList.remove("unfrozen");
+            }, 3000);
+            htmlObjects.outputModalMessage.innerHTML = modalMessages.unfrozen;
+            break;
+    }
+
+    htmlObjects.close.onclick = function() {
+        // body...
+        htmlObjects.modal.style.display = "none";
+
+    }
+
 }

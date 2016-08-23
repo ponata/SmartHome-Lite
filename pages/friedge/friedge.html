@@ -25,14 +25,6 @@
         <div class="container aligner center">
             <div class="width-25 dp-ib text-center">
                 <div id="indicators" class="indicators">
-                    <div class="output-field">
-                        <span>Temperature in the freezer</span>
-                        <div id="outputFreezeTemp" class="output">&nbsp;</div>
-                    </div>
-                    <div class="output-field">
-                        <span>Temperature overall</span>
-                        <div id="outputOverallTemp" class="output">&nbsp;</div>
-                    </div>
                     <div id="notifications" class="notifications">
                         <p class="notifications-title">Notification message</p>
                     </div>
@@ -86,6 +78,13 @@
     <footer class="footer">
         <div class="container copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
     </footer>
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-body">
+            <div class="modal-header"><button id="close" class="close">x</button></div>
+            <p id="outputModalMessage" class="modal-message"></p>
+        </div>
+    </div>
     <script src="js/friedge.js"></script>
 </body>
 
