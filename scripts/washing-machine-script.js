@@ -21,16 +21,16 @@ function Forms(node) {
     };
     this.washingOptions = {
         Sport: {
-            time: '00:40'
-	        , temperature: '40'
+            time: '00:40',
+            temperature: '40'
         },
 	    Cotton: {
-	        time: '0255',
+	        time: '02:55',
 	        temperature: '90'
 	    },
          Jeans: {
-             time: '00:60'
-	        , temperature: '40'
+             time: '02:20',
+             temperature: '40'
 	    }
     };
     this.init();
@@ -159,7 +159,6 @@ Forms.prototype.defaultView = function () {
 
 Forms.prototype.submitForm = function () {
     var outputTimer = document.getElementById('panel');
-
     var programName = document.querySelector('input[name="program"]:checked').id;
     var htmlTimer = '<div class="timer">' + this.washingOptions[programName].time + '</div>';
     outputTimer.innerHTML = htmlTimer;
