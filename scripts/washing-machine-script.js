@@ -15,30 +15,32 @@ window.onload = function () {
 function Forms(node) {
     this.node = node;
     this.svg = document.getElementById("washingMachine").contentDocument;
+    this.arrayHoursMinutes;
+    this.period;
     this.initValueObject = {
-        switchNode : false,
+        switchNode: false,
         program: []
     };
     this.washingOptions = {
         Sport: {
-            time: '00:40',
+            time: '00:20',
             temperature: '40'
         },
-	    Cotton: {
-	        time: '02:55',
-	        temperature: '90'
-	    },
-         Jeans: {
-             time: '02:20',
-             temperature: '40'
-	    }
+        Cotton: {
+            time: '02:55',
+            temperature: '90'
+        },
+        Jeans: {
+            time: '02:01',
+            temperature: '40'
+        }
     };
     this.init();
 }
 
 Forms.prototype.initValue = function (node) {
     if (node.name === 'switch') {
-        this.initValueObject.switchNode = node.checked ;
+        this.initValueObject.switchNode = node.checked;
     }
     else if (node.name === 'program') {
         this.initValueObject.program.push(node.checked);
@@ -65,7 +67,7 @@ Forms.prototype.init = function () {
     }
 }
 
-Forms.prototype.SelectProgram = function(){
+Forms.prototype.SelectProgram = function () {
     var programsList = document.querySelectorAll('input[name = program]');
     for (var i = 0; i < programsList.length; i++) {
         if (programsList[i].id === this.node.id) {
@@ -105,7 +107,7 @@ Forms.prototype.updateActiveteFormsView = function () {
             }
             for (var j = 0; j < this.initValueObject.program.length; j++) {
                 if (this.initValueObject.program[j] == true) {
-                        svgControlProgram[j].classList.add('active');
+                    svgControlProgram[j].classList.add('active');
                 }
             }
 
@@ -113,7 +115,7 @@ Forms.prototype.updateActiveteFormsView = function () {
             svgControl[i].classList.remove("active");
             if (this.node.checked === false) {
                 this.defaultView();
-            }  
+            }
         }
 
     }
@@ -125,6 +127,7 @@ Forms.prototype.updateActiveteFormsView = function () {
 Forms.prototype.updateSwitchView = function () {
     var svgClassName = this.node.name;
     var svgControl = this.svg.getElementsByClassName(svgClassName);
+
     if (this.node.checked) {
         svgControl[0].classList.add('active');
     } else {
@@ -159,8 +162,55 @@ Forms.prototype.defaultView = function () {
 
 Forms.prototype.submitForm = function () {
     var outputTimer = document.getElementById('panel');
+    var outputActions = document.getElementById('actions');
     var programName = document.querySelector('input[name="program"]:checked').id;
-    var htmlTimer = '<div class="timer">' + this.washingOptions[programName].time + '</div>';
+    var programText = 'Program ' + programName + ' is running';
+    var arrayHoursMinutes = this.washingOptions[programName].time.split(':');
+    var htmlTimer = '<div> <h3>' + programText + '</h3>' + '<div  class="timer" id="timer">' + '<span id="hours">' + arrayHoursMinutes[0] + '</span>' + ':' + '<span id="minutes">' + arrayHoursMinutes[1] + '</span>' + ':' + '<span id="seconds">10</span></div></div>';
+    var htmlActions = '<input class="button" type="button" name="button" value="Pause" />'
     outputTimer.innerHTML = htmlTimer;
-    
+    outputActions.innerHTML = htmlActions;
+    var date = new Date();
+    setTimeout(window.timerGlobal, 1000);
 }
+
+
+var timerGlobal = function (arrayHoursMinutes, period) {
+    var date = new Date();
+    var timeinterval = setTimeout(timerGlobal, 1000);
+    var elemMinutes = document.getElementById('minutes');
+    var elemHourse = document.getElementById('hours');
+    var elemSeconds = document.getElementById('seconds');
+    elemSeconds.innerHTML--;
+    var elemSecondsSecound = ('0' + elemSeconds.innerHTML).slice(-2);
+    elemSeconds.innerHTML = elemSecondsSecound;
+    if (elemSeconds.innerHTML == 0) {
+        if (elemMinutes.innerHTML == 0) {
+            elemMinutes.innerHTML = '59';
+            elemSeconds.innerHTML = '60';
+            elemHourse.innerHTML--;
+            var elemHourseSecound = ('0' + elemHourse.innerHTML).slice(-2);
+            elemHourse.innerHTML = elemHourseSecound;
+            timeinterval();
+            if (elemHourse.innerHTML == 0) {
+                var infoTextElement = document.createElement('div');
+                infoTextElement.innerHTML = 'Program finished';
+                elemMinutes.parentNode.parentNode.appendChild(infoTextElement);
+                clearInterval(timeinterval);
+            }
+        }
+        else {            
+            elemSeconds.innerHTML = '60';
+            elemMinutes.innerHTML--;
+            var elemMinutesSecound = ('0' + elemMinutes.innerHTML).slice(-2);
+            elemMinutes.innerHTML = elemMinutesSecound;
+            timeinterval();
+        }
+       
+    }
+    else {
+        timeinterval();
+    }
+    clearInterval(timerGlobal);
+}
+

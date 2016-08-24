@@ -88,6 +88,10 @@ input[type="radio"]:checked + .time{
     display: block;
 }
 
+.timer{
+    font-size:5em;
+}
+
 /*switch*/
 /* The switch - the box around the slider */
 .switch {
