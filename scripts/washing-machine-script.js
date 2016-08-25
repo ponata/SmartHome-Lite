@@ -12,7 +12,7 @@ window.onload = function () {
 var washMachineModel = {
     status: false,
     statusWashing: 'choose',
-    animate:'off',
+    animate: false,
     washingOptions: {
         Sport: {
             time: '00:01',
@@ -139,11 +139,12 @@ objectWashingOptions.prototype.restoreObjectForms = function () {
 
     var message = document.querySelector('p.message');
 
+    washMachineModel.animate = false;
+    message.parentNode.removeChild(message);
     document.getElementById('panel-in-process').classList.add('hide');
     document.getElementById('panel').classList.remove('hide');
     document.querySelector('input[name="startNew"]').classList.add('hide');
     document.querySelector('input[name="pause"]').classList.remove('hide');
-    node.parent.removeChild(message);
 
     this.defaultView();
 }
@@ -226,11 +227,11 @@ objectWashingOptions.updateAnimateView = function () {
     var svgControlAnimate = svg.getElementsByClassName('animate');
     var svgControlStatic = svg.getElementsByClassName('static');
 
-    if (washMachineModel.animate === 'on') {
+    if (washMachineModel.animate) {
         svgControlAnimate[0].classList.add('hide');
         svgControlStatic[0].classList.remove('hide');
     } else {
-        washMachineModel.animate = 'on';
+        washMachineModel.animate = true;
         svgControlAnimate[0].classList.remove('hide');
         svgControlStatic[0].classList.add("hide");
     }
@@ -244,7 +245,7 @@ objectWashingOptions.prototype.defaultView = function () {
     var svgActiveControls = this.svg.querySelectorAll('path');
     var svgActiveControlsLength = svgActiveControls.length;
 
-    if (washMachineModel.animate = 'on') {
+    if (washMachineModel.animate) {
         objectWashingOptions.updateAnimateView();
     }
 
