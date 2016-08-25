@@ -23,7 +23,7 @@ function Forms(node) {
     };
     this.washingOptions = {
         Sport: {
-            time: '00:20',
+            time: '00:01',
             temperature: '40'
         },
         Cotton: {
@@ -62,7 +62,6 @@ Forms.prototype.init = function () {
         this.SelectProgram();
     }
     else if (this.node.name === 'button') {
-        event.preventDefault();
         this.submitForm();
     }
 }
@@ -175,9 +174,9 @@ Forms.prototype.submitForm = function () {
 }
 
 
-var timerGlobal = function (arrayHoursMinutes, period) {
+var timerGlobal = function () {
     var date = new Date();
-    var timeinterval = setTimeout(timerGlobal, 1000);
+    var timeinterval = function () { setTimeout(timerGlobal, 1000) };
     var elemMinutes = document.getElementById('minutes');
     var elemHourse = document.getElementById('hours');
     var elemSeconds = document.getElementById('seconds');
@@ -186,27 +185,29 @@ var timerGlobal = function (arrayHoursMinutes, period) {
     elemSeconds.innerHTML = elemSecondsSecound;
     if (elemSeconds.innerHTML == 0) {
         if (elemMinutes.innerHTML == 0) {
-            elemMinutes.innerHTML = '59';
-            elemSeconds.innerHTML = '60';
-            elemHourse.innerHTML--;
-            var elemHourseSecound = ('0' + elemHourse.innerHTML).slice(-2);
-            elemHourse.innerHTML = elemHourseSecound;
-            timeinterval();
-            if (elemHourse.innerHTML == 0) {
+            if (elemHourse.innerHTML !== '00') {
+                elemMinutes.innerHTML = '59';
+                elemSeconds.innerHTML = '60';
+                elemHourse.innerHTML--;
+                var elemHourseSecound = ('0' + elemHourse.innerHTML).slice(-2);
+                elemHourse.innerHTML = elemHourseSecound;
+                timeinterval();
+            }
+            else {
                 var infoTextElement = document.createElement('div');
                 infoTextElement.innerHTML = 'Program finished';
                 elemMinutes.parentNode.parentNode.appendChild(infoTextElement);
                 clearInterval(timeinterval);
             }
         }
-        else {            
+        else {
             elemSeconds.innerHTML = '60';
             elemMinutes.innerHTML--;
             var elemMinutesSecound = ('0' + elemMinutes.innerHTML).slice(-2);
             elemMinutes.innerHTML = elemMinutesSecound;
             timeinterval();
         }
-       
+
     }
     else {
         timeinterval();
