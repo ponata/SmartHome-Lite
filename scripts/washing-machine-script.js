@@ -4,24 +4,16 @@ window.onload = function () {
         if (event.target.nodeName === 'INPUT') {
             //event.preventDefault(); Отмена действия браузера по умолчанию              
             var control = event.target;
-            var master = new Forms(control);
+            var master = new objectWashingOptions(control);
         }
     }, true);
 };
 
-
-
-
-function Forms(node) {
-    this.node = node;
-    this.svg = document.getElementById("washingMachine").contentDocument;
-    this.arrayHoursMinutes;
-    this.period;
-    this.initValueObject = {
-        switchNode: false,
-        program: []
-    };
-    this.washingOptions = {
+var washMachineModel = {
+    status: false,
+    statusWashing: 'choose',
+    animate:'off',
+    washingOptions: {
         Sport: {
             time: '00:01',
             temperature: '40'
@@ -34,11 +26,46 @@ function Forms(node) {
             time: '02:01',
             temperature: '40'
         }
+    }
+}
+
+
+function objectWashingOptions(node) {
+    this.node = node;
+    this.svg = document.getElementById("washingMachine").contentDocument;
+    this.arrayHoursMinutes;
+    this.period;
+    this.initValueObject = {
+        switchNode: false,
+        program: []
     };
     this.init();
 }
 
-Forms.prototype.initValue = function (node) {
+
+objectWashingOptions.prototype.init = function () {
+
+    if (this.node.name === 'status') {
+        this.activeteObjectForms();
+
+    } else if (this.node.name === 'switch') {
+        this.updateSwitchView();
+    }
+    else if (this.node.name === 'program') {
+        this.SelectProgram();
+    }
+    else if (this.node.name === 'submit') {
+        this.submitForm();
+
+    } else if (this.node.name === 'startNew') {
+        this.restoreObjectForms();
+    }
+
+}
+
+
+objectWashingOptions.prototype.initValue = function (node) {
+
     if (node.name === 'switch') {
         this.initValueObject.switchNode = node.checked;
     }
@@ -49,35 +76,11 @@ Forms.prototype.initValue = function (node) {
 }
 
 
-Forms.prototype.init = function () {
-
-    if (this.node.name === 'status') {
-        //this.node.addEventListener('click', this.activeteForms.bind(this));
-        this.activeteForms();
-
-    } else if (this.node.name === 'switch') {
-        this.updateSwitchView();
-    }
-    else if (this.node.name === 'program') {
-        this.SelectProgram();
-    }
-    else if (this.node.name === 'button') {
-        this.submitForm();
-    }
-}
-
-Forms.prototype.SelectProgram = function () {
-    var programsList = document.querySelectorAll('input[name = program]');
-    for (var i = 0; i < programsList.length; i++) {
-        if (programsList[i].id === this.node.id) {
-            this.updateSelectProgramView(i);
-        }
-    }
-}
-
-
-Forms.prototype.activeteForms = function () {
+objectWashingOptions.prototype.activeteObjectForms = function () {
     var elements = document.querySelectorAll('input:not([name="status"])');
+
+    washMachineModel.status = document.forms.washingOptions.status.checked;
+
     for (var i = 0; i < elements.length; i++) {
         this.initValue(elements[i]);
         if (this.node.checked) {
@@ -88,12 +91,78 @@ Forms.prototype.activeteForms = function () {
             elements[i].disabled = true;
         }
     }
-    this.updateActiveteFormsView();
+
+    this.updateActiveteObjectFormsView();
+}
+
+objectWashingOptions.prototype.SelectProgram = function () {
+
+    var programsList = document.querySelectorAll('input[name = program]');
+
+    for (var i = 0; i < programsList.length; i++) {
+
+        if (programsList[i].id === this.node.id) {
+            this.updateSelectProgramView(i);
+        }
+    }
 }
 
 
 
-Forms.prototype.updateActiveteFormsView = function () {
+objectWashingOptions.prototype.submitForm = function () {
+    event.preventDefault();
+
+    var outputTimer = document.getElementById('panel');
+    var outputActions = document.getElementById('panel-in-process');
+    var outputActionsHeader = document.querySelector('#panel-in-process > h3');
+    var programName = document.querySelector('input[name="program"]:checked').id;
+    var arrayHoursMinutes = washMachineModel.washingOptions[programName].time.split(':');
+    var outputTimer = document.getElementById('panel');
+    var timerSeconds = document.getElementById('seconds');
+    var timerHours = document.getElementById('hours');
+    var timerMinutes = document.getElementById('minutes');
+
+
+    outputTimer.classList.add('hide');
+    outputActions.classList.remove('hide');
+    outputActionsHeader.innerHTML = 'Program ' + programName + ' is running';
+    timerSeconds.innerHTML = '04';
+    timerHours.innerHTML = arrayHoursMinutes[0];
+    timerMinutes.innerHTML = arrayHoursMinutes[1];
+
+    setTimeout(window.timerGlobal, 1000);
+    objectWashingOptions.updateAnimateView()
+}
+
+
+objectWashingOptions.prototype.restoreObjectForms = function () {
+
+    var message = document.querySelector('p.message');
+
+    document.getElementById('panel-in-process').classList.add('hide');
+    document.getElementById('panel').classList.remove('hide');
+    document.querySelector('input[name="startNew"]').classList.add('hide');
+    document.querySelector('input[name="pause"]').classList.remove('hide');
+    node.parent.removeChild(message);
+
+    this.defaultView();
+}
+
+
+objectWashingOptions.statusOnChange = function () {
+    if (washMachineModel.statusWashing === 'finished') {
+        document.querySelector('input[name="pause"]').classList.add('hide');
+        document.querySelector('input[name="startNew"]').classList.remove('hide');
+       this.updateAnimateView();
+
+    }
+
+}
+
+
+/*update views methods*/
+
+objectWashingOptions.prototype.updateActiveteObjectFormsView = function () {
     var svgClassName = this.node.name;
     var svgControl = this.svg.getElementsByClassName(svgClassName);
     var svgControlSwitch = this.svg.getElementsByClassName('switch');
@@ -123,7 +192,7 @@ Forms.prototype.updateActiveteFormsView = function () {
 
 
 
-Forms.prototype.updateSwitchView = function () {
+objectWashingOptions.prototype.updateSwitchView = function () {
     var svgClassName = this.node.name;
     var svgControl = this.svg.getElementsByClassName(svgClassName);
 
@@ -135,7 +204,7 @@ Forms.prototype.updateSwitchView = function () {
 }
 
 
-Forms.prototype.updateSelectProgramView = function (j) {
+objectWashingOptions.prototype.updateSelectProgramView = function (j) {
     var className = this.node.name;
     var svgControl = this.svg.getElementsByClassName(className);
     for (var i = 0; i < svgControl.length; i++) {
@@ -151,38 +220,50 @@ Forms.prototype.updateSelectProgramView = function (j) {
 }
 
 
-Forms.prototype.defaultView = function () {
+objectWashingOptions.updateAnimateView = function () {
+
+    var svg = document.getElementById("washingMachine").contentDocument;
+    var svgControlAnimate = svg.getElementsByClassName('animate');
+    var svgControlStatic = svg.getElementsByClassName('static');
+
+    if (washMachineModel.animate === 'on') {
+        svgControlAnimate[0].classList.add('hide');
+        svgControlStatic[0].classList.remove('hide');
+    } else {
+        washMachineModel.animate = 'on';
+        svgControlAnimate[0].classList.remove('hide');
+        svgControlStatic[0].classList.add("hide");
+    }
+
+}
+
+/*default view */
+
+objectWashingOptions.prototype.defaultView = function () {
+
     var svgActiveControls = this.svg.querySelectorAll('path');
     var svgActiveControlsLength = svgActiveControls.length;
-    for (var i = 0; i < svgActiveControlsLength; i++) {
-        svgActiveControls[i].classList.remove("active");
+
+    if (washMachineModel.animate = 'on') {
+        objectWashingOptions.updateAnimateView();
     }
+
+    for (var i = 0; i < svgActiveControlsLength; i++) {
+        if (!washMachineModel.status) {
+            svgActiveControls[i].classList.remove("active");
+        }
+    }
+
+   
+
 }
 
-Forms.prototype.submitForm = function () {
-    var outputTimer = document.getElementById('panel');
-    var outputActions = document.getElementById('panel-in-process');
-    var outputActionsHeader = document.querySelector('#panel-in-process > h3');
-    var programName = document.querySelector('input[name="program"]:checked').id;
-    var arrayHoursMinutes = this.washingOptions[programName].time.split(':');
-    var outputTimer = document.getElementById('panel');
-    var timerSeconds = document.getElementById('seconds');
-    var timerHours = document.getElementById('hours');
 
 
-    outputTimer.classList.add('hide');
-    outputActions.classList.remove('hide');
-    outputActionsHeader.innerHTML = 'Program ' + programName + ' is running';
-    timerSeconds.innerHTML = arrayHoursMinutes[1];
-    timerHours.innerHTML = arrayHoursMinutes[0];
-
-
-    setTimeout(window.timerGlobal, 1000);
-}
-
+/*global timer*/
 
 var timerGlobal = function () {
-
+    washMachineModel.statusWashing = 'process';
     var timeinterval = function () { setTimeout(timerGlobal, 1000) };
     var elemMinutes = document.getElementById('minutes');
     var elemHourse = document.getElementById('hours');
@@ -202,8 +283,10 @@ var timerGlobal = function () {
             }
             else {
                 var infoTextElement = document.createElement('div');
-                infoTextElement.innerHTML = 'Program finished';
+                infoTextElement.innerHTML = '<p class="message">Program was finished</p>';
                 elemMinutes.parentNode.parentNode.appendChild(infoTextElement);
+                washMachineModel.statusWashing = 'finished';
+                objectWashingOptions.statusOnChange();
                 clearInterval(timeinterval);
             }
         }

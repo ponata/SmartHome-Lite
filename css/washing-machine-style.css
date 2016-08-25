@@ -68,6 +68,12 @@ input:checked:disabled + .slider,
 input[type="radio"]:disabled + .time{
     opacity: 0.5;
 }
+
+.button.green {
+    background-color:yellowgreen;
+    border-color:yellowgreen;
+}
+
 .actions-wrapper{
     margin: 40px 0 20px;
 }
@@ -88,7 +94,7 @@ input[type="radio"]:checked + .time{
     display: block;
 }
 
-.timer{
+.timer-output{
     font-size:5em;
 }
 .hide {
@@ -182,3 +188,29 @@ input:checked + .slider:before {
 .status.active{
     fill: #87C540;
 }
+
+
+/*.svg-washing-machine {
+    max-width: 95%;
+    max-height: 95%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+   .svg-washing-machine path {
+    fill-opacity: 0;
+    stroke: #32B4FD;
+    stroke-width: 1;
+    stroke-dasharray: 870;
+    stroke-dashoffset: 870;
+    animation: draw 10s infinite linear;
+  }
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}*/

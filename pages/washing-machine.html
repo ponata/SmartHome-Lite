@@ -53,17 +53,25 @@
                                         <input type="radio" name="program" id="Jeans" disabled /> <span class="time">02:20  60C</span>
                                         <label for="Jeans">Jeans</label>
                                     </fieldset>
-                                </div>                               
+                                </div>    
+                                <div class="actions-wrapper">
+                                    <input class="button" type="submit" name="submit" value="Start" disabled />
+                                </div>                           
                             </div>
                             <div class="hide" id="panel-in-process">
                                 <h3>Program Sport is running</h3>
                                 <div class="timer" id="timer">
-                                    <span id="hours">00</span>:<span id="minutes">19</span>:<span id="seconds">26</span>
+                                    <div class="timer-output">
+                                        <span id="hours"></span>:<span id="minutes"></span>:<span id="seconds">60</span>
+
+                                    </div>
+                                </div>
+                                <div class="actions-wrapper">
+                                    <input class="button" type="button" name="pause" value="Pause"  />
+                                    <input class="button green hide" type="button" name="startNew" value="Start new washing" />
                                 </div>
                             </div>
-                            <div class="actions-wrapper" id="actions">
-                                <input class="button" type="submit" name="button" value="Start" disabled />
-                            </div>
+
                         </form>
                     </div>
                 </div>
