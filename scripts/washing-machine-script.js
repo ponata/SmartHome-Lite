@@ -276,7 +276,7 @@ var timerGlobal = function () {
         if (elemMinutes.innerHTML == 0) {
             if (elemHourse.innerHTML !== '00') {
                 elemMinutes.innerHTML = '59';
-                elemSeconds.innerHTML = '60';
+                elemSeconds.innerHTML = '59';
                 elemHourse.innerHTML--;
                 var elemHourseSecound = ('0' + elemHourse.innerHTML).slice(-2);
                 elemHourse.innerHTML = elemHourseSecound;
@@ -292,7 +292,7 @@ var timerGlobal = function () {
             }
         }
         else {
-            elemSeconds.innerHTML = '60';
+            elemSeconds.innerHTML = '59';
             elemMinutes.innerHTML--;
             var elemMinutesSecound = ('0' + elemMinutes.innerHTML).slice(-2);
             elemMinutes.innerHTML = elemMinutesSecound;
