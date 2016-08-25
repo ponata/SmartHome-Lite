@@ -23,19 +23,12 @@
     <div class="bg-global blured"></div>
     <main class="main aligner">
         <div class="container aligner center">
-            <div class="width-25 dp-ib text-center">
-                <div id="indicators" class="indicators">
-                    <div id="notifications" class="notifications">
-                        <p class="notifications-title">Notification message</p>
-                    </div>
-
-                </div>
-            </div>
             <div class="width-50 dp-ib text-center">
-                <?xml version="1.0" standalone="no"?>
-                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet" class="svg-elem big blue">
-                    <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)">
-                        <path d="M2650 8306 c-58 -7 -115 -18 -127 -24 -12 -7 -31 -12 -42 -12 -12 0
+                <div class="container">
+                    <?xml version="1.0" standalone="no"?>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet" class="svg-elem">
+                        <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)">
+                            <path d="M2650 8306 c-58 -7 -115 -18 -127 -24 -12 -7 -31 -12 -42 -12 -12 0
                         -29 -4 -39 -9 -9 -5 -53 -26 -97 -47 -84 -40 -200 -119 -264 -182 -93 -91
                         -192 -248 -244 -387 -48 -129 -47 -91 -47 -1553 0 -1087 3 -1371 13 -1374 6
                         -2 1217 -4 2690 -3 2367 0 2679 2 2687 15 6 9 9 510 7 1355 -3 1433 -1 1387
@@ -43,7 +36,7 @@
                         -1835 14 -1264 -1 -1748 -5 -1825 -13z m155 -2039 c21 -12 53 -42 70 -65 l30
                         -44 0 -316 c0 -297 -1 -319 -19 -347 -47 -72 -110 -105 -201 -105 -98 0 -183
                         53 -212 132 -18 51 -17 595 1 639 39 93 96 128 211 128 65 1 88 -4 120 -22z" />
-                        <path d="M1797 4263 c-4 -3 -7 -625 -7 -1382 0 -1320 1 -1379 19 -1447 30
+                            <path d="M1797 4263 c-4 -3 -7 -625 -7 -1382 0 -1320 1 -1379 19 -1447 30
                         -111 46 -154 91 -238 93 -177 249 -331 425 -418 102 -51 143 -68 164 -68 10 0
                         36 -8 57 -17 37 -17 151 -18 1869 -21 1792 -2 1921 -1 2035 29 206 53 405 190
                         533 364 103 140 138 218 188 420 17 67 25 2735 9 2765 -11 20 -27 20 -2694 20
@@ -51,26 +44,66 @@
                         c0 -169 -3 -318 -7 -332 -11 -38 -67 -94 -115 -114 -31 -14 -60 -17 -115 -15
                         -64 4 -79 8 -120 38 -81 58 -83 64 -86 400 -3 313 -2 325 46 389 37 48 93 71
                         177 71 51 0 82 -6 115 -22z" />
-                    </g>
-                </svg>
+                        </g>
+                    </svg>
+                    <!-- new svg -->
+                    <?xml version="1.0" standalone="no"?>
+                    <svg id="svg" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet" class="svg-elem big off">
+                        <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)">
+                            <path d="M2650 8306 c-58 -7 -115 -18 -127 -24 -12 -7 -31 -12 -42 -12 -12 0
+                        -29 -4 -39 -9 -9 -5 -53 -26 -97 -47 -84 -40 -200 -119 -264 -182 -93 -91
+                        -192 -248 -244 -387 -48 -129 -47 -91 -47 -1553 0 -1087 3 -1371 13 -1374 6
+                        -2 1217 -4 2690 -3 2367 0 2679 2 2687 15 6 9 9 510 7 1355 -3 1433 -1 1387
+                        -51 1546 -74 240 -280 473 -517 588 -109 52 -165 68 -309 86 -97 12 -384 15
+                        -1835 14 -1264 -1 -1748 -5 -1825 -13z m155 -2039 c21 -12 53 -42 70 -65 l30
+                        -44 0 -316 c0 -297 -1 -319 -19 -347 -47 -72 -110 -105 -201 -105 -98 0 -183
+                        53 -212 132 -18 51 -17 595 1 639 39 93 96 128 211 128 65 1 88 -4 120 -22z" />
+                            <path d="M1797 4263 c-4 -3 -7 -625 -7 -1382 0 -1320 1 -1379 19 -1447 30
+                        -111 46 -154 91 -238 93 -177 249 -331 425 -418 102 -51 143 -68 164 -68 10 0
+                        36 -8 57 -17 37 -17 151 -18 1869 -21 1792 -2 1921 -1 2035 29 206 53 405 190
+                        533 364 103 140 138 218 188 420 17 67 25 2735 9 2765 -11 20 -27 20 -2694 20
+                        -1475 0 -2686 -3 -2689 -7z m1003 -696 c26 -13 56 -40 75 -65 l30 -44 0 -306
+                        c0 -169 -3 -318 -7 -332 -11 -38 -67 -94 -115 -114 -31 -14 -60 -17 -115 -15
+                        -64 4 -79 8 -120 38 -81 58 -83 64 -86 400 -3 313 -2 325 46 389 37 48 93 71
+                        177 71 51 0 82 -6 115 -22z" />
+                        </g>
+                    </svg>
+                </div>
                 <div class="outer-progress-bar">
                     <div id="outputPercentage" class="percentage">0%</div>
                     <div id="progressBar" class="progress-bar"></div>
                 </div>
-
             </div>
-            <div class="width-25 dp-ib text-center">
+            <div class="width-50 dp-ib text-center">
                 <form action="" class="form">
-                    <div class="input-field">
-                        <span>New temperature in freezer</span>
-                        <input id="inputFreezeTemp" type="number" class="input" min="-50" max="0" value="-20">
+                    <div class="aligner center">
+                        <span>Turn on/off</span>
+                        <label id="btnPower" class="btn-power">
+                            <input id="status" type="checkbox" name="status">
+                            <div class="btn-power-bg"></div>
+                        </label>
                     </div>
                     <div class="input-field">
-                        <span>New overall temperature</span>
-                        <input id="inputOverallTemp" type="number" class="input" min="-20" max="0" value="-7">
+                        <span>Overall</span>
+                        <input id="inputOverallTemp" type="number" class="input" min="-20" max="0" value="-6">
+                        <span>&deg;C</span>
+                        <div class="input-error">Enter value between "-20" and "0"</div>
+                    </div>
+                    <div class="input-field">
+                        <span>Freezer</span>
+                        <input id="inputFreezeTemp" type="number" class="input" min="-50" max="0" value="-18">
+                        <span>&deg;C</span>
+                        <div class="input-error">Enter value between "-50" and "0"</div>
+                    </div>
+                    <div class="input-field">
+                        <select name="selectMode" id="selectMode">
+                            <option value="standard">Standard</option>
+                            <option value="light">Light</option>
+                            <option value="highFreeze">High freeze</option>
+                        </select>
                     </div>
                     <button id="make-ice" class="submit">Make Ice</button>
-                    <button id="defrost" class="submit">Defrost</button>
+                    <button id="defrost" class="submit">Extreme Freeze</button>
                 </form>
             </div>
         </div>
@@ -81,7 +114,9 @@
     <!-- Modal -->
     <div id="modal" class="modal">
         <div class="modal-body">
-            <div class="modal-header"><button id="close" class="close">x</button></div>
+            <div class="modal-header">
+                <button id="close" class="close">x</button>
+            </div>
             <p id="outputModalMessage" class="modal-message"></p>
         </div>
     </div>
