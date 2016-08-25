@@ -3,9 +3,9 @@
 
 <head>
     <title>SmartHome</title>
-    <link rel="shortcut icon" href="img/icon.ico" />
-    <link rel="stylesheet" href="../../css/main.css">
-    <link rel="stylesheet" href="css/friedge.css">
+    <link rel="shortcut icon" href="../img/icon.ico" />
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/friedge.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
         <div class="container aligner">
             <div class="dp-ib">
                 <a href="../../index.html">
-                    <img src="img/logo.png" alt="" class="logo small">
+                    <img src="../img/logo.png" alt="" class="logo small">
                     <h1 class="name">SmartHome<sup class="">light</sup></h1>
                 </a>
             </div>
@@ -83,18 +83,23 @@
                             <div class="btn-power-bg"></div>
                         </label>
                     </div>
-                    <div class="input-field">
-                        <span>Overall</span>
-                        <input id="inputOverallTemp" type="number" class="input" min="-20" max="0" value="-6">
-                        <span>&deg;C</span>
-                        <div class="input-error">Enter value between "-20" and "0"</div>
+
+                    <div id="inputWrapper">
+                        <div class="input-field">
+                            <span>Overall</span>
+                            <input id="inputOverallTemp" type="number" class="input" min="-20" max="0" value="-6">
+                            <span>&deg;C</span>
+                            <div class="input-error">Enter value between "-20" and "0"</div>
+                        </div>
+                        <div class="input-field">
+                            <span>Freezer</span>
+                            <input id="inputFreezeTemp" type="number" class="input" min="-50" max="0" value="-18">
+                            <span>&deg;C</span>
+                            <div class="input-error">Enter value between "-50" and "0"</div>
+                        </div>
                     </div>
-                    <div class="input-field">
-                        <span>Freezer</span>
-                        <input id="inputFreezeTemp" type="number" class="input" min="-50" max="0" value="-18">
-                        <span>&deg;C</span>
-                        <div class="input-error">Enter value between "-50" and "0"</div>
-                    </div>
+
+
                     <div class="input-field">
                         <select name="selectMode" id="selectMode">
                             <option value="standard">Standard</option>
@@ -120,7 +125,7 @@
             <p id="outputModalMessage" class="modal-message"></p>
         </div>
     </div>
-    <script src="js/friedge.js"></script>
+    <script src="../scripts/friedge.js"></script>
 </body>
 
 </html>
