@@ -162,21 +162,28 @@ Forms.prototype.defaultView = function () {
 
 Forms.prototype.submitForm = function () {
     var outputTimer = document.getElementById('panel');
-    var outputActions = document.getElementById('actions');
+    var outputActions = document.getElementById('panel-in-process');
+    var outputActionsHeader = document.querySelector('#panel-in-process > h3');
     var programName = document.querySelector('input[name="program"]:checked').id;
-    var programText = 'Program ' + programName + ' is running';
     var arrayHoursMinutes = this.washingOptions[programName].time.split(':');
-    var htmlTimer = '<div> <h3>' + programText + '</h3>' + '<div  class="timer" id="timer">' + '<span id="hours">' + arrayHoursMinutes[0] + '</span>' + ':' + '<span id="minutes">' + arrayHoursMinutes[1] + '</span>' + ':' + '<span id="seconds">10</span></div></div>';
-    var htmlActions = '<input class="button" type="button" name="button" value="Pause" />'
-    outputTimer.innerHTML = htmlTimer;
-    outputActions.innerHTML = htmlActions;
-    var date = new Date();
+    var outputTimer = document.getElementById('panel');
+    var timerSeconds = document.getElementById('seconds');
+    var timerHours = document.getElementById('hours');
+
+
+    outputTimer.classList.add('hide');
+    outputActions.classList.remove('hide');
+    outputActionsHeader.innerHTML = 'Program ' + programName + ' is running';
+    timerSeconds.innerHTML = arrayHoursMinutes[1];
+    timerHours.innerHTML = arrayHoursMinutes[0];
+
+
     setTimeout(window.timerGlobal, 1000);
 }
 
 
 var timerGlobal = function (arrayHoursMinutes, period) {
-    var date = new Date();
+
     var timeinterval = setTimeout(timerGlobal, 1000);
     var elemMinutes = document.getElementById('minutes');
     var elemHourse = document.getElementById('hours');

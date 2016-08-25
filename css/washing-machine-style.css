@@ -91,6 +91,9 @@ input[type="radio"]:checked + .time{
 .timer{
     font-size:5em;
 }
+.hide {
+    display:none;
+}
 
 /*switch*/
 /* The switch - the box around the slider */
@@ -113,10 +116,15 @@ input[type="radio"]:checked + .time{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: red;
   -webkit-transition: .4s;
   transition: .4s;
 }
+
+input:disabled + .slider {
+  background-color: #ccc;
+}
+
 .control .slider{
     background-color: red;
 }
