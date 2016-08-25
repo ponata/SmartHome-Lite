@@ -32,6 +32,10 @@ button:hover {
     background: #1faeff;
 }
 
+.input-field {
+    position: relative;
+}
+
 .input-field,
 .submit {
     display: block;
@@ -59,6 +63,10 @@ button:hover {
 .input {
     background: #fff;
     color: #000;
+}
+
+.input:invalid ~ .input-error {
+    display: block;
 }
 
 .notifications {
@@ -235,4 +243,13 @@ input[name="status"]:checked + .btn-power-bg {
     stroke: #D4D4D4;
     -webkit-transition: fill 3s, stroke 3s;
     transition: fill 3s, stroke 3s;
+}
+
+.input-error {
+    display: none;
+    position: absolute;
+    right: -55%;
+    top: 20%;
+    color: #F54D4D;
+    font-size: 18px;
 }

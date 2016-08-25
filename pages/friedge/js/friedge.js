@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var htmlObjects = {
         inputFreezeTemp: document.getElementById("inputFreezeTemp"),
         inputOverallTemp: document.getElementById("inputOverallTemp"),
+        inputsTemp: document.getElementsByClassName("input"),
+
         progressBar: document.getElementById("progressBar"),
         outputPercentage: document.getElementById("outputPercentage"),
         close: document.getElementById("close"),
@@ -49,22 +51,21 @@ document.addEventListener("DOMContentLoaded", function() {
         switch (htmlObjects.selectMode.options[htmlObjects.selectMode.selectedIndex].value) {
             case "standard":
                 htmlObjects.inputFreezeTemp.value = "-18";
-                htmlObjects.inputOverallTemp.value = "-8";
+                htmlObjects.inputOverallTemp.value = "-6";
                 htmlObjects.svg.classList.add("standard");
                 htmlObjects.svg.classList.remove("light");
                 htmlObjects.svg.classList.remove("highFreeze");
-
                 break;
             case "light":
-                htmlObjects.inputFreezeTemp.value = "-12";
-                htmlObjects.inputOverallTemp.value = "-4";
+                htmlObjects.inputFreezeTemp.value = "-9";
+                htmlObjects.inputOverallTemp.value = "-3";
                 htmlObjects.svg.classList.add("light");
                 htmlObjects.svg.classList.remove("standard");
                 htmlObjects.svg.classList.remove("highFreeze");
                 break;
             case "highFreeze":
                 htmlObjects.inputFreezeTemp.value = "-27";
-                htmlObjects.inputOverallTemp.value = "-15";
+                htmlObjects.inputOverallTemp.value = "-10";
                 htmlObjects.svg.classList.add("highFreeze");
                 htmlObjects.svg.classList.remove("standard");
                 htmlObjects.svg.classList.remove("light");
@@ -76,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-// new frost function
 
 function Frost(htmlObjects, startingValues, modalMessages) {
     var currentTemps;
@@ -87,9 +87,15 @@ function Frost(htmlObjects, startingValues, modalMessages) {
         case "frost":
 
             startingValues.speed = 70;
+            startingValues.currentTemps = getCurrentTemps(htmlObjects);
 
             var timeoutID = setInterval(function() {
-                startingValues.currentTemps = getCurrentTemps(htmlObjects);
+            	if (true) {}
+                htmlObjects.inputOverallTemp.onchange = function() {
+                	console.log('new');
+                    startingValues.currentTemps = getCurrentTemps(htmlObjects);
+
+                }
 
                 startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 5000;
                 if (startingValues.currentWidth + startingValues.stepForward < 100) {
@@ -150,11 +156,14 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 
 
 function getCurrentTemps(htmlObjects) {
+
     var object = {
         inputFreezeTemp: Math.abs(htmlObjects.inputFreezeTemp.value),
         inputOverallTemp: Math.abs(htmlObjects.inputOverallTemp.value)
     }
     return object;
+
+
 }
 
 function showModal(htmlObjects, startingValues, modalMessages) {
