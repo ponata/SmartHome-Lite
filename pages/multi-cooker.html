@@ -23,17 +23,31 @@
                 </div>
             </header>
 
+
             <div class="bg-global blured"></div>
             <main class="main aligner multi">
                 <div class="container aligner center">
                     <div class="content-wrapper">
                       <img src="../img/multi.png" />
                       <div>
-                          <button  id="heating" class="action-button">Heating</button>
+                          <button  id="heating-btn" class="action-button">Heating</button>
                           <button id="cook-btn" class="action-button">Cook</button>
-                          <button id="settings" class="action-button">Settings</button>
+                          <button id="settings-btn" class="action-button">Settings</button>
                       </div>
                     </div>
+
+                    <div class="heating-display" id="heating-display">
+                            <img class="img-temperature" src="../img/multi-temperature.png">
+                            <p class="p-temperature">145°</p>
+                            <br>
+                            <img class="img-clock" src="../img/multi-clock.png">
+                            <p class="p-clock">7m</p>
+                            <br>
+                            <button id="stop-heat" class="status"> <img src="../img/multi-stop.png"></button>
+                            <br>
+                            <p id="heat-time-sec"></p>
+                    </div>
+
                     <div id="program-display" class="program-display">
                             <button id="soup">soup</button>
                             <button id="rice">rice</button>
@@ -43,16 +57,29 @@
                             <button id="bake">bake</button>
                             <button id="fry">fry</button>
                     </div>
+
+                    <div class="done" id="done">
+                        <img id="img-done" src="../img/multi-done.png">
+                        <p>Done!</p>
+                    </div>
+
+                    <div class="cancel" id="cancel">
+                        <img id="img-cancel" src="../img/multi-cancel.png">
+                        <p>Canceled!</p>
+                    </div>
+
                     <div id="set-program-display">
                         <div id="content">
-                            <p id="cookingNow">I am doing <span id="spanDishName"></span>now!</p>
-                            <button id="pause" class="status">PAUSE</button>
-                            <button id="stop" class="status">STOP</button>
+
+                            <p id="cookingNow">Program: <span id="span-dish-name"></span></p>
+                            <button id="play" class="status play"> <img src="../img/play.ico"></button>
+                            <button id="pause" class="status"> <img src="../img/multi-pause.png"></button>
+                            <button id="stop" class="status"> <img src="../img/multi-stop.png"></button>
+
                             <div id="timer">
                                 <img class='timer' src="../img/multi-timer.png">
-                                <p id="timeSec"></p>
+                                <p id="cook-time-sec"></p>
                             </div>
-
                         </div>
                     </div>
                     <!-- <div id="setting" class="setting">
@@ -67,6 +94,8 @@
                         <button></button>
                     </div> -->
                 </div>
+
+
             </main>
             <footer class="footer">
                 <div class="container copyright"> &copy; Kharkiv SoftServe ITA 2016</div>

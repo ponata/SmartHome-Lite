@@ -46,7 +46,8 @@ button:focus {
     border: 1px solid #444;
 }
 
-div.program-display{
+.heating-display,
+.program-display{
     text-align: center;
     background: black;
     opacity: 0.6;
@@ -55,12 +56,41 @@ div.program-display{
     display: none;
 }
 
-div.program-display{
+
+.heating-display,
+.program-display {
   animation-duration: 1s;
-  animation-name: slidein;
 }
 
-@keyframes slidein {
+.heating-display {
+  animation-duration: 1s;
+  animation-name: heating-slidein;
+}
+
+@keyframes heating-slidein {
+  0% {
+    width:0;
+    height: 0;
+  }
+
+  50% {
+    width: 302px;
+    height: 0;
+
+  }
+
+  100% {
+    width: 269px;
+    height: 456px;
+  }
+}
+
+.program-display {
+  animation-duration: 1s;
+  animation-name: program-slidein;
+}
+
+@keyframes program-slidein {
   0% {
     width:0;
     height: 0;
@@ -90,7 +120,11 @@ div.program-display{
     font-family: 'DigitalSansEFMedium';
     font-size: 16px;
 }
-.program-display>button {
+
+.heating-display>*,
+.program-display>*,
+.done>*,
+.cancel>* {
     animation-duration: 2s;
     animation-name: show;
 }
@@ -130,10 +164,16 @@ div.program-display{
     width: 100px;
     height: 100px;
     margin: 10px;
-    color: white;
-    font-size: 20px;
     vertical-align: bottom;
+    background: none;
+    border: none;
 }
+
+.status>img{
+ width: 100px;
+ height: 100px
+}
+
 
 #cookingNow{
     color: white;
@@ -141,12 +181,12 @@ div.program-display{
     padding: 9px;
 }
 
-#pause{
-    background: #00FF00;
-}
-
-#stop{
-    background: #FF0033;
+.play{
+    display: none;
+    width: 100px;
+    height: 100px;
+    background: none;
+    border: none;
 }
 
 #timer{
@@ -180,13 +220,162 @@ div.program-display{
     text-align: center;
 }
 
-#timeSec {
+#heat-time-sec,
+#cook-time-sec {
     color: white;
     display: inline-block;
     font-size: 80px;
-    margin-left: 15px;
     font-size: 60px;
     vertical-align: super;
+    margin: 15px 15px;
+}
+
+.none{
+    display: none;
+}
+
+.inline-block{
+    display: inline-block;
+    margin: 10px;
+    vertical-align: bottom;
+    background: none;
+    border: none;
+}
+.inline-block>img{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+.done{
+    display: none;
+    color: white;
+    font-size: 80px;
+    text-align: center;
+    display: none;
+    font-size: 50px;
+    background: black;
+    opacity: 0.6;
+    border: 2px solid #0099FF;
+    border-radius: 10%;
+    vertical-align: super;
+    width: 300px;
+}
+
+.done>img{
+    width: 100%;
+    display: inline-block;
+}
+
+.done {
+  animation-duration: 1s;
+  animation-name: done-slidein;
+}
+
+@keyframes done-slidein {
+  0% {
+    width:0;
+    height: 0;
+  }
+
+  50% {
+    width: 300px;
+    height: 0;
+
+  }
+
+  100% {
+    width: 300px;
+    height: 372px;
+  }
+}
 
 
+.heating-display{
+    display: none;
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    background: black;
+    opacity: 0.6;
+    border: 2px solid #0099FF;
+    border-radius: 10%;
+    text-align: left;
+    vertical-align: super;
+}
+
+.heating-display>img{
+    display: inline-block;
+    height: 80px;
+    margin: 5px 20px 10px 20px;
+}
+.heating-display>img:first-child{
+    margin-top: 20px;
+}
+
+.p-temperature {
+    display: inline-block;
+    vertical-align: top;
+    margin: 30px 0px;
+}
+
+#stop-heat{
+    display: inline-block;
+    margin-left: calc(50% - 50px);
+}
+
+.img-clock{
+    margin-left: -5px;
+}
+
+.p-clock{
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0px;
+}
+
+
+
+
+
+.cancel{
+    display: none;
+    color: white;
+    font-size: 80px;
+    text-align: center;
+    display: none;
+    font-size: 50px;
+    background: black;
+    opacity: 0.6;
+    border: 2px solid #0099FF;
+    border-radius: 10%;
+    vertical-align: super;
+    width: 300px;
+}
+
+.cancel>img{
+    width: 100%;
+    display: inline-block;
+}
+
+.cancel {
+  animation-duration: 1s;
+  animation-name: cancel-slidein;
+}
+
+@keyframes cancel-slidein {
+  0% {
+    width:0;
+    height: 0;
+  }
+
+  50% {
+    width: 300px;
+    height: 0;
+
+  }
+
+  100% {
+    width: 300px;
+    height: 372px;
+  }
 }
