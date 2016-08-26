@@ -1,4 +1,14 @@
-# SmartHome-Lite
+# Smart Home Lite
+
+First demo project of Web UI group ITAcademy Soft Serve.
+
+Smart functionality of following devices: 
+- air conditioner;
+- friedge;
+- multi cooker;
+- security;
+- washing machine;
+- coffee machine;
 
 ## Overview
 
