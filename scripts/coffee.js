@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 customizable: false,
                 size: "large",
                 ingredients: [
-                    {name: "milk", selected: true, percentage: 30},
+                    {name: "milk", selected: true, percentage: 20},
                     {name: "chocolate", selected: false, percentage: 10},
                     {name: "cocoa", selected: false, percentage: 10},
                     {name: "cognac", selected: false, percentage: 0}
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 size: "middle",
                 ingredients: [
                     {name: "milk", selected: true, percentage: 10},
-                    {name: "chocolate", selected: true, percentage: 30},
+                    {name: "chocolate", selected: true, percentage: 5},
                     {name: "cocoa", selected: true, percentage: 10},
                     {name: "cognac", selected: false, percentage: 0}
                 ]
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     {name: "milk", selected: false, percentage: 0},
                     {name: "chocolate", selected: false, percentage: 0},
                     {name: "cocoa", selected: false, percentage: 0},
-                    {name: "cognac", selected: true, percentage: 50}
+                    {name: "cognac", selected: true, percentage: 10}
                 ]
             },
             {
@@ -68,10 +68,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 customizable: true,
                 size: "middle",
                 ingredients: [
-                    {name: "milk", selected: true, percentage: 10},
-                    {name: "chocolate", selected: true, percentage: 10},
-                    {name: "cocoa", selected: true, percentage: 20},
-                    {name: "cognac", selected: true, percentage: 10}
+                    {name: "milk", selected: true, percentage: 0},
+                    {name: "chocolate", selected: true, percentage: 0},
+                    {name: "cocoa", selected: true, percentage:0 },
+                    {name: "cognac", selected: true, percentage: 0}
                 ]
             },
             {
@@ -108,8 +108,26 @@ document.addEventListener("DOMContentLoaded", function() {
             {
                 id: 4,
                 enabled: false,
+                recipeName: "hard"
+                // time:
+            },
+            {
+                id: 4,
+                enabled: false,
                 recipeName: "coffee"
                // time:
+            },
+            {
+                id: 5,
+                enabled: false,
+                recipeName: "custom1"
+                // time:
+            },
+            {
+                id: 6,
+                enabled: false,
+                recipeName: "custom2"
+                // time:
             }
         ],
         switchCurrentRecipie: function (recipeName) {
@@ -148,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateCurrentRecipeIngredientPercentage: function (ingredientIndex,ingredientPercentage) {
             this.recipies[0].ingredients[ingredientIndex].percentage= ingredientPercentage;
         }
+        
     };
 
     //View
@@ -203,6 +222,8 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+    
+    
     //Controllers
 
     coffeeMachineView.selectRecipe.onchange = function () {
@@ -218,17 +239,11 @@ document.addEventListener("DOMContentLoaded", function() {
             makeCoffee.classList.remove("button_active");
         }, 5000);
     };
-    coffeeMachineView.buttonSmall.onclick = function () {
-        coffeeMachine.updateCurrentRecipeSize("small");
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.buttonMiddle.onclick = function () {
-        coffeeMachine.updateCurrentRecipeSize("middle");
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.buttonLarge.onclick = function () {
-        coffeeMachine.updateCurrentRecipeSize("large");
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+    document.getElementById('execute').onclick = function (event) {
+        if(event.target.tagName == 'BUTTON') {
+            coffeeMachine.updateCurrentRecipeSize(event.target.value);
+            coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+        }     
     };
     coffeeMachineView.ingredientsButtonsArr[0].onclick = function () {
         coffeeMachine.updateCurrentRecipeIngredientState(0);
@@ -265,8 +280,11 @@ document.addEventListener("DOMContentLoaded", function() {
     coffeeMachineView.buttonSaveRecipe.onclick = function () {
         coffeeMachine.saveCustomRecipe(coffeeMachineView.selectRecipe.value);
         coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    }
-});
+    };
+})
+//var scheduleView ={}
+
+
 
 
         
