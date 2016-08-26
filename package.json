@@ -10,7 +10,7 @@
 		"type": "git",
 		"url": "git+https://github.com/Kharkiv-SoftServe-ITA/SmartHome-Lite.git"
 	},
-	"author": "",
+	"author": "Web UI",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/Kharkiv-SoftServe-ITA/SmartHome-Lite/issues"

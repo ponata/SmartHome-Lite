@@ -57,7 +57,7 @@ objectWashingOptions.prototype.initValue = function (node) {
 objectWashingOptions.prototype.activeteObjectForms = function () {
 	
 	var elements = document.querySelectorAll('#panel input:not([name="status"])');
-	washMachineModel.status = document.forms.washingOptions.status.checked;
+	washMachineModel.status = document.forms.washingOptions.status;
 
 	for (var i = 0; i < elements.length; i++) {
 		this.initValue(elements[i]);
@@ -74,7 +74,7 @@ objectWashingOptions.prototype.activeteObjectForms = function () {
 
 objectWashingOptions.prototype.activateSwitch = function () {
 
-	washMachineModel.stausSwitch = this.node.status.checked;
+	washMachineModel.stausSwitch = this.node.checked;
 
 	this.updateSwitchView();
 
@@ -196,8 +196,6 @@ objectWashingOptions.statusOnChange = function () {
 objectWashingOptions.prototype.actionModal = function () {
 
 	if (!washMachineModel.modalStatus) {
-		
-		washMachineModel.modalStatus = true;		
 		this.popupMasterView();
 		
 	}else{
