@@ -2,6 +2,9 @@
 
 First demo project of Web UI group ITAcademy Soft Serve.
 
+
+## Overview
+
 Smart functionality of following devices: 
 - air conditioner;
 - friedge;
@@ -10,15 +13,13 @@ Smart functionality of following devices:
 - washing machine;
 - coffee machine;
 
-## Overview
-
-
 
 ## Prerequisites
 
 ### Git
 
-
+- A good place to learn about setting up git is [here][git-setup].
+- You can find documentation and download git [here][git-home].
 
 ### Node.js and Tools
 
@@ -34,3 +35,5 @@ Smart functionality of following devices:
 
 
 [node-download]: https://nodejs.org/en/download/
+[git-home]: https://git-scm.com
+[git-setup]: https://help.github.com/articles/set-up-git/
