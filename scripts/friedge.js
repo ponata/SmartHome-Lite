@@ -9,10 +9,14 @@ document.addEventListener("DOMContentLoaded", function() {
         close: document.getElementById("close"),
         modal: document.getElementById("modal"),
         outputModalMessage: document.getElementById("outputModalMessage"),
-        defrost: document.getElementById("defrost"),
         svg: document.getElementById("svg"),
         status: document.getElementById("status"),
-        selectMode: document.getElementById("selectMode")
+        selectMode: document.getElementById("selectMode"),
+        products: document.getElementById("products"),
+        btnAddProducts: document.getElementById("btnAddProducts"),
+        btnRemoveProducts: document.getElementById("btnRemoveProducts"),
+        btnExtremeFrost: document.getElementById("btnExtremeFrost"),
+        newProduct: document.getElementById("newProduct")
     }
 
     var startingValues = {
@@ -25,19 +29,29 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     var modalMessages = {
-            frozen: "Frozen!",
-            defrozen: "Defrozen!"
-        }
-        // power button clicked
+        frozen: "Frozen!",
+        defrozen: "Defrozen!"
+    }
+
+    // power button clicked
     htmlObjects.status.onclick = function(e) {
 
-        if (htmlObjects.status.checked) {
-            // friedge is on
 
-            htmlObjects.svg.classList.add("on");
-            htmlObjects.svg.classList.remove("off");
-            startingValues.flag = "frost";
-            Frost(htmlObjects, startingValues, modalMessages);
+        if (htmlObjects.status.checked) {
+            if (htmlObjects.products.length > 0) {
+                // friedge is on
+
+                htmlObjects.svg.classList.add("on");
+                htmlObjects.svg.classList.remove("off");
+                setColor(htmlObjects, startingValues);
+                startingValues.flag = "frost";
+                Frost(htmlObjects, startingValues, modalMessages);
+
+            } else {
+                alert('no products in the friedge!');
+                return false;
+            }
+
         } else {
             // friedge is off
 
@@ -48,19 +62,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 Frost(htmlObjects, startingValues, modalMessages);
 
             } else {}
-
         }
-
     }
-
-
+    htmlObjects.btnAddProducts.onclick = function(e) {
+        e.preventDefault();
+        addProduct(htmlObjects);
+    }
+    htmlObjects.btnRemoveProducts.onclick = function(e) {
+        e.preventDefault();
+        removeProduct(htmlObjects);
+    }
 
 
 });
 
 
 function Frost(htmlObjects, startingValues, modalMessages) {
-    var currentTemps;
+    // var currentTemps;
 
     switch (startingValues.flag) {
 
@@ -73,43 +91,66 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             var timeoutID = setInterval(function() {
                 // before new iteration, check power button status
                 if (htmlObjects.status.checked) {
-                    // check input, if it was changed
-                    document.getElementById('inputWrapper').addEventListener('change', function(event) {
-                        var elem = event.target;
-                        if (checkInput(elem)) {
-                            startingValues.currentTemps = getCurrentTemps(htmlObjects);
-                        }
-                    });
-                    // check if mode was selected
-                    htmlObjects.selectMode.onchange = function() {
+                    if (htmlObjects.products.length > 0) {
+
+                        // check input, if it was changed
+                        document.getElementById('inputWrapper').addEventListener('change', function(event) {
+                            var elem = event.target;
+                            if (checkInput(elem)) {
+                                startingValues.currentTemps = getCurrentTemps(htmlObjects);
+                                setColor(htmlObjects, startingValues);
+
+                            }
+                        });
+
+                        // check if mode was selected
+                        htmlObjects.selectMode.onchange = function() {
                             selectMode(htmlObjects);
                             startingValues.currentTemps = getCurrentTemps(htmlObjects);
+                            setColor(htmlObjects, startingValues);
                         }
-                        // calc the step
-                    startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 200;
 
-                    if (startingValues.currentWidth + startingValues.stepForward < 100) {
-                        startingValues.currentWidth += startingValues.stepForward;
+                        // extreme frost 
+                        htmlObjects.btnExtremeFrost.onclick = function(e) {
+                                e.preventDefault();
+                                frostProduct(htmlObjects);
+                            }
+                            // calc the step
+                        startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 200;
 
-                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+                        if (startingValues.currentWidth + startingValues.stepForward < 100) {
+                            startingValues.currentWidth += startingValues.stepForward;
 
+                            htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+                            htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+
+                        } else {
+                            startingValues.currentWidth = 100;
+                            htmlObjects.outputPercentage.innerHTML = '100%';
+                            htmlObjects.progressBar.style.width = '100%';
+
+                            showModal(htmlObjects, startingValues, modalMessages);
+
+                            clearTimeout(timeoutID);
+                            setTimeout(function() {
+                                // run Frost with new flag
+                                startingValues.flag = "defrost";
+                                Frost(htmlObjects, startingValues, modalMessages);
+                            }, 3000);
+                        }
                     } else {
-                        startingValues.currentWidth = 100;
-                        htmlObjects.outputPercentage.innerHTML = '100%';
-                        htmlObjects.progressBar.style.width = '100%';
+                        htmlObjects.svg.classList.add("off");
+                        htmlObjects.svg.classList.remove("on");
 
-                        showModal(htmlObjects, startingValues, modalMessages);
-
+                        htmlObjects.status.checked = false;
+                        // run Frost with new flag
+                        startingValues.flag = "defrost";
                         clearTimeout(timeoutID);
-                        setTimeout(function() {
-                            // run Frost with new flag
-                            startingValues.flag = "defrost";
-                            Frost(htmlObjects, startingValues, modalMessages);
-                        }, 3000);
+                        Frost(htmlObjects, startingValues, modalMessages);
                     }
+
                 } else {
-                    // if the friedge turned off
+                    // friedge turned off
                     clearTimeout(timeoutID);
                     return false;
                 }
@@ -125,33 +166,30 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 
             var timeoutID = setInterval(function() {
                 // before new iteration, check the status of the friedge
-                if (true) {
-                    if (startingValues.currentWidth - startingValues.stepRevert > 0) {
-                        startingValues.currentWidth -= startingValues.stepRevert;
-                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+
+                if (startingValues.currentWidth - startingValues.stepRevert > 0) {
+                    startingValues.currentWidth -= startingValues.stepRevert;
+                    htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+                    htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+                } else {
+                    startingValues.currentWidth = 0;
+                    htmlObjects.outputPercentage.innerHTML = '0%';
+                    htmlObjects.progressBar.style.width = '0%';
+                    showModal(htmlObjects, startingValues, modalMessages);
+
+                    clearTimeout(timeoutID);
+
+                    if (htmlObjects.status.checked) {
+
+                        startingValues.flag = "frost";
+                        Frost(htmlObjects, startingValues, modalMessages);
                     } else {
-                        startingValues.currentWidth = 0;
-                        htmlObjects.outputPercentage.innerHTML = '0%';
-                        htmlObjects.progressBar.style.width = '0%';
-                        showModal(htmlObjects, startingValues, modalMessages);
 
                         clearTimeout(timeoutID);
-
-                        if (htmlObjects.status.checked) {
-
-                            startingValues.flag = "frost";
-                            Frost(htmlObjects, startingValues, modalMessages);
-                        } else {
-
-                            clearTimeout(timeoutID);
-                            return false;
-                        }
+                        return false;
                     }
-                } else {
-
-
                 }
+
 
 
             }, startingValues.speed);
@@ -159,7 +197,6 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             break;
     }
 }
-
 
 function getCurrentTemps(htmlObjects) {
 
@@ -174,20 +211,18 @@ function showModal(htmlObjects, startingValues, modalMessages) {
 
     switch (startingValues.currentWidth) {
         case 100:
-            htmlObjects.outputModalMessage.classList.add("frozen");
+            htmlObjects.outputModalMessage.className = "frozen";
             htmlObjects.modal.style.display = "block";
             htmlObjects.outputModalMessage.innerHTML = modalMessages.frozen;
             setTimeout(function() {
                 htmlObjects.modal.style.display = "none";
-                htmlObjects.outputModalMessage.classList.remove("frozen");
             }, 3000);
             break;
         case 0:
-            htmlObjects.outputModalMessage.classList.add("defrozen");
+            htmlObjects.outputModalMessage.className = "defrozen";
             htmlObjects.modal.style.display = "block";
             setTimeout(function() {
                 htmlObjects.modal.style.display = "none";
-                htmlObjects.outputModalMessage.classList.remove("defrozen");
             }, 3000);
             htmlObjects.outputModalMessage.innerHTML = modalMessages.defrozen;
             break;
@@ -202,7 +237,6 @@ function showModal(htmlObjects, startingValues, modalMessages) {
         } else {}
 
     }
-
 }
 
 function checkInput(elem) {
@@ -230,36 +264,61 @@ function selectMode(htmlObjects) {
         case "standard":
             htmlObjects.inputFreezeTemp.value = "-18";
             htmlObjects.inputOverallTemp.value = "-6";
-            // htmlObjects.svg.classList.add("standard");
-            // htmlObjects.svg.classList.remove("light");
-            // htmlObjects.svg.classList.remove("highFreeze");
+            for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
+                htmlObjects.inputsTemp[i].disabled = true;
+            }
             break;
         case "light":
             htmlObjects.inputFreezeTemp.value = "-9";
             htmlObjects.inputOverallTemp.value = "-3";
-            // htmlObjects.svg.classList.add("light");
-            // htmlObjects.svg.classList.remove("standard");
-            // htmlObjects.svg.classList.remove("highFreeze");
+            for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
+                htmlObjects.inputsTemp[i].disabled = true;
+            }
             break;
         case "highFreeze":
             htmlObjects.inputFreezeTemp.value = "-27";
             htmlObjects.inputOverallTemp.value = "-10";
-            // htmlObjects.svg.classList.add("highFreeze");
-            // htmlObjects.svg.classList.remove("standard");
-            // htmlObjects.svg.classList.remove("light");
+            for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
+                htmlObjects.inputsTemp[i].disabled = true;
+            }
+            break;
+        case "custom":
+            for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
+                htmlObjects.inputsTemp[i].disabled = false;
+            }
             break;
     }
-
 }
 
 function setColor(htmlObjects, startingValues) {
     startingValues.currentTemps = getCurrentTemps(htmlObjects);
-    switch (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) {
-        case expression:
+    var svgColor = document.getElementById("svgColor");
+    if ((startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) <= 12) {
+        svgColor.className = "light";
+    } else if ((startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) >= 37) {
+        svgColor.className = "highFreeze";
+    } else {
+        svgColor.className = "standard";
+    }
+}
 
-            break;
-        default:
-
+function addProduct(htmlObjects) {
+    var option = document.createElement("option");
+    var error = document.getElementById("productError");
+    option.text = htmlObjects.newProduct.value;
+    if (htmlObjects.newProduct.value) {
+        error.style.opacity = 0;
+        htmlObjects.products.add(option);
+    } else {
+        error.style.opacity = 1;
     }
 
+}
+
+function removeProduct(htmlObjects) {
+    htmlObjects.products.remove(htmlObjects.products.selectedIndex);
+}
+
+function frostProduct(htmlObjects) {
+    htmlObjects.products.selectedIndex.className = "frozen-product";
 }
