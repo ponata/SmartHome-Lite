@@ -1,0 +1,56 @@
+<html>    
+    <head>
+        <title>SmartHome</title>
+        <link rel="shortcut icon" href="../img/icon.ico" />
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/device-air-conditioner.css">
+        <script src="../scripts/device-air-conditioner.js"></script>
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="container aligner">
+                <div class="dp-ib">
+                    <a href="/">
+                        <img src="../img/logo.png" alt="" class="logo small">
+                        <h1 class="name">SmartHome<sup class="">light</sup></h1>
+                    </a>
+                </div>
+                <h2 class="promo">Make your home smarter!</h2>
+            </div>
+        </header>
+        <div class="bg-global blured"></div>
+        <main class="main aligner">
+            <div class="container aligner center">
+                <div class="picture">
+                    <object type="image/svg+xml" data="../img/device-air-conditioner.svg" id="device"></object>
+                </div>
+                <div class="controls">
+                    <div class="screen">
+                        <object type="image/svg+xml" data="../img/screen.svg" id="screen-output"></object>                     
+                    </div>
+                    <div>
+                        <form>
+                            <div class="switch">
+                                <input type="radio" name="switch-input" id="on"><label>on</label>
+                                <input type="radio" name="switch-input" id="off" checked><label>off</label>
+                            </div>
+                            <div class="temperature">
+                                <label>temperature</label><input type="number" min="-30" max="30" step="1" value="18">
+                            </div>
+                            <div class="speed">
+                                <label>speed</label><input type="number" min="1" max="5" step="1" value="4" id="speed-input">
+                            </div>
+                            <div class="humidity">
+                                <label>humidity</label><input type="number" min="0" max="100" step="1" value="40">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="container copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
+        </footer>
+    </body>
+</html>

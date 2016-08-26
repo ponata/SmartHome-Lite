@@ -1,28 +1,4 @@
-function open(evt, name) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(name).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
 window.onload = function() {
-    //Tabs
-    var tabs = document.querySelectorAll(".tablinks");
-    tabs[0].onclick = function(){
-        open(event, "current");
-    }
-    tabs[1].onclick = function(){
-        open(event, "screen");
-    }
-    tabs[0].dispatchEvent(new Event("click"));
-    
     //Functions
     var angle = 0;
     var svg = document.getElementById("device").contentDocument;
@@ -36,7 +12,7 @@ window.onload = function() {
     function switchMode(start, end){
         var interval = start;
         var stop = setInterval(function() {
-            interval+=((start < end? 1: -1)*4);
+            interval+=((start < end? 1: -1)*10);
             clearInterval(spin);
             spin = setInterval(rotate, interval);
             
@@ -50,16 +26,17 @@ window.onload = function() {
     }
     //Events
     document.getElementById("on").onclick = function() {
-        switchMode(40, 4 * (11 - document.getElementById("speed-input").value));
+        switchMode(40, 40 - 10 * (document.getElementById("speed-input").value - 1));
     }
     document.getElementById("off").onclick = function() {
-        switchMode(4 * (11 - document.getElementById("speed-input").value), 40);
+        switchMode(40 - 10 * (document.getElementById("speed-input").value - 1), 40);
     }
     var off = document.getElementById("off");
     document.getElementById("speed-input").onchange = function() {
         if(!off.checked) {
             clearInterval(spin);
-            spin = setInterval(rotate, 4 * (11 - document.getElementById("speed-input").value));
+            spin = setInterval(rotate, 40 - 10 * (document.getElementById("speed-input").value - 1));
+            console.log(40 - 10 * (document.getElementById("speed-input").value - 1));
         }
     }
 }
