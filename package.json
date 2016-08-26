@@ -1,0 +1,25 @@
+{
+	"name": "smart-home-lite",
+	"version": "1.0.0",
+	"description": "- Get [Node.js][node-download].\r - Install the tool dependencies: `npm install`\r - Instal http-server package: `npm install -g http-server`\r - cd checkout to SmartHome-Lite directory  example: `D:\\> cd D:\\MyDocument\\SmartHome-Lite`\r - run: `npm start` \r - open `http://localhost:8000`",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Kharkiv-SoftServe-ITA/SmartHome-Lite.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Kharkiv-SoftServe-ITA/SmartHome-Lite/issues"
+	},	
+	"homepage": "https://github.com/Kharkiv-SoftServe-ITA/SmartHome-Lite/index.html",
+	"devDependencies": {
+		"http-server": "^0.9.0"
+	},
+	"scripts": {
+		"start": "http-server ./ -a localhost -p 8000 -c-1"
+	}
+}

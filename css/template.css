@@ -1,0 +1,39 @@
+.st0 {
+    fill:#BBCCDD;
+}
+
+.st1 {
+    fill:#FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #224477;
+    font-family: "Arial", sans-serif;
+    font-size: 1vw;
+    color: #bbccdd;
+}
+
+.content {
+    background-image: url("../img/grid.svg");
+    margin: 2.5vw;
+    padding: 1vw 5.5vw;
+}
+
+.header > object {
+    width: 10vw;
+}
+
+h1 {
+    display: inline;
+    font-size: 4vw;
+}
+
+
+.footer > span + span {
+   float: right;
+}

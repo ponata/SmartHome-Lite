@@ -1,0 +1,86 @@
+.st0{fill:none;stroke:#BBCCDD;stroke-width:3;stroke-miterlimit:10;}
+.st1{fill:none;stroke:#BBCCDD;stroke-width:4;stroke-miterlimit:10;}
+.st2{fill:#BBCCDD;}
+.st3{font-family:'MyriadPro-Regular';}
+.st4{font-size:36px;}
+.screen-st0{fill:none;}
+.screen-st1{fill:#BBCCDD;}
+
+.body {
+    position: relative;
+}
+.picture {
+    text-align: center;
+}
+
+.picture > object {
+    width: 65%;
+}
+
+/* Style the list */
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: #bbccdd;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {
+    background-color: #cccccc;;
+    color: #444444;
+}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {
+    background-color: #bbccdd;
+    color: #224477 !important;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.controls {
+    position: absolute;
+    top: 5vw;
+    left: 45vw;
+    width: 17vw;
+}
+
+.controls label{
+    margin: 0 1vw;
+}
+
+.switch, .temperature, .speed, .humidity {
+    margin: 0.5vw 0;
+    text-align: center;
+}
+
+#blade {
+    transform-origin: center;
+}
+
+#screen {
+    text-align: center;
+}

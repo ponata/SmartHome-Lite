@@ -1,3 +1,7 @@
+p {
+    color: #fff;
+    font-size: 20px;
+}
 input,
 button {
     font-family: 'DigitalSansEFMedium';
@@ -13,6 +17,10 @@ button:hover {
 
 .width-25 {
     width: 25%;
+}
+
+.relative {
+    position: relative;
 }
 
 .svg-elem.big {
@@ -32,6 +40,10 @@ button:hover {
     background: #1faeff;
 }
 
+.submit.remove {
+    background: #F54D4D;
+}
+
 .input-field {
     position: relative;
 }
@@ -39,17 +51,13 @@ button:hover {
 .input-field,
 .submit {
     display: block;
-    width: 75%;
+    width: 100%;
     margin: 15px auto;
     color: #fff;
 }
 
 .input {
     width: 70px;
-}
-
-.submit {
-    width: 120px;
 }
 
 .input,
@@ -66,7 +74,7 @@ button:hover {
 }
 
 .input:invalid ~ .input-error {
-    display: block;
+    opacity: 1;
 }
 
 .notifications {
@@ -134,15 +142,16 @@ button:hover {
     text-align: center;
 }
 
-.modal-message.frozen {
+.modal-message .frozen {
     color: #1faeff;
 }
 
-.modal-message.defrozen {
+.modal-message .defrozen {
     color: #ff0000;
 }
 
-.modal-header {
+.modal-header,
+.modal-footer {
     text-align: right;
     padding: 0 15px;
 }
@@ -224,21 +233,21 @@ input[name="status"]:checked + .btn-power-bg {
 }
 
 .on path,
-.on.standard path {
+.standard path {
     fill: #1faeff;
     stroke: #6bc4f6;
     -webkit-transition: fill 3s, stroke 3s;
     transition: fill 3s, stroke 3s;
 }
 
-.on.light path {
+.light path {
     fill: #70FA70;
     stroke: #AFF8AF;
     -webkit-transition: fill 3s, stroke 3s;
     transition: fill 3s, stroke 3s;
 }
 
-.on.highFreeze path {
+.highFreeze path {
     fill: #fff;
     stroke: #D4D4D4;
     -webkit-transition: fill 3s, stroke 3s;
@@ -246,10 +255,28 @@ input[name="status"]:checked + .btn-power-bg {
 }
 
 .input-error {
-    display: none;
-    position: absolute;
-    right: -55%;
-    top: 20%;
+    display: block;
+    opacity: 0;
     color: #F54D4D;
     font-size: 18px;
+}
+
+#svgColor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.products {
+    width: 100%;
+}
+
+.new-product {
+    width: 100%;
+}
+
+.frozen-product {
+    color: blue;
 }
