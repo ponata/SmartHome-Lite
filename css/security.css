@@ -1,0 +1,288 @@
+body {
+	margin: 0;
+	color: #000;
+	font: 11px Arial, Helvetica, sans-serif;
+	background: #000308;
+}
+img {border-style: none;}
+a {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {text-decoration: underline;}
+input,
+textarea,
+select {
+	font: 100% arial,sans-serif;
+	vertical-align: middle;
+}
+form,fieldset {
+	margin: 0;
+	padding: 0;
+	border-style: none;
+}
+ul {
+	list-style: none;
+}
+header, footer, article, section, hgroup, nav, figure { display: block; }
+#wrapper {
+	margin: 0 auto;
+	width: 100%;
+	position: relative;
+	background: url(../images/bg-blue-1.jpg) repeat;
+}
+#unlocked {
+	margin: 10px 0 10px 200px;
+
+}
+#locked {
+	display: none;
+	margin: 10px 0 10px 200px;
+}
+#main {
+	overflow: hidden;
+}
+
+.block {
+	width: 90%;
+	margin: 70px auto;
+	/* background: rgba(0,0,0,.8); */
+	overflow: hidden;
+}
+.block h2 {
+	color: #fff;
+	text-align: center;
+	font-size: 20px;
+}
+.password-block {
+	float: left;
+	width: 30%;
+	border-right: 1px solid #000;
+	margin-top: 100px;
+	text-align: center;
+}
+.garage-block {
+	float: right;
+	width: 30%;
+	margin-top: 50px;
+}
+.garage-button {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100px;
+	height: 65px;
+	background: #000;
+ 	border: 2px solid #008BDE;
+ 	color: #008BDE;
+}
+.camera-block {
+	float: left;
+	width: 35%;
+	margin: 50px auto;
+	border-right: 1px solid #000;
+	position: relative;
+}
+.camera-object,
+.garage-object {
+	display: block;
+}
+.garage-object {
+	padding-left: 50px;
+}
+.screen {
+	width: 45%;
+	height: 110px;
+	float: left;
+	border: 10px solid #B0BFC8;
+	border-radius: 10px;
+	overflow: hidden;
+	margin: 10px;
+}
+.screen video {
+	width: 100%;
+}
+#video-btn {
+	list-style: none;
+	margin: 10px;
+	padding: 0;
+	width: 45%;
+	float: left;
+}
+#video-btn li {
+	float: left;
+	width: 90%;
+	border: 1px solid #008BDE;
+	margin: 5px;
+	height: 30px;
+}
+#video-btn li a {
+	text-decoration: none;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	color: #008BDE;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 30px;
+}
+#video-btn li a:hover {
+	background: #7CB4B9;
+	color: #000;
+}
+#full-screen-btn {
+	display: block;
+	width: 30px;
+	height: 30px;
+/* 	background: #008BDE; */
+	position: absolute;
+	top: 80px;
+	right: 0;
+}
+#full-screen-btn img {
+	width: 100%;
+}
+:-webkit-full-screen .camera-block {
+  width: 100%!important;
+  background: #000;
+}
+:-moz-full-screen .camera-block {
+  width: 100%;
+}
+.full-screen-camera-block {
+	width: 100%;
+	height: 100%;
+	background: #000308;
+	//background: url(../img/bg-blue-1.jpg) repeat;
+}
+.full-screen-camera-block .camera-object {
+	display: none;
+}
+.full-screen-camera-block .screen {
+	width: 45%;
+	float: left;
+	height: 350px;
+}
+.full-screen-camera-block #video-btn li{
+	width: 50%;
+	height: 80px;
+	font-size: 30px;
+}
+.full-screen-camera-block #video-btn li a {
+	line-height: 80px;
+}
+
+.garage {
+	display: inline-block;
+	vertical-align: middle;
+	width: 225px;
+	height: 150px;
+	border: 2px solid #7CB4B9;
+}
+.garage-gates {
+	width: 100%;
+	height: 100%;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#aebcbf+0,0a0e0a+4,aebcbf+7,0a0e0a+10,aebcbf+13,0a0e0a+16,aebcbf+19,0a0e0a+22,aebcbf+25,0a0e0a+28,aebcbf+31,0a0e0a+34,aebcbf+37,0a0e0a+40,aebcbf+43,0a0e0a+46,aebcbf+49,0a0e0a+52,aebcbf+55,0a0e0a+58,aebcbf+61,0a0e0a+64,aebcbf+67,0a0e0a+70,aebcbf+73,0a0809+76,aebcbf+79,0a0809+82,aebcbf+85,0a0809+88,aebcbf+91,0a0809+94,aebcbf+97,0a0809+100 */
+background: rgb(174,188,191); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(174,188,191,1) 0%, rgba(10,14,10,1) 4%, rgba(174,188,191,1) 7%, rgba(10,14,10,1) 10%, rgba(174,188,191,1) 13%, rgba(10,14,10,1) 16%, rgba(174,188,191,1) 19%, rgba(10,14,10,1) 22%, rgba(174,188,191,1) 25%, rgba(10,14,10,1) 28%, rgba(174,188,191,1) 31%, rgba(10,14,10,1) 34%, rgba(174,188,191,1) 37%, rgba(10,14,10,1) 40%, rgba(174,188,191,1) 43%, rgba(10,14,10,1) 46%, rgba(174,188,191,1) 49%, rgba(10,14,10,1) 52%, rgba(174,188,191,1) 55%, rgba(10,14,10,1) 58%, rgba(174,188,191,1) 61%, rgba(10,14,10,1) 64%, rgba(174,188,191,1) 67%, rgba(10,14,10,1) 70%, rgba(174,188,191,1) 73%, rgba(10,8,9,1) 76%, rgba(174,188,191,1) 79%, rgba(10,8,9,1) 82%, rgba(174,188,191,1) 85%, rgba(10,8,9,1) 88%, rgba(174,188,191,1) 91%, rgba(10,8,9,1) 94%, rgba(174,188,191,1) 97%, rgba(10,8,9,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(174,188,191,1) 0%,rgba(10,14,10,1) 4%,rgba(174,188,191,1) 7%,rgba(10,14,10,1) 10%,rgba(174,188,191,1) 13%,rgba(10,14,10,1) 16%,rgba(174,188,191,1) 19%,rgba(10,14,10,1) 22%,rgba(174,188,191,1) 25%,rgba(10,14,10,1) 28%,rgba(174,188,191,1) 31%,rgba(10,14,10,1) 34%,rgba(174,188,191,1) 37%,rgba(10,14,10,1) 40%,rgba(174,188,191,1) 43%,rgba(10,14,10,1) 46%,rgba(174,188,191,1) 49%,rgba(10,14,10,1) 52%,rgba(174,188,191,1) 55%,rgba(10,14,10,1) 58%,rgba(174,188,191,1) 61%,rgba(10,14,10,1) 64%,rgba(174,188,191,1) 67%,rgba(10,14,10,1) 70%,rgba(174,188,191,1) 73%,rgba(10,8,9,1) 76%,rgba(174,188,191,1) 79%,rgba(10,8,9,1) 82%,rgba(174,188,191,1) 85%,rgba(10,8,9,1) 88%,rgba(174,188,191,1) 91%,rgba(10,8,9,1) 94%,rgba(174,188,191,1) 97%,rgba(10,8,9,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(174,188,191,1) 0%,rgba(10,14,10,1) 4%,rgba(174,188,191,1) 7%,rgba(10,14,10,1) 10%,rgba(174,188,191,1) 13%,rgba(10,14,10,1) 16%,rgba(174,188,191,1) 19%,rgba(10,14,10,1) 22%,rgba(174,188,191,1) 25%,rgba(10,14,10,1) 28%,rgba(174,188,191,1) 31%,rgba(10,14,10,1) 34%,rgba(174,188,191,1) 37%,rgba(10,14,10,1) 40%,rgba(174,188,191,1) 43%,rgba(10,14,10,1) 46%,rgba(174,188,191,1) 49%,rgba(10,14,10,1) 52%,rgba(174,188,191,1) 55%,rgba(10,14,10,1) 58%,rgba(174,188,191,1) 61%,rgba(10,14,10,1) 64%,rgba(174,188,191,1) 67%,rgba(10,14,10,1) 70%,rgba(174,188,191,1) 73%,rgba(10,8,9,1) 76%,rgba(174,188,191,1) 79%,rgba(10,8,9,1) 82%,rgba(174,188,191,1) 85%,rgba(10,8,9,1) 88%,rgba(174,188,191,1) 91%,rgba(10,8,9,1) 94%,rgba(174,188,191,1) 97%,rgba(10,8,9,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aebcbf', endColorstr='#0a0809',GradientType=0 ); /* IE6-9 */
+	
+}
+.garage-gates {
+	animation-duration: 10s;
+	//animation-name: slide-down;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+.open-gates {
+	animation-name: slide-up;
+}
+.close-gates {
+	animation-name: slide-down;
+}
+@keyframes slide-up {
+	from {
+	height: 100%;
+	}
+	to {
+	height: 0;
+	}
+}
+@keyframes slide-down {
+	from {
+	height: 0;
+	}
+	to {
+	height: 100%;
+	}
+}
+#garage-btn {
+	margin: 20px;
+	font-size: 14px;
+	background: #000;
+	color: #008BDE;
+	height: 40px;
+	width: 100px;
+	border: 1px solid #008BDE;
+	display: block;
+	padding: 10px;
+}
+.password-form {
+	margin: 20px auto;
+}
+.password-table {
+	margin: 20px auto;
+}
+.password-table tr td {
+	width: 80px;
+	height: 40px;
+	background: #000;
+	border: 1px solid #008BDE;
+	color: #008BDE;
+	text-align: center;
+	font-size: 20px;
+}
+.password-table tr td:hover {
+	color: #000;
+	background: #7CB4B9;
+}
+.password-form {
+	margin: 20px;
+}
+
+input[type=password] {
+	outline: none;
+	background: #000;
+	color: #fff;
+	border: 1px solid #008BDE;
+	height: 30px;
+	margin: 0 40px;
+	padding: 0 10px;
+}
+input[type=submit],
+input[type=button]{
+	background: #000;
+	color: #008BDE;
+	height: 30px;
+	width: 80px;
+	border: 1px solid #008BDE;
+	margin: 0 30px;
+	display: inline-block;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+input[type=submit] {
+	height: 40px;
+	width: 100px;
+}
+input[type=button]:hover,
+input[type=submit]:hover {
+	background: #7CB4B9; 
+	color: #000
+}
+#set-password {
+	font-size: 12px;
+	width: 110px;
+}
