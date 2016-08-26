@@ -5,6 +5,7 @@ var controller = {
 	garageHandler: function() {
 		this.view.garage.getGarageBtn().addEventListener ('click',
 		function(event) {
+			event.preventDefault();
 			if (controller.model.garage.isClosed == true) {
 				controller.model.garage.isClosed = false;
 				controller.view.garage.openGates();
