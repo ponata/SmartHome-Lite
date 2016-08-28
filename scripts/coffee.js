@@ -164,8 +164,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     this.recipies[0].ingredients[ingredientIndex].percentage = 0;
                 }
         },
-        updateCurrentRecipeIngredientPercentage: function (ingredientIndex,ingredientPercentage) {
-            this.recipies[0].ingredients[ingredientIndex].percentage= ingredientPercentage;
+        updateCurrentRecipeIngredientPercentage: function (ingredientName,ingredientPercentage) {
+            var j = 0;
+            while (this.recipies[0].ingredients[j].name != ingredientName) {
+                j++;
+            }
+            this.recipies[0].ingredients[j].percentage= ingredientPercentage;
         }
     };
 
@@ -248,11 +252,6 @@ document.addEventListener("DOMContentLoaded", function() {
     //Controllers
     coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
 
-    coffeeMachineView.selectRecipe.onchange = function () {
-        coffeeMachine.switchCurrentRecipie(coffeeMachineView.selectRecipe.value);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-
     document.getElementById("make-coffee").onclick = function () {
         coffeeMachineView.buttonMakeCoffee(coffeeMachine);
         coffeeMachineView.changeImage(coffeeMachine);
@@ -272,24 +271,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    coffeeMachineView.rangeArray[0].onchange = function () {
-        coffeeMachine.updateCurrentRecipeIngredientPercentage(0,coffeeMachineView.rangeArray[0].value);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.rangeArray[1].onchange = function () {
-        coffeeMachine.updateCurrentRecipeIngredientPercentage(1,coffeeMachineView.rangeArray[1].value);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.rangeArray[2].onchange = function () {
-        coffeeMachine.updateCurrentRecipeIngredientPercentage(2,coffeeMachineView.rangeArray[2].value);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.rangeArray[3].onchange = function () {
-        coffeeMachine.updateCurrentRecipeIngredientPercentage(3,coffeeMachineView.rangeArray[3].value);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.buttonSaveRecipe.onclick = function () {
-        coffeeMachine.saveCustomRecipe(coffeeMachineView.selectRecipe.value);
+    document.getElementById("control-menu").onchange = function () {
+        if(event.target.tagName == 'SELECT'){
+            coffeeMachine.switchCurrentRecipie(coffeeMachineView.selectRecipe.value);
+        }
+        else if(event.target.tagName == 'INPUT'){
+            coffeeMachine.updateCurrentRecipeIngredientPercentage(event.target.id,event.target.value);
+        }
         coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
     };
 });
