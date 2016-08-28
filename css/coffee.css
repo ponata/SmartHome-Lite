@@ -48,25 +48,24 @@ button:hover {
     border: 5px solid deepskyblue;
     -webkit-box-shadow:
             0 0 40px rgba(0,191,255,.6) !important;
-            inset:0 0 20px rgba(0,191,255,1) ;
+            inset 0 0 20px rgba(0,191,255,1) ;
     -moz-box-shadow:
             0 0 40px rgba(0,191,255,.6) !important;
-            inset: 0 0 20px rgba(0,191,255,1) ;
+            inset 0 0 20px rgba(0,191,255,1);
     box-shadow:
             0 0 40px rgba(0,191,255,.6) !important;
-            inset: 0 0 20px rgba(0,191,255,1) ;
-
+            inset 0 0 20px rgba(0,191,255,1);
 }
-.coffee_selected-device, .coffee_menu, #coffee{
+#coffee_selected-device, .coffee_menu, #coffee{
     height: 330px;
     margin-top: 20px;
     width: 33%;
-    box-shadow: rgba(255,255,240,.2) 0 0 200px 100px, rgba(255,255,240,.3) 0 0 40px, inset rgba(0,0,0,.8) 0 0 20px;
     border-radius: 50px;
+    opacity: 0.9;
 }
-.coffee_selected-device{
+#coffee_selected-device{
+    background: url(../img/coffee_sprite.png)no-repeat center;
     float: left;
-    background: url("../img/coffee.png")no-repeat center;
     margin-left: 5px;
 }
 .coffee_menu{
@@ -75,7 +74,6 @@ button:hover {
 }
 #coffee{
     float: right;
-
 }
 #myButton:hover{
     -webkit-box-shadow: none;
@@ -86,7 +84,6 @@ button:hover {
     height: 20px;
     width: 30px;
     margin-left: 20px;
-
 }
 #save_recipe{
     display: inline-block;
@@ -94,7 +91,10 @@ button:hover {
     height: 40px;
     margin: -20px 0 0 180px;
     vertical-align: middle;
-
+}
+#save_recipe:disabled{
+    background:gray;
+    box-shadow: none;
 }
 #change-recipe, .selected-product{
     width: 100%;
@@ -108,7 +108,6 @@ button:hover {
 #custom{
     display: inline-block;
     margin: 20px 0 0 20px;
-
 }
 input[type=range]{
     left: 160px;
@@ -144,7 +143,7 @@ select{
     border-radius: 5px;
     text-transform: none;
     font-size: 14px;
-    color: black;
+    color: #0E0E0E;
     font-family: DigitalSansEFMedium;
 }
 input[type=datetime-local]{
@@ -183,3 +182,32 @@ input[type=datetime-local]{
 .copyright{
     margin-top: 170px;
 }
+#coffee_selected-device.sprite-coffee_0 {
+    background-position: 0 0;
+}
+#coffee_selected-device.sprite-coffee_1 {
+    background-position: -340px 0;
+}
+#coffee_selected-device.sprite-coffee_2 {
+    background-position: -680px 0;
+}
+#coffee_selected-device.sprite-coffee_3 {
+    background-position: -1020px 0;
+}
+#coffee_selected-device.sprite-coffee_4 {
+    background-position: -1360px 0;
+}
+#coffee_selected-device.sprite-coffee_5 {
+    background-position: -1700px 0;
+}
+#coffee_selected-device.sprite-coffee_6 {
+    background-position: -2040px 0;
+}
+#coffee_selected-device.sprite-coffee_7 {
+    background-position: -2380px 0;
+}
+#coffee_selected-device.sprite-coffee_8 {
+    background-position: -2720px 0;
+}
+
+

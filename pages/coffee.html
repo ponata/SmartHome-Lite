@@ -20,11 +20,9 @@
                 <h2 class="promo">Make your home smarter!</h2>
             </div>
         </header>
-        <div class="blured"></div>
-
-
+        <div class="bg-global blured"></div>
         <div id="wrap">
-            <div class="coffee_menu">
+            <div class="coffee_menu" id="control-menu">
                 <div id="change-recipe">
                     <select id="custom">
                         <option value="coffee">Coffee</option>
@@ -35,10 +33,10 @@
                         <option value="custom1">Custom 1</option>
                         <option value="custom2">Custom 2</option>
                     </select>
-                    <button id="save_recipe" disabled="disabled">Save recipe</button>
+                    <button id="save_recipe">Save recipe</button>
                 </div>
                 <div class="selected-product">
-                    <button class="choose-component" id="component-milk">
+                    <button class="choose-component" id="component-milk" value="0">
                     </button>
                     <label for=milk>Milk</label>
                     <input type=range id="milk" min=5 value=10 max=20 step=1>
@@ -46,7 +44,7 @@
 
                 </div>
                 <div class="selected-product">
-                    <button class="choose-component" id="component-chocolate">
+                    <button class="choose-component" id="component-chocolate" value="1">
                     </button>
                     <label for=chocolate>Chocolate</label>
                     <input type=range id="chocolate" min=5 value=10 max=20 step=1>
@@ -54,7 +52,7 @@
 
                 </div>
                 <div class="selected-product">
-                    <button class="choose-component" id="component-cocoa">
+                    <button class="choose-component" id="component-cocoa" value="2">
                     </button>
                     <label for=cocoa>Cocoa</label>
                     <input type=range id=cocoa min=5 value=10 max=20 step=1>
@@ -62,7 +60,7 @@
 
                 </div>
                 <div class="selected-product">
-                    <button class="choose-component" id="component-cognac">
+                    <button class="choose-component" id="component-cognac" value="3">
                     </button>
                     <label for=cognac>Cognac</label>
                     <input type=range id=cognac min=5 value=10 max=20 step=1>
@@ -70,7 +68,7 @@
 
                 </div>
             </div>
-            <div class="coffee_selected-device blured ">
+            <div class="blured sprite-coffee_0" id="coffee_selected-device">
             </div>
             <div class="coffee_menu" id="coffee">
                 <div id="reset">
@@ -152,8 +150,8 @@
             </button>
         </div>
 
-        <footer>
-            <div class="container copyright"> &copy; SmartHouse Corp 2016</div>
+        <footer class="container footer">
+            <div class="copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
         </footer>
     </body>
-    </html>
+</html>

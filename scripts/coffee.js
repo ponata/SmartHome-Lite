@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 i++;
             }
             this.recipies[0].size = this.recipies[i].size;
+            this.recipies[0].customizable=this.recipies[i].customizable;
             for (var j = 0; j < this.recipies[0].ingredients.length; j++) {
                 this.recipies[0].ingredients[j].selected = this.recipies[i].ingredients[j].selected;
                 this.recipies[0].ingredients[j].percentage = this.recipies[i].ingredients[j].percentage;
@@ -156,17 +157,16 @@ document.addEventListener("DOMContentLoaded", function() {
             this.recipies[0].size = recipeSize;
         },
         updateCurrentRecipeIngredientState: function (ingredientIndex) {
-            this.recipies[0].ingredients[ingredientIndex].selected = !this.recipies[0].ingredients[ingredientIndex].selected;
-            if(this.recipies[0].ingredients[ingredientIndex].selected){
-                this.recipies[0].ingredients[ingredientIndex].percentage = 5;
-            }else {
-                this.recipies[0].ingredients[ingredientIndex].percentage = 0;
-            }
+                this.recipies[0].ingredients[ingredientIndex].selected = !this.recipies[0].ingredients[ingredientIndex].selected;
+                if (this.recipies[0].ingredients[ingredientIndex].selected) {
+                    this.recipies[0].ingredients[ingredientIndex].percentage = 5;
+                } else {
+                    this.recipies[0].ingredients[ingredientIndex].percentage = 0;
+                }
         },
         updateCurrentRecipeIngredientPercentage: function (ingredientIndex,ingredientPercentage) {
             this.recipies[0].ingredients[ingredientIndex].percentage= ingredientPercentage;
         }
-        
     };
 
     //View
@@ -188,12 +188,9 @@ document.addEventListener("DOMContentLoaded", function() {
         buttonSmall: document.getElementById("small"),
         buttonMiddle: document.getElementById("middle"),
         buttonLarge: document.getElementById("large"),
+        divCoffeeMachinePictures: document.getElementById("coffee_selected-device"),
         depictCoffeeMachineMenu: function (coffeeMachineObject) {
-            if (coffeeMachineObject.recipies[0].customizable) {
-                this.buttonSaveRecipe.classList.add("button_active");
-            } else {
-                this.buttonSaveRecipe.disabled = false;
-            }
+            this.buttonSaveRecipe.disabled=!coffeeMachineObject.recipies[0].customizable;
             for (var i = 0; i < coffeeMachineObject.recipies[0].ingredients.length; i++) {
                 if (coffeeMachineObject.recipies[0].ingredients[i].selected) {
                     this.ingredientsButtonsArr[i].classList.add("button_active");
@@ -218,49 +215,63 @@ document.addEventListener("DOMContentLoaded", function() {
                 this.buttonSmall.classList.remove("button_active");
                 this.buttonMiddle.classList.remove("button_active");
             }
+        },
+        buttonMakeCoffee: function () {
+            var makeCoffee = document.getElementById("make-coffee");
+            makeCoffee.classList.add("button_active");
+            makeCoffee.textContent = "Making coffee";
+            setTimeout(function () {
+                makeCoffee.textContent = "Make coffee";
+                makeCoffee.classList.remove("button_active");
+            }, 5000);
+        },
+        changeImage: function () {
+            var i = 0;
+            var timer = setInterval(function () {
+                if (i < 8) {
+                    coffeeMachineView.divCoffeeMachinePictures.classList.remove("sprite-coffee_" + i);
+                    coffeeMachineView.divCoffeeMachinePictures.classList.add("sprite-coffee_" + (i + 1));
+                    i++;
+                }
+                else if (i >= 8 && i < 12) {
+                    i++;
+                }
+                else {
+                    coffeeMachineView.divCoffeeMachinePictures.classList.remove("sprite-coffee_" + 8);
+                    coffeeMachineView.divCoffeeMachinePictures.classList.add("sprite-coffee_" + 0);
+                    clearInterval(timer);
+                }
+            }, 500)
         }
     };
 
-    coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    
-    
     //Controllers
+    coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
 
     coffeeMachineView.selectRecipe.onchange = function () {
         coffeeMachine.switchCurrentRecipie(coffeeMachineView.selectRecipe.value);
         coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
     };
-    var makeCoffee = document.getElementById("make-coffee");
-    makeCoffee.onclick = function () {
-        makeCoffee.classList.add("button_active");
-        makeCoffee.textContent="Making coffee";
-        setTimeout(function() {
-            makeCoffee.textContent="Make coffee";
-            makeCoffee.classList.remove("button_active");
-        }, 5000);
+
+    document.getElementById("make-coffee").onclick = function () {
+        coffeeMachineView.buttonMakeCoffee(coffeeMachine);
+        coffeeMachineView.changeImage(coffeeMachine);
     };
+
     document.getElementById('execute').onclick = function (event) {
         if(event.target.tagName == 'BUTTON') {
             coffeeMachine.updateCurrentRecipeSize(event.target.value);
             coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
         }     
     };
-    coffeeMachineView.ingredientsButtonsArr[0].onclick = function () {
-        coffeeMachine.updateCurrentRecipeIngredientState(0);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+    
+    document.getElementById("control-menu").onclick = function (event) {
+        if(event.target.classList.contains("choose-component")){
+            coffeeMachine.updateCurrentRecipeIngredientState(event.target.value);
+            coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+        }
     };
-    coffeeMachineView.ingredientsButtonsArr[1].onclick = function () {
-        coffeeMachine.updateCurrentRecipeIngredientState(1);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.ingredientsButtonsArr[2].onclick = function () {
-        coffeeMachine.updateCurrentRecipeIngredientState(2);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
-    coffeeMachineView.ingredientsButtonsArr[3].onclick = function () {
-        coffeeMachine.updateCurrentRecipeIngredientState(3);
-        coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-    };
+
     coffeeMachineView.rangeArray[0].onchange = function () {
         coffeeMachine.updateCurrentRecipeIngredientPercentage(0,coffeeMachineView.rangeArray[0].value);
         coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
@@ -281,14 +292,4 @@ document.addEventListener("DOMContentLoaded", function() {
         coffeeMachine.saveCustomRecipe(coffeeMachineView.selectRecipe.value);
         coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
     };
-})
-//var scheduleView ={}
-
-
-
-
-        
-
-
-
-
+});
