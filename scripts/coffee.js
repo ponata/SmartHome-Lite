@@ -68,10 +68,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 customizable: true,
                 size: "middle",
                 ingredients: [
-                    {name: "milk", selected: true, percentage: 0},
-                    {name: "chocolate", selected: true, percentage: 0},
-                    {name: "cocoa", selected: true, percentage:0 },
-                    {name: "cognac", selected: true, percentage: 0}
+                    {name: "milk", selected: true, percentage: 5},
+                    {name: "chocolate", selected: true, percentage: 5},
+                    {name: "cocoa", selected: true, percentage:5},
+                    {name: "cognac", selected: true, percentage: 5}
                 ]
             },
             {
@@ -79,10 +79,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 customizable: true,
                 size: "middle",
                 ingredients: [
-                    {name: "milk", selected: true, percentage: 0},
-                    {name: "chocolate", selected: true, percentage: 0},
-                    {name: "cocoa", selected: true, percentage: 0},
-                    {name: "cognac", selected: true, percentage: 0}
+                    {name: "milk", selected: true, percentage: 5},
+                    {name: "chocolate", selected: true, percentage: 5},
+                    {name: "cocoa", selected: true, percentage: 5},
+                    {name: "cognac", selected: true, percentage: 5}
                 ]
             }],
 
@@ -90,44 +90,51 @@ document.addEventListener("DOMContentLoaded", function() {
             {
                 id: 1,
                 enabled: false,
-                recipeName: "late"
-               // time: format of time?
+                recipeName: "coffee",
+                hours:23,
+                minute:60
             },
             {
                 id: 2,
                 enabled: false,
-                recipeName: "espresso"
-               // time:
+                recipeName: "late",
+                hours:23,
+                minute:60
             },
             {
                 id: 3,
                 enabled: false,
-                recipeName: "macciato"
-               // time:
+                recipeName: "espresso",
+                hours:23,
+                minute:60
             },
             {
                 id: 4,
                 enabled: false,
-                recipeName: "hard"
-                // time:
+                recipeName: "macchiato",
+                hours:23,
+                minute:60
             },
             {
                 id: 4,
                 enabled: false,
-                recipeName: "coffee"
-               // time:
+                recipeName: "hard",
+                hours:23,
+                minute:60
             },
             {
                 id: 5,
                 enabled: false,
-                recipeName: "custom1"
-                // time:
+                recipeName: "custom1",
+                hours:23,
+                minute:60
             },
             {
                 id: 6,
                 enabled: false,
-                recipeName: "custom2"
-                // time:
+                recipeName: "custom2",
+                hours:23,
+                minute:60
             }
         ],
         switchCurrentRecipie: function (recipeName) {
@@ -252,6 +259,8 @@ document.addEventListener("DOMContentLoaded", function() {
     //Controllers
     coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
 
+
+
     document.getElementById("make-coffee").onclick = function () {
         coffeeMachineView.buttonMakeCoffee(coffeeMachine);
         coffeeMachineView.changeImage(coffeeMachine);
@@ -265,12 +274,15 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     
     document.getElementById("control-menu").onclick = function (event) {
-        if(event.target.classList.contains("choose-component")){
-            coffeeMachine.updateCurrentRecipeIngredientState(event.target.value);
-            coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+        if (event.target.tagName == 'BUTTON') {
+            if (event.target.classList.contains("choose-component")) {
+                coffeeMachine.updateCurrentRecipeIngredientState(event.target.value);
+                coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
+            } else {
+                coffeeMachine.saveCustomRecipe(coffeeMachineView.selectRecipe.value);
+            }
         }
     };
-
     document.getElementById("control-menu").onchange = function () {
         if(event.target.tagName == 'SELECT'){
             coffeeMachine.switchCurrentRecipie(coffeeMachineView.selectRecipe.value);

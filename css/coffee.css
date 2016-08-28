@@ -138,19 +138,14 @@ label{
 }
 select{
     display: block;
-    margin: -25px 0 0 150px;
-    width: 140px;
+    margin: -35px 0 0 200px;
+    height: 30px;
+    width: 100px;
     border-radius: 5px;
     text-transform: none;
     font-size: 14px;
     color: #0E0E0E;
     font-family: DigitalSansEFMedium;
-}
-input[type=datetime-local]{
-    display: block;
-    position: relative;
-    width: 40px;
-    margin: -25px 0 0 75px;
 }
 #execute{
     position: relative;
@@ -208,6 +203,19 @@ input[type=datetime-local]{
 }
 #coffee_selected-device.sprite-coffee_8 {
     background-position: -2720px 0;
+}
+input[type=number]{
+    display:inline-block;
+    position: relative;
+    width: 40px;
+    height: 30px;
+    border-radius: 5px;
+    margin-bottom: -50px;
+}
+.scheduled-task>button{
+    display: inline-block;
+    width: 60px;
+    height: 30px;
 }
 
 
