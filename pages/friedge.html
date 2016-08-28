@@ -26,8 +26,8 @@
             <div class="width-25 dp-ib text-center">
                 <form action="" class="form">
                     <p>Products</p>
-                    <select id="products" multiple class="products">
-                    </select>
+                    <div id="products" class="products">
+                    </div>
                     <div class="input-field">
                         <span>Name</span>
                         <input id="newProduct" type="text" class="input new-product">
@@ -98,10 +98,26 @@
             <div class="width-25 dp-ib text-center">
                 <form action="" class="form">
                     <div class="aligner center">
-                        <span>Turn on/off</span>
                         <label id="btnPower" class="btn-power">
                             <input id="status" type="checkbox" name="status">
-                            <div class="btn-power-bg"></div>
+                            <?xml version="1.0" standalone="no"?>
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet" class="btn-power-bg">
+                                <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)">
+                                    <path d="M1519 2578 c-19 -37 -178 -340 -481 -915 l-69 -133 191 0 c105 0 190
+                        -4 188 -8 -3 -8 -375 -729 -511 -992 -66 -128 -68 -133 -34 -100 63 63 1297
+                        1413 1297 1420 0 4 -100 6 -223 5 -123 -1 -231 1 -240 4 -14 5 29 75 216 356
+                        129 193 242 362 251 378 l18 27 -291 0 -291 0 -21 -42z" />
+                                    <path d="M1340 2518 c-138 -19 -321 -96 -439 -183 -290 -214 -446 -539 -428
+                        -889 13 -253 107 -470 281 -653 48 -51 91 -93 95 -93 4 0 23 33 43 74 l37 73
+                        -46 44 c-100 98 -185 247 -225 397 -27 104 -29 286 -4 395 73 320 324 580 634
+                        657 40 10 44 15 87 100 25 50 42 89 38 89 -5 -1 -37 -6 -73 -11z" />
+                                    <path d="M2002 2323 c-21 -32 -41 -63 -45 -69 -4 -7 15 -26 46 -46 74 -49 171
+                        -150 228 -238 166 -253 185 -589 47 -865 -123 -246 -365 -421 -643 -466 -111
+                        -17 -269 -7 -375 26 -128 39 -119 41 -179 -26 l-54 -59 54 -24 c86 -40 224
+                        -75 323 -84 311 -28 609 79 827 297 351 351 403 892 125 1310 -55 82 -171 201
+                        -254 259 l-61 43 -39 -58z" />
+                                </g>
+                            </svg>
                         </label>
                     </div>
                     <div id="inputWrapper">
@@ -119,7 +135,7 @@
                         </div>
                     </div>
                     <div class="input-field">
-                        <select name="selectMode" id="selectMode">
+                        <select name="selectMode" id="selectMode" class="select">
                             <option value="standard">Standard</option>
                             <option value="light">Light</option>
                             <option value="highFreeze">High freeze</option>
