@@ -79,7 +79,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             var timeoutID = setInterval(function() {
                 // before new iteration, check electricity status
                 if (!htmlObjects.status.checked) {
-                    if (htmlObjects.products.length > 0) {
+                    if (htmlObjects.products.hasChildNodes()) {
 
                         // check input, if it was changed
                         document.getElementById('inputWrapper').addEventListener('change', function(event) {
@@ -169,7 +169,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 
                         clearTimeout(timeoutID);
 
-                        if (htmlObjects.products.length > 0) {
+                        if (htmlObjects.products.hasChildNodes()) {
 
                             startingValues.flag = "frost";
                             Frost(htmlObjects, startingValues, modalMessages);
@@ -211,7 +211,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                         htmlObjects.progressBar.style.width = '0%';
                         showModal(htmlObjects, startingValues, modalMessages);
 
-                        if (!htmlObjects.status.checked && htmlObjects.products.length > 0) {
+                        if (!htmlObjects.status.checked && htmlObjects.products.hasChildNodes()) {
                             startingValues.flag = "frost";
                             Frost(htmlObjects, startingValues, modalMessages);
                         } else {
@@ -342,12 +342,16 @@ function setColor(htmlObjects, startingValues) {
 }
 
 function addProduct(htmlObjects) {
-    var option = document.createElement("option");
     var error = document.getElementById("productError");
-    option.text = htmlObjects.newProduct.value;
+
     if (htmlObjects.newProduct.value) {
         error.style.opacity = 0;
-        htmlObjects.products.add(option);
+
+        var elem = document.createElement("input");
+        elem.type = "checkbox";
+        elem.className = "product";
+        elem.text = htmlObjects.newProduct.value;
+        htmlObjects.products.appendChild(elem);
     } else {
         error.style.opacity = 1;
     }
@@ -355,9 +359,10 @@ function addProduct(htmlObjects) {
 }
 
 function removeProduct(htmlObjects) {
-    htmlObjects.products.remove(htmlObjects.products.selectedIndex);
+    htmlObjects.products.remove(document.querySelectorAll(".products .product:checked"));
+
 }
 
 function frostProduct(htmlObjects) {
-    htmlObjects.products.selectedIndex.className = "frozen-product";
+    htmlObjects.products.selectedIndex.classList.add("frozen-product");
 }
