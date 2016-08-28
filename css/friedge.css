@@ -181,16 +181,18 @@ button:hover {
 }
 
 .btn-power-bg {
-    background-color: #F54D4D;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+    fill: yellow;
 }
-
+input[name="status"] {
+    opacity: 0;
+}
 input[name="status"]:checked + .btn-power-bg {
-    background-color: #70FA70;
+    fill: #F54D4D;
 }
 
 .svg-elem.on path {

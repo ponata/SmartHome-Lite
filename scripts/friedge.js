@@ -35,38 +35,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // power button clicked
     htmlObjects.status.onclick = function(e) {
+        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off")) {
 
-
-        if (htmlObjects.status.checked) {
-            if (htmlObjects.products.length > 0) {
-                // friedge is on
-
-                htmlObjects.svg.classList.add("on");
-                htmlObjects.svg.classList.remove("off");
-                setColor(htmlObjects, startingValues);
-                startingValues.flag = "frost";
-                Frost(htmlObjects, startingValues, modalMessages);
-
-            } else {
-                alert('no products in the friedge!');
-                return false;
-            }
-
-        } else {
-            // friedge is off
-
-            htmlObjects.svg.classList.add("off");
-            htmlObjects.svg.classList.remove("on");
-            if (startingValues.flag == "frost") {
-                startingValues.flag = "defrost";
-                Frost(htmlObjects, startingValues, modalMessages);
-
-            } else {}
-        }
+            htmlObjects.svg.classList.add("on");
+            htmlObjects.svg.classList.remove("off");
+            setColor(htmlObjects, startingValues);
+            startingValues.flag = "frost";
+            Frost(htmlObjects, startingValues, modalMessages);
+        } else {}
     }
     htmlObjects.btnAddProducts.onclick = function(e) {
         e.preventDefault();
         addProduct(htmlObjects);
+        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off")) {
+
+            htmlObjects.svg.classList.add("on");
+            htmlObjects.svg.classList.remove("off");
+            setColor(htmlObjects, startingValues);
+            startingValues.flag = "frost";
+            Frost(htmlObjects, startingValues, modalMessages);
+        } else {}
     }
     htmlObjects.btnRemoveProducts.onclick = function(e) {
         e.preventDefault();
@@ -89,8 +77,8 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             startingValues.currentTemps = getCurrentTemps(htmlObjects);
 
             var timeoutID = setInterval(function() {
-                // before new iteration, check power button status
-                if (htmlObjects.status.checked) {
+                // before new iteration, check electricity status
+                if (!htmlObjects.status.checked) {
                     if (htmlObjects.products.length > 0) {
 
                         // check input, if it was changed
@@ -142,17 +130,18 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                         htmlObjects.svg.classList.add("off");
                         htmlObjects.svg.classList.remove("on");
 
-                        htmlObjects.status.checked = false;
+                        clearTimeout(timeoutID);
                         // run Frost with new flag
                         startingValues.flag = "defrost";
-                        clearTimeout(timeoutID);
                         Frost(htmlObjects, startingValues, modalMessages);
                     }
 
                 } else {
-                    // friedge turned off
+
+                    // electricity turned off
                     clearTimeout(timeoutID);
-                    return false;
+                    startingValues.flag = "defrost";
+                    Frost(htmlObjects, startingValues, modalMessages);
                 }
 
             }, startingValues.speed);
@@ -165,36 +154,86 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             startingValues.speed = 40;
 
             var timeoutID = setInterval(function() {
-                // before new iteration, check the status of the friedge
+                // before new iteration, check the electricity status
+                if (!htmlObjects.status.checked) {
 
-                if (startingValues.currentWidth - startingValues.stepRevert > 0) {
-                    startingValues.currentWidth -= startingValues.stepRevert;
-                    htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                    htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
-                } else {
-                    startingValues.currentWidth = 0;
-                    htmlObjects.outputPercentage.innerHTML = '0%';
-                    htmlObjects.progressBar.style.width = '0%';
-                    showModal(htmlObjects, startingValues, modalMessages);
-
-                    clearTimeout(timeoutID);
-
-                    if (htmlObjects.status.checked) {
-
-                        startingValues.flag = "frost";
-                        Frost(htmlObjects, startingValues, modalMessages);
+                    if (startingValues.currentWidth - startingValues.stepRevert > 0) {
+                        startingValues.currentWidth -= startingValues.stepRevert;
+                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
                     } else {
+                        startingValues.currentWidth = 0;
+                        htmlObjects.outputPercentage.innerHTML = '0%';
+                        htmlObjects.progressBar.style.width = '0%';
+                        showModal(htmlObjects, startingValues, modalMessages);
 
                         clearTimeout(timeoutID);
-                        return false;
+
+                        if (htmlObjects.products.length > 0) {
+
+                            startingValues.flag = "frost";
+                            Frost(htmlObjects, startingValues, modalMessages);
+                        } else {
+
+                            clearTimeout(timeoutID);
+                            return false;
+                        }
                     }
+
+
+
+                } else {
+                    // electricity turned off
+                    clearTimeout(timeoutID);
+                    startingValues.flag = "power saving mode";
+                    Frost(htmlObjects, startingValues, modalMessages);
                 }
-
-
 
             }, startingValues.speed);
 
             break;
+
+        case "power saving mode":
+
+            startingValues.speed = 1000;
+
+            var timeoutID = setInterval(function() {
+                // before new iteration, check the electricity status
+                // if electricity turned off
+                if (htmlObjects.status.checked) {
+                    if (startingValues.currentWidth - startingValues.stepRevert > 0) {
+                        startingValues.currentWidth -= startingValues.stepRevert;
+                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+                    } else {
+                        startingValues.currentWidth = 0;
+                        htmlObjects.outputPercentage.innerHTML = '0%';
+                        htmlObjects.progressBar.style.width = '0%';
+                        showModal(htmlObjects, startingValues, modalMessages);
+
+                        if (!htmlObjects.status.checked && htmlObjects.products.length > 0) {
+                            startingValues.flag = "frost";
+                            Frost(htmlObjects, startingValues, modalMessages);
+                        } else {
+                            htmlObjects.svg.classList.add("off");
+                            htmlObjects.svg.classList.remove("on");
+                            clearTimeout(timeoutID);
+                            return false;
+                        }
+                        clearTimeout(timeoutID);
+                    }
+
+                } else {
+                    // electricity turned on
+                    clearTimeout(timeoutID);
+                    startingValues.flag = "frost";
+                    Frost(htmlObjects, startingValues, modalMessages);
+                }
+
+            }, startingValues.speed);
+
+            break;
+
     }
 }
 
