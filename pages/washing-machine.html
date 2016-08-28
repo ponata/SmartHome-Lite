@@ -1,8 +1,12 @@
-﻿<head>
+<head>
     <title>SmartHome</title>
     <link rel="shortcut icon" href="../img/icon.ico" />
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" type="text/css" href="../css/washing-machine-style.css">
+	 <script type="text/javascript" src="../scripts/washing-machine-model.js"></script>
+	 <script type="text/javascript" src="../scripts/washing-machine-main.js"></script>
+	<script type="text/javascript" src="../scripts/washing-machine-controller.js"></script>
+    <script type="text/javascript" src="../scripts/washing-machine-view.js"></script>
 </head>
 
 <body>
@@ -39,7 +43,7 @@
                                 <div class="panel-option">
                                     <h3>Fill washing powder</h3>
                                     <label class="switch panel-value">
-                                        <input type="checkbox" name="switch" disabled required />
+                                        <input type="checkbox" name="switch" disabled />
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
@@ -68,6 +72,7 @@
                                 </div>
                                 <div class="actions-wrapper">
                                     <input class="button" type="button" name="pause" value="Pause"  />
+									<input class="button green" type="button" name="restore" value="Restore" disabled />
                                     <input class="button green hide" type="button" name="startNew" value="Start new washing" />
                                 </div>
                             </div>
@@ -82,7 +87,6 @@
     <footer class="footer">
         <div class="container copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
     </footer>
-    <script type="text/javascript" src="../scripts/washing-machine-script.js"></script>
 </body>
 
 </html>
