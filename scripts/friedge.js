@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var htmlObjects = {
         inputFreezeTemp: document.getElementById("inputFreezeTemp"),
         inputOverallTemp: document.getElementById("inputOverallTemp"),
-        inputsTemp: document.getElementsByClassName("input"),
+        inputsTemp: document.getElementsByClassName("temp"),
         progressBar: document.getElementById("progressBar"),
         outputPercentage: document.getElementById("outputPercentage"),
         close: document.getElementById("close"),
@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
         btnAddProducts: document.getElementById("btnAddProducts"),
         btnRemoveProducts: document.getElementById("btnRemoveProducts"),
         btnExtremeFrost: document.getElementById("btnExtremeFrost"),
-        newProduct: document.getElementById("newProduct")
+        newProduct: document.getElementById("newProduct"),
+        makeIce: document.getElementById("makeIce")
     }
 
     var startingValues = {
@@ -43,6 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
             startingValues.flag = "frost";
             Frost(htmlObjects, startingValues, modalMessages);
         } else {}
+    }
+    htmlObjects.makeIce.onclick = function(e) {
+        e.preventDefault();
+        makeIce(htmlObjects);
     }
     htmlObjects.btnAddProducts.onclick = function(e) {
         e.preventDefault();
@@ -384,4 +389,16 @@ function frostProduct(htmlObjects) {
         var parents = elements[i].parentNode;
         parents.classList.add("frozen-product");
     }
+}
+
+function makeIce(htmlObjects) {
+    var label = document.createElement("label");
+    var elem = document.createElement("input");
+
+    label.className = "product";
+    elem.type = "checkbox";
+
+    label.innerHTML = "Ice";
+    label.appendChild(elem);
+    htmlObjects.products.appendChild(label);
 }
