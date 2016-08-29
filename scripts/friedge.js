@@ -365,6 +365,7 @@ function addProduct(htmlObjects) {
         htmlObjects.products.appendChild(parentElem);
     } else {
         error.style.opacity = 1;
+        var a;
     }
     addStyle();
 }
