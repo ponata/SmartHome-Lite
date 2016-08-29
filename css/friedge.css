@@ -2,85 +2,61 @@ p {
     color: #fff;
     font-size: 20px;
 }
-input,
-button,
-select {
+input, button, select {
     font-family: 'DigitalSansEFMedium';
 }
-
 button:hover {
     cursor: pointer;
 }
-
 .width-50 {
     width: 50%;
 }
-
 .width-25 {
     width: 25%;
 }
-
 .relative {
     position: relative;
 }
-
 .svg-elem.big {
     max-width: 1000px;
 }
-
 .form {
     font-size: 25px;
 }
-
-.form,
-.indicators {
+.form, .indicators {
     color: #fff;
 }
-
-.submit,
-.select {
+.submit, .select {
     background: #1faeff;
 }
-
 .submit.remove {
     background: #F54D4D;
 }
-
 .input-field {
     position: relative;
 }
-
-.input-field,
-.submit,
-.select {
+.input-field, .submit, .select {
     display: block;
     width: 100%;
     margin: 15px auto;
     color: #fff;
 }
-
 .input {
     width: 70px;
 }
-
-.input,
-.submit,
-.select {
+.input, .submit, .select {
     padding: 10px;
     border-radius: 5px;
     border: none;
     font-size: 20px;
 }
-
 .input {
     background: #fff;
     color: #000;
 }
-
-.input:invalid ~ .input-error {
+.input:invalid~ .input-error {
     opacity: 1;
 }
-
 .notifications {
     background: #fff;
     border-radius: 5px;
@@ -89,11 +65,9 @@ button:hover {
     color: #000;
     text-align: center;
 }
-
 .notifications-title {
     font-size: 25px;
 }
-
 .outer-progress-bar {
     position: relative;
     width: 100%;
@@ -102,13 +76,11 @@ button:hover {
     border-radius: 25px;
     overflow: hidden;
 }
-
 .progress-bar {
     width: 0;
     height: 100%;
     background-color: #F54D4D;
 }
-
 .percentage {
     height: 100%;
     width: 100%;
@@ -117,7 +89,6 @@ button:hover {
     z-index: 1;
     color: #fff;
 }
-
 .modal {
     display: none;
     position: absolute;
@@ -128,7 +99,6 @@ button:hover {
     background: rgba(0, 0, 0, .7);
     z-index: 10;
 }
-
 .modal-body {
     position: fixed;
     width: 500px;
@@ -140,26 +110,20 @@ button:hover {
     border-radius: 15px;
     font-size: 30px;
 }
-
 .modal-message {
     padding-top: 50px;
     text-align: center;
 }
-
 .modal-message .frozen {
     color: #1faeff;
 }
-
 .modal-message .defrozen {
     color: #ff0000;
 }
-
-.modal-header,
-.modal-footer {
+.modal-header, .modal-footer {
     text-align: right;
     padding: 0 15px;
 }
-
 .close {
     display: inline-block;
     width: 35px;
@@ -169,7 +133,6 @@ button:hover {
     text-align: center;
     font-size: 18px;
 }
-
 .btn-power {
     display: inline-block;
     position: relative;
@@ -179,11 +142,9 @@ button:hover {
     overflow: hidden;
     margin: 0 15px;
 }
-
 .btn-power:hover {
     cursor: pointer;
 }
-
 .btn-power-bg {
     width: 100%;
     height: 100%;
@@ -195,10 +156,9 @@ button:hover {
 input[name="status"] {
     opacity: 0;
 }
-input[name="status"]:checked + .btn-power-bg {
+input[name="status"]:checked+ .btn-power-bg {
     fill: #F54D4D;
 }
-
 .svg-elem.on path {
     fill-opacity: 0;
     stroke-width: 100;
@@ -206,27 +166,22 @@ input[name="status"]:checked + .btn-power-bg {
     stroke-dashoffset: 40000;
     animation: draw 1s 1s 1 linear forwards, show .5s 1.5s 1 linear forwards;
 }
-
 @keyframes draw {
     to {
         stroke-dashoffset: 0;
     }
 }
-
 @keyframes show {
     to {
         fill-opacity: 1;
     }
 }
-
 .container {
     position: relative;
 }
-
 .svg-elem.off {
     display: none;
 }
-
 .svg-elem.on {
     display: block;
     position: absolute;
@@ -237,36 +192,30 @@ input[name="status"]:checked + .btn-power-bg {
     right: 0;
     margin: auto;
 }
-
-.on path,
-.standard path {
+.on path, .standard path {
     fill: #1faeff;
     stroke: #6bc4f6;
     -webkit-transition: fill 3s, stroke 3s;
     transition: fill 3s, stroke 3s;
 }
-
 .light path {
     fill: #70FA70;
     stroke: #AFF8AF;
     -webkit-transition: fill 3s, stroke 3s;
     transition: fill 3s, stroke 3s;
 }
-
 .highFreeze path {
     fill: #fff;
     stroke: #D4D4D4;
     -webkit-transition: fill 3s, stroke 3s;
     transition: fill 3s, stroke 3s;
 }
-
 .input-error {
     display: block;
     opacity: 0;
     color: #F54D4D;
     font-size: 18px;
 }
-
 #svgColor {
     position: absolute;
     width: 100%;
@@ -274,15 +223,18 @@ input[name="status"]:checked + .btn-power-bg {
     top: 0;
     left: 0;
 }
-
 .products {
     width: 100%;
+    color: #fff;
 }
-
+.product {
+    display: block;
+    width: 100%;
+    color: #fff;
+}
 .new-product {
     width: 100%;
 }
-
 .frozen-product {
     color: blue;
 }
