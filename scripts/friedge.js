@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         btnAddProducts: document.getElementById("btnAddProducts"),
         btnRemoveProducts: document.getElementById("btnRemoveProducts"),
         btnExtremeFrost: document.getElementById("btnExtremeFrost"),
-        newProduct: document.getElementById("newProduct"),
-        makeIce: document.getElementById("makeIce")
+        newProduct: document.getElementById("newProduct")
     }
 
     var startingValues = {
@@ -45,14 +44,11 @@ document.addEventListener("DOMContentLoaded", function() {
             Frost(htmlObjects, startingValues, modalMessages);
         } else {}
     }
-    htmlObjects.makeIce.onclick = function(e) {
-        e.preventDefault();
-        makeIce(htmlObjects);
-    }
+
     htmlObjects.btnAddProducts.onclick = function(e) {
         e.preventDefault();
         addProduct(htmlObjects);
-        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off")) {
+        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off") && htmlObjects.products.children.length) {
 
             htmlObjects.svg.classList.add("on");
             htmlObjects.svg.classList.remove("off");
@@ -60,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
             startingValues.flag = "frost";
             Frost(htmlObjects, startingValues, modalMessages);
         } else {}
+
     }
     htmlObjects.btnRemoveProducts.onclick = function(e) {
         e.preventDefault();
@@ -85,6 +82,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             var timeoutID = setInterval(function() {
                 // before new iteration, check electricity status
                 if (!htmlObjects.status.checked) {
+                    // check products in friedge
                     if (htmlObjects.products.children.length) {
 
                         // check input, if it was changed
@@ -110,7 +108,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                                 frostProduct(htmlObjects);
                             }
                             // calc the step
-                        startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 200;
+                        startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 1000;
 
                         if (startingValues.currentWidth + startingValues.stepForward < 100) {
                             startingValues.currentWidth += startingValues.stepForward;
@@ -380,25 +378,14 @@ function removeProduct(htmlObjects) {
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.parentNode.removeChild(parents);
+
     }
 }
 
 function frostProduct(htmlObjects) {
-    var elements = document.querySelectorAll(".product input:checked");
+    var elements = document.querySelectorAll(".product");
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.classList.add("frozen-product");
     }
-}
-
-function makeIce(htmlObjects) {
-    var label = document.createElement("label");
-    var elem = document.createElement("input");
-
-    label.className = "product";
-    elem.type = "checkbox";
-
-    label.innerHTML = "Ice";
-    label.appendChild(elem);
-    htmlObjects.products.appendChild(label);
 }

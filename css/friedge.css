@@ -8,6 +8,10 @@ button,
 select {
     font-family: 'DigitalSansEFMedium';
 }
+option {
+    color: #000;
+    background: #fff;
+}
 
 button:hover {
     cursor: pointer;
@@ -295,6 +299,7 @@ input[name="status"]:checked+ .btn-power-bg {
     width: 100%;
     font-size: 18px;
     border-bottom: 1px solid #ccc;
+    text-align: left;
     z-index: 1;
 }
 
@@ -308,7 +313,7 @@ input[name="status"]:checked+ .btn-power-bg {
     position: absolute;
     z-index: 0;
     top: 0;
-    left: 5px;
+    right: 5px;
     bottom: 0;
     margin: auto;
     width: 15px;
