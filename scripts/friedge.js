@@ -359,7 +359,6 @@ function addProduct(htmlObjects) {
         parentElem.className = "product";
         var elem = document.createElement("input");
         elem.type = "checkbox";
-
         parentElem.className = "product";
         parentElem.innerHTML = htmlObjects.newProduct.value;
         parentElem.appendChild(elem);
