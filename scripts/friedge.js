@@ -355,19 +355,19 @@ function addProduct(htmlObjects) {
     if (htmlObjects.newProduct.value) {
         error.style.opacity = 0;
 
-        var parentElem = document.createElement("label");
-        parentElem.className = "product";
+        var label = document.createElement("label");
         var elem = document.createElement("input");
+
+        label.className = "product";
         elem.type = "checkbox";
-        parentElem.className = "product";
-        parentElem.innerHTML = htmlObjects.newProduct.value;
-        parentElem.appendChild(elem);
-        htmlObjects.products.appendChild(parentElem);
+
+        label.innerHTML = htmlObjects.newProduct.value;
+        label.appendChild(elem);
+        htmlObjects.products.appendChild(label);
+        htmlObjects.newProduct.value = "";
     } else {
         error.style.opacity = 1;
-        var a;
     }
-    addStyle();
 }
 
 function removeProduct(htmlObjects) {
@@ -383,11 +383,5 @@ function frostProduct(htmlObjects) {
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.classList.add("frozen-product");
-    }
-}
-
-function addStyle() {
-    document.querySelector(".product").onclick = function functionName() {
-        this.classList.add('asadas');
     }
 }
