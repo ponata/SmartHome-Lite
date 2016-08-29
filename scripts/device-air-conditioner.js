@@ -137,7 +137,6 @@ window.onload = function() {
                 if(prevHumidity == humidity.value){
                     clearInterval(hum);
                 }
-            console.log("log");
 
             }, 600);
          }
