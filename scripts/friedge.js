@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // power button clicked
     htmlObjects.status.onclick = function(e) {
-        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off")) {
+        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off") && htmlObjects.products.children.length) {
 
             htmlObjects.svg.classList.add("on");
             htmlObjects.svg.classList.remove("off");
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
+
 });
 
 
@@ -79,7 +80,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             var timeoutID = setInterval(function() {
                 // before new iteration, check electricity status
                 if (!htmlObjects.status.checked) {
-                    if (htmlObjects.products.hasChildNodes()) {
+                    if (htmlObjects.products.children.length) {
 
                         // check input, if it was changed
                         document.getElementById('inputWrapper').addEventListener('change', function(event) {
@@ -98,7 +99,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                             setColor(htmlObjects, startingValues);
                         }
 
-                        // extreme frost 
+                        // extreme frost
                         htmlObjects.btnExtremeFrost.onclick = function(e) {
                                 e.preventDefault();
                                 frostProduct(htmlObjects);
@@ -152,11 +153,14 @@ function Frost(htmlObjects, startingValues, modalMessages) {
         case "defrost":
 
             startingValues.speed = 40;
+            startingValues.stepRevert = 1;
+
 
             var timeoutID = setInterval(function() {
                 // before new iteration, check the electricity status
                 if (!htmlObjects.status.checked) {
 
+                    // no products
                     if (startingValues.currentWidth - startingValues.stepRevert > 0) {
                         startingValues.currentWidth -= startingValues.stepRevert;
                         htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
@@ -169,16 +173,19 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 
                         clearTimeout(timeoutID);
 
-                        if (htmlObjects.products.hasChildNodes()) {
-
+                        if (htmlObjects.products.children.length) {
                             startingValues.flag = "frost";
                             Frost(htmlObjects, startingValues, modalMessages);
                         } else {
 
                             clearTimeout(timeoutID);
+                            htmlObjects.svg.classList.add("off");
+                            htmlObjects.svg.classList.remove("on");
                             return false;
                         }
                     }
+
+
 
 
 
@@ -196,6 +203,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
         case "power saving mode":
 
             startingValues.speed = 1000;
+            startingValues.stepRevert = 0.3;
 
             var timeoutID = setInterval(function() {
                 // before new iteration, check the electricity status
@@ -211,7 +219,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                         htmlObjects.progressBar.style.width = '0%';
                         showModal(htmlObjects, startingValues, modalMessages);
 
-                        if (!htmlObjects.status.checked && htmlObjects.products.hasChildNodes()) {
+                        if (!htmlObjects.status.checked && htmlObjects.products.children.length) {
                             startingValues.flag = "frost";
                             Frost(htmlObjects, startingValues, modalMessages);
                         } else {
@@ -347,22 +355,39 @@ function addProduct(htmlObjects) {
     if (htmlObjects.newProduct.value) {
         error.style.opacity = 0;
 
+        var parentElem = document.createElement("label");
+        parentElem.className = "product";
         var elem = document.createElement("input");
         elem.type = "checkbox";
-        elem.className = "product";
-        elem.text = htmlObjects.newProduct.value;
-        htmlObjects.products.appendChild(elem);
+
+        parentElem.className = "product";
+        parentElem.innerHTML = htmlObjects.newProduct.value;
+        parentElem.appendChild(elem);
+        htmlObjects.products.appendChild(parentElem);
     } else {
         error.style.opacity = 1;
     }
-
+    addStyle();
 }
 
 function removeProduct(htmlObjects) {
-    htmlObjects.products.remove(document.querySelectorAll(".products .product:checked"));
-
+    var elements = document.querySelectorAll(".product input:checked");
+    for (var i = 0; i < elements.length; i++) {
+        var parents = elements[i].parentNode;
+        parents.parentNode.removeChild(parents);
+    }
 }
 
 function frostProduct(htmlObjects) {
-    htmlObjects.products.selectedIndex.classList.add("frozen-product");
+    var elements = document.querySelectorAll(".product input:checked");
+    for (var i = 0; i < elements.length; i++) {
+        var parents = elements[i].parentNode;
+        parents.classList.add("frozen-product");
+    }
+}
+
+function addStyle() {
+    document.querySelector(".product").onclick = function functionName() {
+        this.classList.add('asadas');
+    }
 }
