@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
+
 });
 
 
@@ -366,17 +367,15 @@ function addProduct(htmlObjects) {
     } else {
         error.style.opacity = 1;
     }
-
+    addStyle();
 }
 
 function removeProduct(htmlObjects) {
-
     var elements = document.querySelectorAll(".product input:checked");
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.parentNode.removeChild(parents);
     }
-
 }
 
 function frostProduct(htmlObjects) {
@@ -384,5 +383,11 @@ function frostProduct(htmlObjects) {
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.classList.add("frozen-product");
+    }
+}
+
+function addStyle() {
+    document.querySelector(".product").onclick = function functionName() {
+        this.classList.add('asadas');
     }
 }

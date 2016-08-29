@@ -225,12 +225,24 @@ input[name="status"]:checked+ .btn-power-bg {
 }
 .products {
     width: 100%;
-    color: #fff;
+    height: 200px;
+    overflow-y: scroll;
+    color: #000;
+    background: #fff;
+    border-radius: 5px;
 }
 .product {
     display: block;
     width: 100%;
-    color: #fff;
+    font-size: 18px;
+    border-bottom: 1px solid #000;
+
+}
+.product input {
+  display: none;
+}
+.product:hover {
+  cursor: pointer;
 }
 .new-product {
     width: 100%;
