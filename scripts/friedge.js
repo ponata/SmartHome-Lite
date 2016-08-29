@@ -38,19 +38,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     Frost(htmlObjects, startingValues, modalMessages);
     // power button clicked
-    // htmlObjects.status.onclick = function(e) {
-    //     // is electr
+    htmlObjects.status.onclick = function(e) {
+        // is electr
 
-    //     if (!htmlObjects.status.checked) {
-    //         startingValues.flag = true;
-    //         Frost(htmlObjects, startingValues, modalMessages);
+        if (!htmlObjects.status.checked && !htmlObjects.products.children.length) {
+            startingValues.flag = true;
+            Frost(htmlObjects, startingValues, modalMessages);
 
-    //     }
-    //     // no electr
-    //     else {
+        }
+        // no electr
+        else {
 
-    //     }
-    // }
+        }
+    }
 
     htmlObjects.btnAddProducts.onclick = function(e) {
         e.preventDefault();
