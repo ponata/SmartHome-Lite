@@ -308,16 +308,18 @@ input[name="status"]:checked+ .btn-power-bg {
     background: #fff;
     border-radius: 5px;
 }
-
-.product {
-    position: relative;
-    padding: 3px;
-    display: block;
-    width: 100%;
-    font-size: 18px;
-    border-bottom: 1px solid #ccc;
-    text-align: left;
-    z-index: 1;
+.products label {
+  position: relative;
+  padding: 3px;
+  display: block;
+  width: 100%;
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  z-index: 1;
+}
+.product-frozen {
+    color: #1faeff;
 }
 
 .product input {
@@ -348,8 +350,4 @@ input[name="status"]:checked+ .btn-power-bg {
 
 .new-product {
     width: 100%;
-}
-
-.frozen-product {
-    color: blue;
 }

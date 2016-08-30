@@ -345,7 +345,7 @@ function addProduct(htmlObjects) {
 }
 
 function removeProduct(htmlObjects) {
-    var elements = document.querySelectorAll(".product input:checked");
+    var elements = document.querySelectorAll(".products input:checked");
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.parentNode.removeChild(parents);
@@ -354,10 +354,10 @@ function removeProduct(htmlObjects) {
 }
 
 function frostProduct(htmlObjects) {
-    var elements = document.querySelectorAll(".product");
+    var elements = document.querySelectorAll(".products label");
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
-        parents.classList.add("frozen-product");
+        elements[i].classList.add("product-frozen");
     }
 }
 
