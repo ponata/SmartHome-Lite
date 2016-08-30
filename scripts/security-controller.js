@@ -23,7 +23,7 @@ var controller = {
 				controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Opening...');
 				controller.view.garage.addDisabled(controller.view.garage.getGarageBtn());
 				setTimeout(function() {
-					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Lock');
+					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Close');
 					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
 				}, 10000);
 			} else {
@@ -32,7 +32,7 @@ var controller = {
 				controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Closing...');
 				controller.view.garage.addDisabled(controller.view.garage.getGarageBtn());
 				setTimeout(function() {
-					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Unlock');
+					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Open');
 					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
 				}, 10000);
 			}
