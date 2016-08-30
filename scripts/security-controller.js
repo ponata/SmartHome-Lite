@@ -27,44 +27,142 @@ var controller = {
 			}
 		}, false);
 	},
+	//camera block
 	cameraHandler: function() {
 		this.view.camera.getFullScreenBtn().onclick = this.view.camera.enterFullScreen.bind(controller.view.camera);
-		//check bind for all event functions
 	},
-	cameraHandlerBtn: function() {
-		this.view.camera.getVideoBtn().onclick = this.view.camera.turnOnOffCamera.bind(controller.view.camera);
-		/*this.view.cameraView.getVideoBtn().addEventListener('click',	
-		this.view.cameraView.turnOnOffCamera, false);*/
+	addCameraHandler: function() {
+		this.view.camera.getAddNewCameraBtn().onclick = this.view.camera.showCameraFormBlock;
 	},
+	removeCameraHandler: function() {
+		this.view.camera.getRemoveCameraFormBlock().onclick = this.view.camera.hideCameraFormBlock;
+	},
+	fillInCameraModel: function() {
+		var newCamera = new controller.NewCameraConstructor(controller.view.camera.getCameraNameValue(), controller.view.camera.getCameraPathValue());
+		controller.model.camera.push(newCamera);
+	},
+	hideCameraHandler: function() {
+		this.view.camera.getCameraSubmitBtn().addEventListener('click', function(e) {
+			e.preventDefault();
+			controller.fillInCameraModel();
+			controller.view.camera.hideCameraFormBlock();
+			controller.view.camera.addCameraInnerHTML();
+			controller.setVideoBtnIdHandler();
+		}, false); 	
+	},
+	NewCameraConstructor: function NewCameraConstructor(name, url) {
+		this.name = name;
+		this.url = url;
+		this.isOn = true;
+	},
+	setVideoBtnIdHandler: function() {
+		this.view.camera.setVideoBtnId();
+	},
+	hideShowVideoTagHandler: function() {
+		//Comment Added
+		this.view.camera.getCameraBlock().addEventListener('click', function(e) {
+			var target = e.target;
+			var dataNumber = target.getAttribute('data-number');
+			var dataNumberRemove = target.getAttribute('data-number-remove');
+			if (target.hasAttribute('data-number')){
+				var video = target.previousElementSibling.previousElementSibling.firstElementChild;
+				if (controller.model.camera[dataNumber].isOn == true){
+					controller.model.camera[dataNumber].isOn = false;
+					video.classList.add('tab-content');
+					controller.view.camera.changeCameraBtnInner(target, true);
+				} else{
+					controller.model.camera[dataNumber].isOn = true;
+					video.classList.remove('tab-content');
+					controller.view.camera.changeCameraBtnInner(target, false);
+				} 
+			} else if (target.hasAttribute('data-number-remove')) {
+				var block = target.parentElement;
+				console.log(block);
+				controller.model.camera.splice([dataNumberRemove],1);
+				block.remove();
+			} else {
+				return;
+			}
+			
+		}, false);
+	},
+	//password block
 	generateUniqueNumbers: function() {
 		this.view.password.generateUniqueNumbers();
 	},
-	inputPassHandler: function() {
-		this.view.password.getTable().addEventListener('click',
-			function(event) {
-				self = controller;
-				if (event.target.getAttribute('data-td') === 'true'){
-				self.view.password.setCurrentPassValue();
-				self.view.password.putPassword();
-			}
-			}, false);
-	},
+	//reset
 	resetHandler: function() {
-		this.view.password.resetBtn().onclick = this.view.password.resetFunc;
+		this.view.password.resetBtn()[0].onclick = this.view.password.resetFunc;
+		this.view.password.resetBtn()[1].onclick = this.view.password.resetFunc;
 	},
+	resetLastValueHandler: function() {
+		this.view.password.resetLastSymbBtn()[0].onclick = this.view.password.resetLastSymbol;
+		this.view.password.resetLastSymbBtn()[1].onclick = this.view.password.resetLastSymbol;
+	},
+	//set password
+	i: null,
+	inputPassHandlerFunc: function(e) {
+		//console.log('cliiiiick');
+		self = controller;
+		if (event.target.getAttribute('data-td') === 'true'){
+		self.view.password.setCurrentPassValue();
+		self.view.password.putPassword();
+		}
+	},
+
+	getPasswordStatus: function(){
+		var status = this.model.password.passwordStatus;
+		return status;
+	},
+	inputPassHandler: function() {
+		if (this.model.password.passwordStatus === false) {
+			console.log(this.model.password.passwordStatus);
+			this.i = 1;
+		} else {
+			console.log(this.model.password.passwordStatus);
+			this.i = 0;
+		};
+		
+		
+		this.view.password.getTable()[this.i].removeEventListener('click',
+				this.inputPassHandlerFunc);
+		
+		this.view.password.getTable()[this.i].addEventListener('click',
+			this.inputPassHandlerFunc, false);
+
+	},
+	
 	setPassword: function() {
 		if (this.model.password.currentPassword === '' || this.model.password.currentPassword !== '') {
 			this.model.password.currentPassword = this.view.password.getCurrentInputValue();
+			this.model.password.passwordStatus = true;
 			this.view.password.resetFunc();
-			this.view.password.changeBtnValue(this.view.password.getSetPasswordBtn, 'Edit password');
+			this.view.password.getSetPasswordBlock().classList.add('hide');
+			this.view.password.getPasswordBlock().classList.remove('tab-content');
+			this.view.password.changeUnlockSvgColor();
+			//this.changePasswordBlockHandler();
 		} 
 		else {
 			alert('Password is already set!');
 		}
 	},
 	setPasswordHandler: function () {
-		this.view.password.getSetPasswordBtn().onclick = this.setPassword.bind(this); 
+		var self = this;
+		this.view.password.getSetPasswordBtn().addEventListener('click', function() {
+			self.setPassword();
+			self.inputPassHandler();
+		}, false);
 	},
+	
+	changePasswordBlockHandler: function() {
+		controller.view.password.getChangePasswordBtn().addEventListener('click', function() {
+			controller.view.password.showChangePasswordBlock();
+			controller.model.password.passwordStatus = false;
+			controller.model.password.currentPassword= '';
+			
+		}, false);
+	},
+	//lock/unlock process
 	lockHandler: function() {
 		this.view.password.getLockBtn().addEventListener('click',
 			function(event) {
@@ -76,6 +174,8 @@ var controller = {
 				self.view.password.addDisabled(controller.view.garage.getGarageBtn());
 				self.view.password.addDisabled(controller.view.password.getSetPasswordBtn());
 				self.view.password.toggleVisibility(controller.view.password.getUnlockedIcon(),controller.view.password.getLockedIcon());
+				console.log(controller.view.password.getChangePasswordBtn());
+				self.view.password.getChangePasswordBtn().classList.add('hide');
 			} else if (self.view.password.getCurrentInputValue() === self.model.password.currentPassword  
 				&& self.view.password.getLockBtn().getAttribute('value') === 'Unlock') {
 				self.view.password.resetFunc();
@@ -83,10 +183,16 @@ var controller = {
 				self.view.password.removeDisabled(controller.view.garage.getGarageBtn());
 				self.view.password.removeDisabled(controller.view.password.getSetPasswordBtn());
 				self.view.password.toggleVisibility(controller.view.password.getLockedIcon(),controller.view.password.getUnlockedIcon());
+				
+				self.view.password.getChangePasswordBtn().classList.remove('hide');
 			}
 				else {
-				alert('Wrong password!');
+				self.view.password.showWrongPasswordBlock();
+				console.log(self.view.password.showWrongPasswordBlock);
 			}
 			}, false);
+	},
+	exitWrongPasswordHandler: function() {
+		this.view.password.getWrongPasswordBlock().onclick = this.view.password.exitWrongPassword;
 	}
 }
