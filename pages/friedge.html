@@ -27,7 +27,6 @@
                 <form action="" class="form">
                     <p>Products</p>
                     <div id="products" class="products">
-
                     </div>
                     <div class="input-field">
                         <span>Name</span>
@@ -36,7 +35,6 @@
                     </div>
                     <button id="btnAddProducts" class="submit">Add Products</button>
                     <button id="btnRemoveProducts" class="submit remove">Remove Products</button>
-
                 </form>
             </div>
             <div class="width-50 dp-ib text-center">
@@ -110,10 +108,12 @@
                         </div>
                     </div>
                 </div>
-                <p>Frozen</p>
-                <div class="outer-progress-bar">
-                    <div id="outputPercentage" class="percentage">0%</div>
-                    <div id="progressBar" class="progress-bar"></div>
+                <p>Battery</p>
+                <div class="battery">
+                    <div class="outer-progress-bar">
+                        <div id="outputPercentage" class="percentage">0%</div>
+                        <div id="progressBar" class="progress-bar"></div>
+                    </div>
                 </div>
             </div>
             <div class="width-25 dp-ib text-center">
@@ -121,13 +121,13 @@
                     <div id="inputWrapper">
                         <div class="input-field">
                             <span>Overall</span>
-                            <input id="inputOverallTemp" type="number" class="input" min="-20" max="0" value="-6" disabled="disabled">
+                            <input id="inputOverallTemp" type="number" class="input temp" min="-20" max="0" value="-6" disabled="disabled">
                             <span>&deg;C</span>
                             <div class="input-error">Enter value between "-20" and "0"</div>
                         </div>
                         <div class="input-field">
                             <span>Freezer</span>
-                            <input id="inputFreezeTemp" type="number" class="input" min="-50" max="0" value="-18" disabled="disabled">
+                            <input id="inputFreezeTemp" type="number" class="input temp" min="-50" max="0" value="-18" disabled="disabled">
                             <span>&deg;C</span>
                             <div class="input-error">Enter value between "-50" and "0"</div>
                         </div>
@@ -140,7 +140,6 @@
                             <option value="custom">Custom</option>
                         </select>
                     </div>
-                    <button id="make-ice" class="submit">Make Ice</button>
                     <button id="btnExtremeFrost" class="submit">Extreme Freeze</button>
                 </form>
             </div>
