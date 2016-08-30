@@ -8,6 +8,7 @@ button,
 select {
     font-family: 'DigitalSansEFMedium';
 }
+
 option {
     color: #000;
     background: #fff;
@@ -106,12 +107,14 @@ button:hover {
     border-radius: 5px;
     overflow: hidden;
 }
+
 .battery {
     position: relative;
     width: 60%;
     height: 60px;
     margin: 0 auto;
 }
+
 .battery::after {
     position: absolute;
     right: -5px;
@@ -122,6 +125,7 @@ button:hover {
     background: #6bc4f6;
     z-index: 1;
 }
+
 .progress-bar {
     width: 0;
     height: 100%;
@@ -137,6 +141,7 @@ button:hover {
     text-align: center;
     z-index: 1;
     color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     padding: 15px 0;
 }
 
@@ -164,8 +169,13 @@ button:hover {
 }
 
 .modal-message {
-    padding-top: 50px;
+    padding-top: 20px;
     text-align: center;
+}
+
+.output-modal-message {
+    color: #000;
+    margin-bottom: 20px;
 }
 
 .modal-message .frozen {
@@ -284,6 +294,10 @@ input[name="status"]:checked+ .btn-power-bg {
     transition: fill 3s, stroke 3s;
 }
 
+.on.battery-mode path {
+    stroke: #F54D4D;
+}
+
 .input-error {
     display: block;
     opacity: 0;
@@ -309,7 +323,7 @@ input[name="status"]:checked+ .btn-power-bg {
     border-radius: 5px;
 }
 
-.product {
+.products label {
     position: relative;
     padding: 3px;
     display: block;
@@ -318,6 +332,10 @@ input[name="status"]:checked+ .btn-power-bg {
     border-bottom: 1px solid #ccc;
     text-align: left;
     z-index: 1;
+}
+
+.product-frozen {
+    color: #1faeff;
 }
 
 .product input {
@@ -350,6 +368,22 @@ input[name="status"]:checked+ .btn-power-bg {
     width: 100%;
 }
 
-.frozen-product {
-    color: blue;
+
+/*Loader*/
+
+.loader {
+    position: relative;
+}
+.loader img {
+    margin: 0 auto; 
+}
+
+.loader-percentage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 50px 0;
+    font-size: 20px;
 }
