@@ -7,7 +7,7 @@
 }
 #wrap {
     display: block;
-    height: 390px;
+/*    height: 390px;*/
     margin: 0 auto;
     width: 1023px;
 }
@@ -187,9 +187,6 @@ select:disabled{
     font-size: 20px;
     color: white;
     text-shadow: none;
-}
-.copyright{
-    margin-top: 170px;
 }
 #coffee_selected-device.sprite-coffee_0 {
     background-position: 0 0;
