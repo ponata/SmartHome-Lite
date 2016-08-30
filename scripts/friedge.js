@@ -41,10 +41,11 @@ document.addEventListener("DOMContentLoaded", function() {
     htmlObjects.status.onclick = function(e) {
         // is electr
 
-        if (!htmlObjects.status.checked && !htmlObjects.products.children.length) {
+        if (!htmlObjects.status.checked) {
+            startingValues.status = "off";
+            Enable(htmlObjects, startingValues, modalMessages);
             startingValues.flag = true;
             Frost(htmlObjects, startingValues, modalMessages);
-
         }
         // no electr
         else {
