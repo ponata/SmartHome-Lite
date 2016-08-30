@@ -8,12 +8,30 @@ var view = {
 			return document.querySelector('.garage-gates');
 		},
 		openGates: function() {
-			this.getGarageGates().classList.add('open-gates');
-			this.getGarageGates().classList.remove('close-gates');
+			var id = setInterval(opening, 75);
+			var hght = 100;
+			var elem = controller.view.garage.getGarageGates();
+			function opening() {
+				if (hght == 0) {
+					clearInterval(id);
+				} else {
+					hght--;
+					elem.style.height = hght + '%';
+				}
+			}
 		},
 		closeGates: function() {
-			this.getGarageGates().classList.add('close-gates');
-			this.getGarageGates().classList.remove('open-gates');
+			var id = setInterval(closing, 75);
+			var hght = 0;
+			var elem = controller.view.garage.getGarageGates();
+			function closing() {
+				if (hght == 100) {
+					clearInterval(id);
+				} else {
+					hght++;
+					elem.style.height = hght + '%';
+				}
+			}
 		},
 		changeBtnValue: function(callback, newValue) {
 			callback().setAttribute('value', newValue);

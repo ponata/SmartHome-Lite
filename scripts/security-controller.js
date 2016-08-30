@@ -25,7 +25,7 @@ var controller = {
 				setTimeout(function() {
 					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Close');
 					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
-				}, 10000);
+				}, 7500);
 			} else {
 				controller.model.garage.isClosed = true;
 				controller.view.garage.closeGates();
@@ -34,7 +34,7 @@ var controller = {
 				setTimeout(function() {
 					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Open');
 					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
-				}, 10000);
+				}, 7500);
 			}
 		}, false);
 	},
