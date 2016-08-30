@@ -88,55 +88,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
         schedule: [
             {
-                id: 1,
-                enabled: false,
+                id: 0,
+                enabled: true,
                 recipeName: "coffee",
                 hours:23,
                 minute:60
             },
             {
-                id: 2,
+                id: 1,
                 enabled: false,
                 recipeName: "late",
                 hours:23,
                 minute:60
             },
             {
-                id: 3,
+                id: 2,
                 enabled: false,
                 recipeName: "espresso",
                 hours:23,
                 minute:60
             },
             {
-                id: 4,
-                enabled: false,
+                id: 3,
+                enabled: true,
                 recipeName: "macchiato",
-                hours:23,
-                minute:60
-            },
-            {
-                id: 4,
-                enabled: false,
-                recipeName: "hard",
-                hours:23,
-                minute:60
-            },
-            {
-                id: 5,
-                enabled: false,
-                recipeName: "custom1",
-                hours:23,
-                minute:60
-            },
-            {
-                id: 6,
-                enabled: false,
-                recipeName: "custom2",
                 hours:23,
                 minute:60
             }
         ],
+        
         switchCurrentRecipie: function (recipeName) {
             var i = 0;
             while (this.recipies[i].name != recipeName) {
@@ -176,7 +156,24 @@ document.addEventListener("DOMContentLoaded", function() {
             while (this.recipies[0].ingredients[j].name != ingredientName) {
                 j++;
             }
-            this.recipies[0].ingredients[j].percentage= ingredientPercentage;
+            this.recipies[0].ingredients[j].percentage = ingredientPercentage;
+        },
+        updateScheduleRecipe: function (scheduleTaskId,recipeName) {
+            this.schedule[scheduleTaskId].recipeName = recipeName;
+        },
+        updateCurrentScheduleState: function (scheduledTaskId) {
+            this.schedule[scheduledTaskId].enabled = !this.schedule[scheduledTaskId].enabled;
+        },
+        updateScheduleHours: function (scheduleTaskId,hours) {
+            this.schedule[scheduleTaskId].hours = hours;
+        },
+        updateScheduleMinute: function (scheduleTaskId,minute) {
+            this.schedule[scheduleTaskId].minute = minute;
+        },
+        cancelAllTasks: function () {
+            for(var i=0; i<this.schedule.length;i++){
+                this.schedule[i].enabled = false;
+            }
         }
     };
 
@@ -200,6 +197,19 @@ document.addEventListener("DOMContentLoaded", function() {
         buttonMiddle: document.getElementById("middle"),
         buttonLarge: document.getElementById("large"),
         divCoffeeMachinePictures: document.getElementById("coffee_selected-device"),
+        scheduleButtons: [
+            document.getElementById("0"),document.getElementById("1"),
+            document.getElementById("2"),document.getElementById("3")],
+        scheduledInputMinutes:
+            [document.getElementById("minute0"),document.getElementById("minute1"),
+                document.getElementById("minute2"), document.getElementById("minute3")],
+        scheduledInputHours:
+            [document.getElementById("hour0"),document.getElementById("hour1"),
+             document.getElementById("hour2"), document.getElementById("hour3")],
+        selectTask: [document.getElementById("recipe0"),document.getElementById("recipe1"),
+            document.getElementById("recipe2"), document.getElementById("recipe3")],
+        cancelAllButton: document.getElementById("cancel-all"),
+
         depictCoffeeMachineMenu: function (coffeeMachineObject) {
             this.buttonSaveRecipe.disabled=!coffeeMachineObject.recipies[0].customizable;
             for (var i = 0; i < coffeeMachineObject.recipies[0].ingredients.length; i++) {
@@ -253,13 +263,38 @@ document.addEventListener("DOMContentLoaded", function() {
                     clearInterval(timer);
                 }
             }, 500)
+        },
+        depictSchedule: function (coffeeMachineObject) {
+            for (var i =0; i<this.scheduleButtons.length;i++){
+                if(coffeeMachineObject.schedule[i].enabled){
+                    this.scheduleButtons[i].classList.add("button_active");
+                    this.scheduledInputHours[i].disabled=false;
+                    this.scheduledInputMinutes[i].disabled=false;
+                    this.selectTask[i].disabled=false;
+                    coffeeMachineObject.schedule[i].recipeName = this.selectTask[i].options[this.selectTask[i].selectedIndex].text;
+                }else{
+                    this.scheduleButtons[i].classList.remove("button_active");
+                    this.scheduledInputHours[i].disabled=true;
+                    this.scheduledInputMinutes[i].disabled=true;
+                    this.selectTask[i].disabled=true;
+                }
+            }
+            var j=0;
+            while(j<this.scheduleButtons.length && coffeeMachineObject.schedule[j].enabled===false){
+                j++;
+            }
+            if(j===this.scheduleButtons.length){
+                this.cancelAllButton.disabled = true;
+            }else{
+                this.cancelAllButton.disabled = false;
+            }
         }
     };
 
+
     //Controllers
     coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
-
-
+    coffeeMachineView.depictSchedule(coffeeMachine);
 
     document.getElementById("make-coffee").onclick = function () {
         coffeeMachineView.buttonMakeCoffee(coffeeMachine);
@@ -283,6 +318,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     };
+    
     document.getElementById("control-menu").onchange = function () {
         if(event.target.tagName == 'SELECT'){
             coffeeMachine.switchCurrentRecipie(coffeeMachineView.selectRecipe.value);
@@ -292,4 +328,27 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         coffeeMachineView.depictCoffeeMachineMenu(coffeeMachine);
     };
+    
+    document.getElementById("coffee").onclick = function (event) {
+        if(event.target.tagName == 'BUTTON'){
+            if(event.target.id == "cancel-all"){
+                coffeeMachine.cancelAllTasks();
+            }else {
+                coffeeMachine.updateCurrentScheduleState(event.target.id);
+            }
+            coffeeMachineView.depictSchedule(coffeeMachine);
+            
+        }else {}
+    };
+    
+    document.getElementById("coffee").onchange = function (event) {
+        if(event.target.tagName == 'SELECT'){
+            coffeeMachine.updateScheduleRecipe(event.target.id[event.target.id.length - 1],event.target.options[event.target.selectTask[event.target.id.length - 1].selectedIndex].text);
+        }else if(event.target.tagName == 'INPUT'){
+            coffeeMachine.updateScheduleHours(event.target.id[event.target.id.length - 1],event.target.value);
+            coffeeMachine.updateScheduleMinute(event.target.id[event.target.id.length - 1],event.target.value);
+        }
+        coffeeMachineView.depictSchedule(coffeeMachine);
+    };
+
 });
