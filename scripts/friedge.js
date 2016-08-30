@@ -16,7 +16,10 @@ document.addEventListener("DOMContentLoaded", function() {
         btnAddProducts: document.getElementById("btnAddProducts"),
         btnRemoveProducts: document.getElementById("btnRemoveProducts"),
         btnExtremeFrost: document.getElementById("btnExtremeFrost"),
-        newProduct: document.getElementById("newProduct")
+        newProduct: document.getElementById("newProduct"),
+        loaderPercentage: document.getElementById("loaderPercentage"),
+        gif: document.getElementById("gif"),
+        errorExtremeFrost: document.getElementById("errorExtremeFrost")
     }
 
     var startingValues = {
@@ -26,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
         speed: 50,
         currentTemps: {},
         flag: true,
-        status: "off"
+        status: "off",
+        timeFrost: 5000
     }
 
     var modalMessages = {
@@ -58,12 +62,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
     htmlObjects.btnRemoveProducts.onclick = function(e) {
+            e.preventDefault();
+            removeProduct(htmlObjects);
+            if (!htmlObjects.products.children.length) {
+                startingValues.status = "off";
+                Enable(htmlObjects, startingValues, modalMessages);
+            } else {}
+        }
+        // check input, if it was changed
+    document.getElementById('inputWrapper').addEventListener('change', function(event) {
+        setColor(htmlObjects, startingValues);
+    });
+
+    // check if mode was selected
+    htmlObjects.selectMode.onchange = function() {
+        selectMode(htmlObjects);
+        startingValues.currentTemps = getCurrentTemps(htmlObjects);
+        setColor(htmlObjects, startingValues);
+    }
+
+    // extreme frost
+    htmlObjects.btnExtremeFrost.onclick = function(e) {
         e.preventDefault();
-        removeProduct(htmlObjects);
-        if (!htmlObjects.products.children.length) {
-            startingValues.status = "off";
-            Enable(htmlObjects, startingValues, modalMessages);
-        } else {}
+        frostProduct(htmlObjects, startingValues, modalMessages);
     }
 
 });
@@ -72,28 +93,8 @@ function Enable(htmlObjects, startingValues, modalMessages) {
 
     switch (startingValues.status) {
         case "on":
-
             htmlObjects.svg.classList.add("on");
             htmlObjects.svg.classList.remove("off");
-
-            // check input, if it was changed
-            document.getElementById('inputWrapper').addEventListener('change', function(event) {
-                setColor(htmlObjects, startingValues);
-            });
-
-            // check if mode was selected
-            htmlObjects.selectMode.onchange = function() {
-                selectMode(htmlObjects);
-                startingValues.currentTemps = getCurrentTemps(htmlObjects);
-                setColor(htmlObjects, startingValues);
-            }
-
-            // extreme frost
-            htmlObjects.btnExtremeFrost.onclick = function(e) {
-                e.preventDefault();
-                frostProduct(htmlObjects);
-            }
-
             break;
 
         case "off":
@@ -101,8 +102,6 @@ function Enable(htmlObjects, startingValues, modalMessages) {
             htmlObjects.svg.classList.remove("on");
             break;
     }
-
-
 }
 
 function Frost(htmlObjects, startingValues, modalMessages) {
@@ -239,15 +238,7 @@ function getCurrentTemps(htmlObjects) {
 
 function showModal(htmlObjects, startingValues, modalMessages) {
 
-
     htmlObjects.modal.style.display = "block";
-
-    // start animation
-    htmlObjects.outputModalMessage.innerHTML = "Extreme frost started!";
-    setTimeout(function() {
-        htmlObjects.outputModalMessage.className = "frozen";
-        htmlObjects.outputModalMessage.innerHTML = "Frozen!";
-    }, 3000);
 
     htmlObjects.close.onclick = function() {
         htmlObjects.modal.style.display = "none";
@@ -325,6 +316,7 @@ function setColor(htmlObjects, startingValues) {
 
 function addProduct(htmlObjects) {
     var error = document.getElementById("productError");
+    htmlObjects.errorExtremeFrost.style.opacity = "0";
 
     if (htmlObjects.newProduct.value) {
         error.style.opacity = 0;
@@ -354,12 +346,65 @@ function removeProduct(htmlObjects) {
 }
 
 function frostProduct(htmlObjects, startingValues, modalMessages) {
-    showModal(htmlObjects, startingValues, modalMessages);
-    var elements = document.querySelectorAll(".products label");
-    for (var i = 0; i < elements.length; i++) {
-        var parents = elements[i].parentNode;
-        elements[i].classList.add("product-frozen");
+    htmlObjects.errorExtremeFrost.style.opacity = "0";
+    startingValues.speed = 50;
+    var tmp = 0;
+
+    // products for frost
+    var elements = document.querySelectorAll(".products label:not(.product-frozen)");
+
+    if (elements.length) {
+        var prevTemperatures = getCurrentTemps(htmlObjects);
+
+        // set temperature to min
+        htmlObjects.inputOverallTemp.value = htmlObjects.inputOverallTemp.min;
+        htmlObjects.inputFreezeTemp.value = htmlObjects.inputFreezeTemp.min;
+
+        showModal(htmlObjects, startingValues, modalMessages);
+
+        htmlObjects.gif.style.display = "block";
+        htmlObjects.outputModalMessage.innerHTML = "Freeze in progress...";
+
+        var timeoutID = setInterval(function() {
+            if (startingValues.currentWidth > 0) {
+                if (tmp + startingValues.speed < startingValues.timeFrost) {
+                    tmp += startingValues.speed;
+                    htmlObjects.loaderPercentage.innerHTML = parseInt((tmp / startingValues.timeFrost) * 100) + '%';
+                } else {
+                    // set prev temp mode
+                    htmlObjects.inputOverallTemp.value = prevTemperatures.inputOverallTemp;
+                    htmlObjects.inputFreezeTemp.value = prevTemperatures.inputFreezeTemp;
+
+                    htmlObjects.loaderPercentage.innerHTML = "100%";
+                    htmlObjects.gif.style.display = "none";
+                    htmlObjects.outputModalMessage.innerHTML = "Frozen!";
+
+                    for (var i = 0; i < elements.length; i++) {
+                        var parents = elements[i].parentNode;
+                        elements[i].classList.add("product-frozen");
+                    }
+
+                    clearTimeout(timeoutID);
+                }
+            }
+            // no battery
+            else {
+                htmlObjects.gif.style.display = "none";
+                htmlObjects.loaderPercentage.display = "none";
+                htmlObjects.outputModalMessage.innerHTML = "No battery energy...";
+                clearTimeout(timeoutID);
+                return false;
+            }
+
+
+        }, startingValues.speed);
     }
+    // no prod to frost
+    else {
+        htmlObjects.errorExtremeFrost.style.opacity = "1";
+        return false;
+    }
+
 }
 
 function setBatteryColor(htmlObjects, startingValues) {
