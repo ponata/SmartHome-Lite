@@ -7,7 +7,7 @@
 }
 #wrap {
     display: block;
-    height: 390px;
+    height: 600px;
     margin: 0 auto;
     width: 1023px;
 }
@@ -118,6 +118,7 @@ label{
 }
 .scheduled-task{
     vertical-align: middle;
+    height: 20%;
 }
 #reset{
     text-align: center;
@@ -136,7 +137,8 @@ label{
 }
 select{
     display:block;
-    margin: -30px 0 20px 220px;
+    top:50%;
+    margin: -15px 0 0 220px;
     height: 30px;
     width: 100px;
     border-radius: 5px;
@@ -188,9 +190,8 @@ select:disabled{
     color: white;
     text-shadow: none;
 }
-.copyright{
-    margin-top: 170px;
-}
+
+
 #coffee_selected-device.sprite-coffee_0 {
     background-position: 0 0;
 }
@@ -220,11 +221,12 @@ select:disabled{
 }
 input[type=number]{
     display:inline-block;
+    top:50%;
     position: relative;
     width: 40px;
     height: 30px;
     border-radius: 5px;
-    margin: 10px -30px 0 30px;
+    margin: -15px -30px 0 30px;
     background: black;
     color: white;
 }
@@ -234,6 +236,8 @@ input[type=number]:disabled{
 }
 .scheduled-task > button{
     display: inline-block;
+    top:50%;
+    margin-top: -15px;!important;
     width: 60px;
     height: 30px;
 }
