@@ -364,6 +364,7 @@ object:active {
 .tab-content {
   display: none;
 }
+.close-garage-warning-block,
 .wrong-password-block,
 .camera-form-block {
   display: none;
@@ -382,6 +383,7 @@ object:active {
   margin: 0;
   position: relative;
 }
+.close-garage-warning,
 .wrong-password,
 .camera-form {
   width: 40%;

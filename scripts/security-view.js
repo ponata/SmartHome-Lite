@@ -256,6 +256,17 @@ var view = {
 		},
 		removeDisabled: function(element) {
 			element.removeAttribute('disabled');
+		},
+		getCloseGarageWarningBlock: function() {
+			return document.querySelector('.close-garage-warning-block');
+		},
+		closeGarageWarningShow: function() {
+			var self = controller.view.password;
+			self.getCloseGarageWarningBlock().classList.add('show');
+		},
+		closeGarageWarningHide: function() {
+			var self = controller.view.password;
+			self.getCloseGarageWarningBlock().classList.remove('show');
 		}
 	},
 	tabs: {

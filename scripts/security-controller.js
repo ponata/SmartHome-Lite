@@ -4,11 +4,9 @@ var controller = {
 	//tabs block
 	tabsHandler: function() {
 		var tabsLength = this.view.tabs.getTabLinks().length;
-		console.log('i am here');
 		for (var i = 0; i < tabsLength; i++) {
 			this.view.tabs.getTabLinks()[i].addEventListener('click', function(event) {
 				controller.view.tabs.getTabCont(event);
-				console.log(event.target);
 			}, false);
 		}
 	},
@@ -31,7 +29,7 @@ var controller = {
 				controller.view.garage.closeGates();
 				controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Closing...');
 				controller.view.garage.addDisabled(controller.view.garage.getGarageBtn());
-				setTimeout(function() {
+				setTimeout (function() {
 					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Open');
 					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
 				}, 7500);
@@ -172,32 +170,36 @@ var controller = {
 		this.view.password.getLockBtn().addEventListener('click',
 			function(event) {
 				var self = controller;
-				if(self.view.password.getCurrentInputValue() === self.model.password.currentPassword
-				&& self.view.password.getLockBtn().getAttribute('value') === 'Lock') {
-				self.view.password.resetFunc();
-				self.view.password.changeBtnValue(self.view.password.getLockBtn,'Unlock');
-				self.view.password.addDisabled(controller.view.garage.getGarageBtn());
-				self.view.password.addDisabled(controller.view.password.getSetPasswordBtn());
-				self.view.password.toggleVisibility(controller.view.password.getUnlockedIcon(),controller.view.password.getLockedIcon());
-				console.log(controller.view.password.getChangePasswordBtn());
-				self.view.password.getChangePasswordBtn().classList.add('hide');
-			} else if (self.view.password.getCurrentInputValue() === self.model.password.currentPassword
-				&& self.view.password.getLockBtn().getAttribute('value') === 'Unlock') {
-				self.view.password.resetFunc();
-				self.view.password.changeBtnValue(self.view.password.getLockBtn, 'Lock');
-				self.view.password.removeDisabled(controller.view.garage.getGarageBtn());
-				self.view.password.removeDisabled(controller.view.password.getSetPasswordBtn());
-				self.view.password.toggleVisibility(controller.view.password.getLockedIcon(),controller.view.password.getUnlockedIcon());
+				if (self.model.garage.isClosed == true) {
+					if(self.view.password.getCurrentInputValue() === self.model.password.currentPassword
+						&& self.view.password.getLockBtn().getAttribute('value') === 'Lock') {
+							self.view.password.resetFunc();
+							self.view.password.changeBtnValue(self.view.password.getLockBtn,'Unlock');
+							self.view.password.addDisabled(controller.view.garage.getGarageBtn());
+							self.view.password.addDisabled(controller.view.password.getSetPasswordBtn());
+							self.view.password.toggleVisibility(controller.view.password.getUnlockedIcon(),controller.view.password.getLockedIcon());
+							self.view.password.getChangePasswordBtn().classList.add('hide');
+					} else if (self.view.password.getCurrentInputValue() === self.model.password.currentPassword
+						&& self.view.password.getLockBtn().getAttribute('value') === 'Unlock') {
+							self.view.password.resetFunc();
+							self.view.password.changeBtnValue(self.view.password.getLockBtn, 'Lock');
+							self.view.password.removeDisabled(controller.view.garage.getGarageBtn());
+							self.view.password.removeDisabled(controller.view.password.getSetPasswordBtn());
+							self.view.password.toggleVisibility(controller.view.password.getLockedIcon(),controller.view.password.getUnlockedIcon());
+							self.view.password.getChangePasswordBtn().classList.remove('hide');
+					} else {
+						self.view.password.showWrongPasswordBlock();
+					}
+				} else {
+					self.view.password.closeGarageWarningShow();
+				}
 
-				self.view.password.getChangePasswordBtn().classList.remove('hide');
-			}
-				else {
-				self.view.password.showWrongPasswordBlock();
-				console.log(self.view.password.showWrongPasswordBlock);
-			}
 			}, false);
 	},
 	exitWrongPasswordHandler: function() {
 		this.view.password.getWrongPasswordBlock().onclick = this.view.password.exitWrongPassword;
+	},
+	exitCloseGarageHandler: function() {
+		this.view.password.getCloseGarageWarningBlock().onclick = this.view.password.closeGarageWarningHide;
 	}
 }

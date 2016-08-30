@@ -21,5 +21,6 @@ window.onload = function () {
   controller.exitWrongPasswordHandler();
   controller.resetLastValueHandler();
   controller.changePasswordBlockHandler();
+  controller.exitCloseGarageHandler();
 
 }
