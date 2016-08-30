@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var startingValues = {
         currentWidth: 0,
-        stepForward: .1,
+        stepForward: .3,
         stepRevert: 0,
         speed: 50,
         currentTemps: {},
@@ -34,24 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
         defrozen: "Defrozen!"
     }
 
-
-
     Frost(htmlObjects, startingValues, modalMessages);
-    // power button clicked
-    htmlObjects.status.onclick = function(e) {
-        // is electr
-
-        if (!htmlObjects.status.checked) {
-            startingValues.status = "off";
-            Enable(htmlObjects, startingValues, modalMessages);
-            startingValues.flag = true;
-            Frost(htmlObjects, startingValues, modalMessages);
-        }
-        // no electr
-        else {
-
-        }
-    }
 
     htmlObjects.btnAddProducts.onclick = function(e) {
         e.preventDefault();
@@ -168,7 +151,9 @@ function Frost(htmlObjects, startingValues, modalMessages) {
             var timeoutID = setInterval(function() {
                 setBatteryColor(htmlObjects, startingValues);
                 // before new iteration, check the electricity status
+                // no electricity
                 if (htmlObjects.status.checked) {
+                    // check products
                     if (htmlObjects.products.children.length) {
                         // check input, if it was changed
                         document.getElementById('inputWrapper').addEventListener('change', function(event) {
@@ -196,29 +181,35 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                             startingValues.currentWidth = 0;
                             htmlObjects.outputPercentage.innerHTML = '0%';
                             htmlObjects.progressBar.style.width = '0%';
-
-
-                            clearTimeout(timeoutID);
                             startingValues.status = "off";
                             Enable(htmlObjects, startingValues, modalMessages);
+                            // check when electricity will on
+                            if (!htmlObjects.status.checked) {
+                                clearTimeout(timeoutID);
+                                startingValues.flag = true;
+                                Frost(htmlObjects, startingValues, modalMessages);
+                            }
                         }
-                    } else {
-                        clearTimeout(timeoutID);
+                    }
+                    // no products
+                    else {
+                        // electricity on
+                        if (!htmlObjects.status.checked) {
+                            clearTimeout(timeoutID);
+                            startingValues.flag = true;
+                            Frost(htmlObjects, startingValues, modalMessages);
+                        } else {
+
+                        }
                         startingValues.status = "off";
                         Enable(htmlObjects, startingValues, modalMessages);
-                        return false;
                     }
-
-
 
                 } else {
                     // electricity turned off
                     clearTimeout(timeoutID);
                     startingValues.flag = true;
-
                     Frost(htmlObjects, startingValues, modalMessages);
-
-
                 }
 
             }, startingValues.speed);
