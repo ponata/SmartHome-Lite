@@ -86,6 +86,11 @@ window.onload = function() {
             case "C": enterMask("1111000", position); break;
         }
     }
+    
+    function validate(){
+        return document.querySelectorAll(":invalid").length === 0;
+    }
+    
     //Events
     var speed = document.getElementById("speed-input");
     document.getElementById("on").onclick = function() {
@@ -108,7 +113,7 @@ window.onload = function() {
     var temperature = document.getElementById("temperature-input");
     var currentTemperature = parseInt(temperature.value);
     temperature.onchange = function(){
-        if(!off.checked){
+        if((!off.checked)&&(validate())){
             var temperatureTransition = setInterval(function(){
                 var dirrection = Math.sign(temperature.value - currentTemperature);
                 currentTemperature+=dirrection;
@@ -124,12 +129,16 @@ window.onload = function() {
                 }
             }, 600);
         }
+        
+        if(!validate()) {
+            alert("Error in value\ntemperature must be in range from -30 to 30, humidity must be in range from 0 to 100");
+        }
     }
     
     var humidity = document.getElementById("humidity-input");
     var currentHumidity = parseInt(humidity.value);
     humidity.onchange = function(){
-        if(!off.checked){
+        if((!off.checked)&&(validate())){
             var humidityTransition = setInterval(function(){
                 var dirrection = Math.sign(humidity.value - currentHumidity);
                 currentHumidity+=dirrection;
@@ -139,6 +148,10 @@ window.onload = function() {
                     clearInterval(humidityTransition);
                 }
             }, 600);
+        }
+        
+        if(!validate()) {
+            alert("Error in value\ntemperature must be in range from -30 to 30, humidity must be in range from 0 to 100");
         }
     }
 }
