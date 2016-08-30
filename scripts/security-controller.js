@@ -1,6 +1,17 @@
 var controller = {
 	model: null,
 	view: null,
+	//tabs block
+	tabsHandler: function() {
+		var tabsLength = this.view.tabs.getTabLinks().length;
+		console.log('i am here');
+		for (var i = 0; i < tabsLength; i++) {
+			this.view.tabs.getTabLinks()[i].addEventListener('click', function(event) {
+				controller.view.tabs.getTabCont(event);
+				console.log(event.target);
+			}, false);
+		}
+	},
 	//garage block
 	garageHandler: function() {
 		this.view.garage.getGarageBtn().addEventListener ('click',
@@ -16,7 +27,7 @@ var controller = {
 					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
 				}, 10000);
 			} else {
-				controller.model.garage.isClosed = true; 
+				controller.model.garage.isClosed = true;
 				controller.view.garage.closeGates();
 				controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Closing...');
 				controller.view.garage.addDisabled(controller.view.garage.getGarageBtn());
@@ -48,7 +59,7 @@ var controller = {
 			controller.view.camera.hideCameraFormBlock();
 			controller.view.camera.addCameraInnerHTML();
 			controller.setVideoBtnIdHandler();
-		}, false); 	
+		}, false);
 	},
 	NewCameraConstructor: function NewCameraConstructor(name, url) {
 		this.name = name;
@@ -74,16 +85,15 @@ var controller = {
 					controller.model.camera[dataNumber].isOn = true;
 					video.classList.remove('tab-content');
 					controller.view.camera.changeCameraBtnInner(target, false);
-				} 
+				}
 			} else if (target.hasAttribute('data-number-remove')) {
 				var block = target.parentElement;
-				console.log(block);
 				controller.model.camera.splice([dataNumberRemove],1);
 				block.remove();
 			} else {
 				return;
 			}
-			
+
 		}, false);
 	},
 	//password block
@@ -102,7 +112,6 @@ var controller = {
 	//set password
 	i: null,
 	inputPassHandlerFunc: function(e) {
-		//console.log('cliiiiick');
 		self = controller;
 		if (event.target.getAttribute('data-td') === 'true'){
 		self.view.password.setCurrentPassValue();
@@ -116,22 +125,19 @@ var controller = {
 	},
 	inputPassHandler: function() {
 		if (this.model.password.passwordStatus === false) {
-			console.log(this.model.password.passwordStatus);
 			this.i = 1;
 		} else {
-			console.log(this.model.password.passwordStatus);
 			this.i = 0;
 		};
-		
-		
+
 		this.view.password.getTable()[this.i].removeEventListener('click',
 				this.inputPassHandlerFunc);
-		
+
 		this.view.password.getTable()[this.i].addEventListener('click',
 			this.inputPassHandlerFunc, false);
 
 	},
-	
+
 	setPassword: function() {
 		if (this.model.password.currentPassword === '' || this.model.password.currentPassword !== '') {
 			this.model.password.currentPassword = this.view.password.getCurrentInputValue();
@@ -140,8 +146,7 @@ var controller = {
 			this.view.password.getSetPasswordBlock().classList.add('hide');
 			this.view.password.getPasswordBlock().classList.remove('tab-content');
 			this.view.password.changeUnlockSvgColor();
-			//this.changePasswordBlockHandler();
-		} 
+		}
 		else {
 			alert('Password is already set!');
 		}
@@ -153,13 +158,13 @@ var controller = {
 			self.inputPassHandler();
 		}, false);
 	},
-	
+
 	changePasswordBlockHandler: function() {
 		controller.view.password.getChangePasswordBtn().addEventListener('click', function() {
 			controller.view.password.showChangePasswordBlock();
 			controller.model.password.passwordStatus = false;
 			controller.model.password.currentPassword= '';
-			
+
 		}, false);
 	},
 	//lock/unlock process
@@ -167,7 +172,7 @@ var controller = {
 		this.view.password.getLockBtn().addEventListener('click',
 			function(event) {
 				var self = controller;
-				if(self.view.password.getCurrentInputValue() === self.model.password.currentPassword 
+				if(self.view.password.getCurrentInputValue() === self.model.password.currentPassword
 				&& self.view.password.getLockBtn().getAttribute('value') === 'Lock') {
 				self.view.password.resetFunc();
 				self.view.password.changeBtnValue(self.view.password.getLockBtn,'Unlock');
@@ -176,14 +181,14 @@ var controller = {
 				self.view.password.toggleVisibility(controller.view.password.getUnlockedIcon(),controller.view.password.getLockedIcon());
 				console.log(controller.view.password.getChangePasswordBtn());
 				self.view.password.getChangePasswordBtn().classList.add('hide');
-			} else if (self.view.password.getCurrentInputValue() === self.model.password.currentPassword  
+			} else if (self.view.password.getCurrentInputValue() === self.model.password.currentPassword
 				&& self.view.password.getLockBtn().getAttribute('value') === 'Unlock') {
 				self.view.password.resetFunc();
 				self.view.password.changeBtnValue(self.view.password.getLockBtn, 'Lock');
 				self.view.password.removeDisabled(controller.view.garage.getGarageBtn());
 				self.view.password.removeDisabled(controller.view.password.getSetPasswordBtn());
 				self.view.password.toggleVisibility(controller.view.password.getLockedIcon(),controller.view.password.getUnlockedIcon());
-				
+
 				self.view.password.getChangePasswordBtn().classList.remove('hide');
 			}
 				else {

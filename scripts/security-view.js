@@ -25,15 +25,11 @@ var view = {
 			element.removeAttribute('disabled');
 		}
 	},
-
 	//camera block
 	camera: {
 		getCameraBlock: function() {
 			return document.querySelector('.camera-block');
 		},
-		/*getVideoContainerBlock: function() {
-			return document
-		},*/
 		getFullScreenBtn: function() {
 			return document.getElementById('full-screen-btn');
 		},
@@ -47,7 +43,7 @@ var view = {
 			for (var i = 0; i < this.getVideoBtn().length; i++) {
 				this.getVideoBtn()[i].setAttribute('data-number', i);
 				this.getRemoveVideoBtn()[i].setAttribute('data-number-remove', i);
-			}	
+			}
 		},
 		getVideoBtnNewId: function() {
 			return document.querySelectorAll('[data-number]');
@@ -76,10 +72,8 @@ var view = {
 			return document.getElementById('camera-path').value;
 		},
 		getCameraNameValue: function() {
-			//console.log(document.getElementById('camera-name').value);
 			return document.getElementById('camera-name').value;
 		},
-
 		addCameraInnerHTML: function() {
 			var div = document.createElement('div');
 			div.className = "video-container";
@@ -110,7 +104,7 @@ var view = {
 			return document.getElementById(video);
 		},
 		cancelFullScreenFunc: function() {
-			document.cancelFullScreen = document.webkitCancelFullScreen 
+			document.cancelFullScreen = document.webkitCancelFullScreen
 			|| document.mozCancelFullScreen;
 			document.cancelFullScreen();
 		},
@@ -131,7 +125,6 @@ var view = {
 			self.getFullScreenBtn().onclick = self.enterFullScreen;
 		}
 	},
-
 	//password block
 	password: {
 		getLockedIcon: function() {
@@ -144,7 +137,6 @@ var view = {
 			id1.style.display = 'none';
 			id2.style.display = 'block';
 		},
-		
 		getTd: function() {
 			return document.querySelectorAll('[data-td="true"]');
 		},
@@ -206,7 +198,7 @@ var view = {
 		getInputPassword: function() {
 			var j;
 			if (controller.getPasswordStatus()) {
-				j = 0; 
+				j = 0;
 			} else {
 				j = 1;
 			}
@@ -247,7 +239,31 @@ var view = {
 		removeDisabled: function(element) {
 			element.removeAttribute('disabled');
 		}
-		
-				
-	}	
+	},
+	tabs: {
+		getTabLinks: function() {
+			return document.querySelectorAll('object');
+		},
+		getSections: function() {
+			return document.querySelectorAll('.tab-content');
+		},
+		getTarget: function(elem) {
+			return elem.getAttribute('data-tabholder').replace('#', '');
+		},
+		getTabCont: function(event) {
+			var elem = event.currentTarget;
+			controller.view.password.getPasswordBlock().classList.add('tab-content');
+			var testTarg = controller.view.tabs.getTarget(elem);
+			var sectionLength = controller.view.tabs.getSections().length;
+			for (var j = 0; j < sectionLength; j++) {
+				controller.view.tabs.getSections()[j].style.display = 'none';
+			}
+			document.getElementById(testTarg).style.display = 'block';
+			for (var k = 0; k < controller.tabsLength; k++) {
+				controller.view.tabs.getTabLinks()[k].removeAttribute('class');
+			}
+			elem.setAttribute('class', 'is-active');
+			return false;
+		}
+	}
 }
