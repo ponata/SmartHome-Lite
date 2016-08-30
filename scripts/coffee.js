@@ -115,8 +115,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 hours:23,
                 minute:60
             }
-
         ],
+        
         switchCurrentRecipie: function (recipeName) {
             var i = 0;
             while (this.recipies[i].name != recipeName) {
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         cancelAllTasks: function () {
             for(var i=0; i<this.schedule.length;i++){
-                this.schedule[i].enabled = ! this.schedule[i].enabled;
+                this.schedule[i].enabled = false;
             }
         }
     };
@@ -279,15 +279,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     this.selectTask[i].disabled=true;
                 }
             }
-        },
-        updateSchedule: function(){
-            for (var i =0; i< this.scheduleButtons.length;i++){
-                if(this.scheduleButtons[i].classList.contains("button_active")){
-                    this.cancelAllButton.disabled = false;
-                    this.scheduleButtons[i].classList.remove("button_active");
-                }else{
-                    this.cancelAllButton.disabled = true;
-                }
+            var j=0;
+            while(j<this.scheduleButtons.length && coffeeMachineObject.schedule[j].enabled===false){
+                j++;
+            }
+            if(j===this.scheduleButtons.length){
+                this.cancelAllButton.disabled = true;
+            }else{
+                this.cancelAllButton.disabled = false;
             }
         }
     };
@@ -332,12 +331,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
     document.getElementById("coffee").onclick = function (event) {
         if(event.target.tagName == 'BUTTON'){
-            coffeeMachine.updateCurrentScheduleState(event.target.id);
-            coffeeMachineView.depictSchedule(coffeeMachine);
             if(event.target.id == "cancel-all"){
                 coffeeMachine.cancelAllTasks();
-                coffeeMachineView.updateSchedule(coffeeMachine);
-            }else {}
+            }else {
+                coffeeMachine.updateCurrentScheduleState(event.target.id);
+            }
+            coffeeMachineView.depictSchedule(coffeeMachine);
+            
         }else {}
     };
     
