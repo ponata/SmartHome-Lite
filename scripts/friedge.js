@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var htmlObjects = {
         inputFreezeTemp: document.getElementById("inputFreezeTemp"),
         inputOverallTemp: document.getElementById("inputOverallTemp"),
-        inputsTemp: document.getElementsByClassName("input"),
+        inputsTemp: document.getElementsByClassName("temp"),
         progressBar: document.getElementById("progressBar"),
         outputPercentage: document.getElementById("outputPercentage"),
         close: document.getElementById("close"),
@@ -21,11 +21,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var startingValues = {
         currentWidth: 0,
-        stepForward: 0,
-        stepRevert: 1,
+        stepForward: .3,
+        stepRevert: 0,
         speed: 50,
         currentTemps: {},
-        flag: "frost"
+        flag: true,
+        status: "off"
     }
 
     var modalMessages = {
@@ -33,62 +34,133 @@ document.addEventListener("DOMContentLoaded", function() {
         defrozen: "Defrozen!"
     }
 
-    // power button clicked
-    htmlObjects.status.onclick = function(e) {
-        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off") && htmlObjects.products.children.length) {
+    Frost(htmlObjects, startingValues, modalMessages);
 
-            htmlObjects.svg.classList.add("on");
-            htmlObjects.svg.classList.remove("off");
-            setColor(htmlObjects, startingValues);
-            startingValues.flag = "frost";
-            Frost(htmlObjects, startingValues, modalMessages);
-        } else {}
-    }
     htmlObjects.btnAddProducts.onclick = function(e) {
         e.preventDefault();
         addProduct(htmlObjects);
-        if (!htmlObjects.status.checked && document.querySelector(".svg-elem.off")) {
-
-            htmlObjects.svg.classList.add("on");
-            htmlObjects.svg.classList.remove("off");
+        if (document.querySelector(".svg-elem.off") && htmlObjects.products.children.length) {
+            startingValues.status = "on";
+            Enable(htmlObjects, startingValues, modalMessages);
             setColor(htmlObjects, startingValues);
-            startingValues.flag = "frost";
-            Frost(htmlObjects, startingValues, modalMessages);
-        } else {}
+            if (htmlObjects.status.checked) {
+                // no electricity
+                startingValues.flag = false;
+                Frost(htmlObjects, startingValues, modalMessages);
+
+            } else {
+                // is electr
+
+            }
+        } else {
+
+        }
+
     }
     htmlObjects.btnRemoveProducts.onclick = function(e) {
         e.preventDefault();
         removeProduct(htmlObjects);
+        if (!htmlObjects.products.children.length) {
+            startingValues.status = "off";
+            Enable(htmlObjects, startingValues, modalMessages);
+        } else {}
     }
-
-
 
 });
 
+function Enable(htmlObjects, startingValues, modalMessages) {
+
+    switch (startingValues.status) {
+        case "on":
+
+            htmlObjects.svg.classList.add("on");
+            htmlObjects.svg.classList.remove("off");
+
+            // check input, if it was changed
+            document.getElementById('inputWrapper').addEventListener('change', function(event) {
+                setColor(htmlObjects, startingValues);
+            });
+
+            // check if mode was selected
+            htmlObjects.selectMode.onchange = function() {
+                selectMode(htmlObjects);
+                startingValues.currentTemps = getCurrentTemps(htmlObjects);
+                setColor(htmlObjects, startingValues);
+            }
+
+            // extreme frost
+            htmlObjects.btnExtremeFrost.onclick = function(e) {
+                e.preventDefault();
+                frostProduct(htmlObjects);
+            }
+
+            break;
+
+        case "off":
+            htmlObjects.svg.classList.add("off");
+            htmlObjects.svg.classList.remove("on");
+            break;
+    }
+
+
+}
 
 function Frost(htmlObjects, startingValues, modalMessages) {
     // var currentTemps;
 
     switch (startingValues.flag) {
 
-        // Start frost
-        case "frost":
+
+        case true:
 
             startingValues.speed = 70;
+
+            var timeoutID = setInterval(function() {
+                setBatteryColor(htmlObjects, startingValues);
+                // before new iteration, check electricity status
+                if (!htmlObjects.status.checked) {
+                    if (startingValues.currentWidth + startingValues.stepForward < 100) {
+                        startingValues.currentWidth += startingValues.stepForward;
+
+                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
+                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
+
+                    } else {
+                        startingValues.currentWidth = 100;
+                        htmlObjects.outputPercentage.innerHTML = '100%';
+                        htmlObjects.progressBar.style.width = '100%';
+                    }
+
+                } else {
+                    // electricity turned off
+                    clearTimeout(timeoutID);
+                    startingValues.flag = false;
+                    Frost(htmlObjects, startingValues, modalMessages);
+                }
+
+            }, startingValues.speed);
+
+            break;
+
+
+        case false:
+
+            startingValues.speed = 40;
             startingValues.currentTemps = getCurrentTemps(htmlObjects);
 
             var timeoutID = setInterval(function() {
-                // before new iteration, check electricity status
-                if (!htmlObjects.status.checked) {
+                setBatteryColor(htmlObjects, startingValues);
+                // before new iteration, check the electricity status
+                // no electricity
+                if (htmlObjects.status.checked) {
+                    // check products
                     if (htmlObjects.products.children.length) {
-
                         // check input, if it was changed
                         document.getElementById('inputWrapper').addEventListener('change', function(event) {
                             var elem = event.target;
                             if (checkInput(elem)) {
                                 startingValues.currentTemps = getCurrentTemps(htmlObjects);
                                 setColor(htmlObjects, startingValues);
-
                             }
                         });
 
@@ -99,142 +171,44 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                             setColor(htmlObjects, startingValues);
                         }
 
-                        // extreme frost
-                        htmlObjects.btnExtremeFrost.onclick = function(e) {
-                                e.preventDefault();
-                                frostProduct(htmlObjects);
-                            }
-                            // calc the step
-                        startingValues.stepForward = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 200;
-
-                        if (startingValues.currentWidth + startingValues.stepForward < 100) {
-                            startingValues.currentWidth += startingValues.stepForward;
-
+                        startingValues.currentTemps = getCurrentTemps(htmlObjects);
+                        startingValues.stepRevert = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 1000;
+                        if (startingValues.currentWidth - startingValues.stepRevert > 0) {
+                            startingValues.currentWidth -= startingValues.stepRevert;
                             htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
                             htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
-
                         } else {
-                            startingValues.currentWidth = 100;
-                            htmlObjects.outputPercentage.innerHTML = '100%';
-                            htmlObjects.progressBar.style.width = '100%';
-
-                            showModal(htmlObjects, startingValues, modalMessages);
-
-                            clearTimeout(timeoutID);
-                            setTimeout(function() {
-                                // run Frost with new flag
-                                startingValues.flag = "defrost";
+                            startingValues.currentWidth = 0;
+                            htmlObjects.outputPercentage.innerHTML = '0%';
+                            htmlObjects.progressBar.style.width = '0%';
+                            startingValues.status = "off";
+                            Enable(htmlObjects, startingValues, modalMessages);
+                            // check when electricity will on
+                            if (!htmlObjects.status.checked) {
+                                clearTimeout(timeoutID);
+                                startingValues.flag = true;
                                 Frost(htmlObjects, startingValues, modalMessages);
-                            }, 3000);
+                            }
                         }
-                    } else {
-                        htmlObjects.svg.classList.add("off");
-                        htmlObjects.svg.classList.remove("on");
-
-                        clearTimeout(timeoutID);
-                        // run Frost with new flag
-                        startingValues.flag = "defrost";
-                        Frost(htmlObjects, startingValues, modalMessages);
                     }
-
-                } else {
-
-                    // electricity turned off
-                    clearTimeout(timeoutID);
-                    startingValues.flag = "defrost";
-                    Frost(htmlObjects, startingValues, modalMessages);
-                }
-
-            }, startingValues.speed);
-
-            break;
-
-            // start derfrost
-        case "defrost":
-
-            startingValues.speed = 40;
-            startingValues.stepRevert = 1;
-
-
-            var timeoutID = setInterval(function() {
-                // before new iteration, check the electricity status
-                if (!htmlObjects.status.checked) {
-
                     // no products
-                    if (startingValues.currentWidth - startingValues.stepRevert > 0) {
-                        startingValues.currentWidth -= startingValues.stepRevert;
-                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
-                    } else {
-                        startingValues.currentWidth = 0;
-                        htmlObjects.outputPercentage.innerHTML = '0%';
-                        htmlObjects.progressBar.style.width = '0%';
-                        showModal(htmlObjects, startingValues, modalMessages);
-
-                        clearTimeout(timeoutID);
-
-                        if (htmlObjects.products.children.length) {
-                            startingValues.flag = "frost";
+                    else {
+                        // electricity on
+                        if (!htmlObjects.status.checked) {
+                            clearTimeout(timeoutID);
+                            startingValues.flag = true;
                             Frost(htmlObjects, startingValues, modalMessages);
                         } else {
 
-                            clearTimeout(timeoutID);
-                            htmlObjects.svg.classList.add("off");
-                            htmlObjects.svg.classList.remove("on");
-                            return false;
                         }
+                        startingValues.status = "off";
+                        Enable(htmlObjects, startingValues, modalMessages);
                     }
-
-
-
-
 
                 } else {
                     // electricity turned off
                     clearTimeout(timeoutID);
-                    startingValues.flag = "power saving mode";
-                    Frost(htmlObjects, startingValues, modalMessages);
-                }
-
-            }, startingValues.speed);
-
-            break;
-
-        case "power saving mode":
-
-            startingValues.speed = 1000;
-            startingValues.stepRevert = 0.3;
-
-            var timeoutID = setInterval(function() {
-                // before new iteration, check the electricity status
-                // if electricity turned off
-                if (htmlObjects.status.checked) {
-                    if (startingValues.currentWidth - startingValues.stepRevert > 0) {
-                        startingValues.currentWidth -= startingValues.stepRevert;
-                        htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                        htmlObjects.progressBar.style.width = startingValues.currentWidth + '%';
-                    } else {
-                        startingValues.currentWidth = 0;
-                        htmlObjects.outputPercentage.innerHTML = '0%';
-                        htmlObjects.progressBar.style.width = '0%';
-                        showModal(htmlObjects, startingValues, modalMessages);
-
-                        if (!htmlObjects.status.checked && htmlObjects.products.children.length) {
-                            startingValues.flag = "frost";
-                            Frost(htmlObjects, startingValues, modalMessages);
-                        } else {
-                            htmlObjects.svg.classList.add("off");
-                            htmlObjects.svg.classList.remove("on");
-                            clearTimeout(timeoutID);
-                            return false;
-                        }
-                        clearTimeout(timeoutID);
-                    }
-
-                } else {
-                    // electricity turned on
-                    clearTimeout(timeoutID);
-                    startingValues.flag = "frost";
+                    startingValues.flag = true;
                     Frost(htmlObjects, startingValues, modalMessages);
                 }
 
@@ -355,19 +329,19 @@ function addProduct(htmlObjects) {
     if (htmlObjects.newProduct.value) {
         error.style.opacity = 0;
 
-        var parentElem = document.createElement("label");
-        parentElem.className = "product";
+        var label = document.createElement("label");
         var elem = document.createElement("input");
+
+        label.className = "product";
         elem.type = "checkbox";
 
-        parentElem.className = "product";
-        parentElem.innerHTML = htmlObjects.newProduct.value;
-        parentElem.appendChild(elem);
-        htmlObjects.products.appendChild(parentElem);
+        label.innerHTML = htmlObjects.newProduct.value;
+        label.appendChild(elem);
+        htmlObjects.products.appendChild(label);
+        htmlObjects.newProduct.value = "";
     } else {
         error.style.opacity = 1;
     }
-    addStyle();
 }
 
 function removeProduct(htmlObjects) {
@@ -375,19 +349,27 @@ function removeProduct(htmlObjects) {
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.parentNode.removeChild(parents);
+
     }
 }
 
 function frostProduct(htmlObjects) {
-    var elements = document.querySelectorAll(".product input:checked");
+    var elements = document.querySelectorAll(".product");
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
         parents.classList.add("frozen-product");
     }
 }
 
-function addStyle() {
-    document.querySelector(".product").onclick = function functionName() {
-        this.classList.add('asadas');
+function setBatteryColor(htmlObjects, startingValues) {
+    if (startingValues.currentWidth > 70) {
+        htmlObjects.progressBar.style.background = "#70FA70";
+
+    } else if (startingValues.currentWidth < 35) {
+        htmlObjects.progressBar.style.background = "#F54D4D";
+    } else {
+        htmlObjects.progressBar.style.background = "#FEBD48";
+
     }
+
 }
