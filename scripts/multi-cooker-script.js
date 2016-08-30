@@ -211,6 +211,8 @@ window.onload = function() {
         stopCustomProgramBtn.onclick = function() {
             hideElem(customDisplayProcess);
             showElem(cancelDisplay);
+            showElem(pauseCustomProgramBtn);
+            hideElem(playCustomProgramBtn);
             clearInterval(timerData.timerId);
             enableMainBtns ();
             resetTempTime ();
@@ -224,6 +226,8 @@ window.onload = function() {
         function resetTempTime () {
             setTemperature.innerText = 100 + " °";
             setClock.innerText = "01:00";
+            custom.temperature = 100;
+            timerData.time = custom.time;
         }
 
         startBtn.onclick = function () {
@@ -231,29 +235,9 @@ window.onload = function() {
             showElem(customDisplayProcess);
             disableMainBtns();
             goTimer (timerData);
-            customTimeSecElem.innerHTML = showAsTime(custom.time);
+            customTimeSecElem.innerHTML = showAsTime(timerData.time);
 
         }
-
-       function changeTime(step) {
-           custom.time += step;
-           var hours = Math.floor(custom.time/3600);
-           if (hours<10) hours = "0" + hours;
-
-           var minutes = Math.floor((custom.time - hours*3600)/60);
-           if (minutes<10) minutes = "0" + minutes;
-
-           var clock =  hours + ":"  + minutes;
-
-           setClock.innerText = clock;
-           if(custom.time <= 0){
-               lessClockBtn.setAttribute("disabled","disabled");
-               }
-           if(custom.time >= 36000){
-               moreClockBtn.setAttribute("disabled","disabled");
-               }
-              return custom.time;
-       }
 
         lessClockBtn.onclick = function() {
             moreClockBtn.removeAttribute("disabled","disabled");
@@ -265,13 +249,6 @@ window.onload = function() {
             changeTime(300);
         }
 
-        resetBtn.onclick = function reset(){
-            setTemperature.innerText = 100 + " °";
-            setClock.innerText = "01:00";
-            custom.time = 3600;
-            custom.temperature = 100;
-        }
-
         lessTemperatureBtn.onclick = function() {
             moreTemperatureBtn.removeAttribute("disabled","disabled");
             changeTemperature(-5);
@@ -280,6 +257,25 @@ window.onload = function() {
         moreTemperatureBtn.onclick = function() {
             lessTemperatureBtn.removeAttribute("disabled","disabled");
             changeTemperature(5);
+        }
+
+        function changeTime(step) {
+            timerData.time += step;
+            var hours = Math.floor(timerData.time/3600);
+            if (hours<10) hours = "0" + hours;
+
+            var minutes = Math.floor((timerData.time - hours*3600)/60);
+            if (minutes<10) minutes = "0" + minutes;
+
+            var clock =  hours + ":"  + minutes;
+
+            setClock.innerText = clock;
+            if(timerData.time <= 0){
+                lessClockBtn.setAttribute("disabled","disabled");
+                }
+            if(timerData.time >= 36000){
+                moreClockBtn.setAttribute("disabled","disabled");
+                }
         }
 
         function changeTemperature (step) {
