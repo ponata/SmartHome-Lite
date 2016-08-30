@@ -1,23 +1,45 @@
 window.onload = function() {
     var heatingBtn = document.getElementById('heating-btn');
     var cookBtn = document.getElementById('cook-btn');
-    var settingsBtn = document.getElementById('settings-btn');
+    var customBtn = document.getElementById('custom-btn');
     var heatingDisplay = document.getElementById('heating-display');
     var programDisplay = document.getElementById('program-display');
     var setProgramDisplay = document.getElementById('set-program-display');
     var spanDishName = document.getElementById("span-dish-name");
     var heatTimeSecElem = document.getElementById('heat-time-sec');
     var cookTimeSecElem = document.getElementById('cook-time-sec');
+    var customTimeSecElem = document.getElementById('custom-time-sec');
     var pauseBtn = document.getElementById('pause');
     var playBtn = document.getElementById('play');
     var stopBtn = document.getElementById('stop');
     var doneDisplay = document.getElementById('done');
     var stopHeatBtn = document.getElementById('stop-heat');
     var cancelDisplay = document.getElementById('cancel');
+    var customDisplay = document.getElementById('custom-display');
+    var lessTemperatureBtn = document.getElementById('less-temperature');
+    var moreTemperatureBtn = document.getElementById('more-temperature');
+    var setTemperature = document.getElementById('set-temperature');
+    var moreClockBtn = document.getElementById('more-clock');
+    var lessClockBtn = document.getElementById('less-clock');
+    var setClockBtn = document.getElementById('set-clock');
+    var setClock = document.getElementById('set-clock');
+    var startBtn = document.getElementById('start');
+    var resetBtn = document.getElementById('reset');
+    var playCustomProgramBtn = document.getElementById('play-custom-program');
+    var pauseCustomProgramBtn = document.getElementById('pause-custom-program');
+    var stopCustomProgramBtn = document.getElementById('stop-custom-program');
+    var customDisplayProcess = document.getElementById('custom-display-process');
+    var imgTimer = document.getElementById('img-timer');
+    var imgTimer2 = document.getElementById('img-timer2');
+
+
+
+
 
     var heating = {
         time: 420
     };
+
     var programs = {
         soup: {
             time:2400,
@@ -63,11 +85,17 @@ window.onload = function() {
         }
     };
 
+    var custom = {
+        time: 3600,
+        temperature: 100
+    };
+
     cookBtn.onclick = function() {
         showElem(programDisplay);
         hideElem(heatingDisplay);
         hideElem(doneDisplay);
         hideElem(cancelDisplay);
+        hideElem(customDisplay);
     }
 
     heatingBtn.onclick = function() {
@@ -75,6 +103,7 @@ window.onload = function() {
         hideElem(programDisplay);
         hideElem(doneDisplay);
         hideElem(cancelDisplay);
+        hideElem(customDisplay);
         disableMainBtns();
         var t = heating.time;
         heatTimeSecElem.innerHTML = showAsTime(t);
@@ -87,13 +116,13 @@ window.onload = function() {
         goTimer (timerData);
 
         stopHeatBtn.onclick = function() {
-            console.log("jkhkjhj");
             hideElem(heatingDisplay);
             showElem(cancelDisplay);
             clearInterval(timerData.timerId);
             enableMainBtns ();
         }
     }
+
 
     for(var programName in programs) {
         document.getElementById(programName).onclick = programs[programName].action;
@@ -122,12 +151,14 @@ window.onload = function() {
             clearInterval(timerData.timerId);
             hideElem(pauseBtn);
             showElem(playBtn);
+            imgTimer.className = "stop-animation";
         }
 
         playBtn.onclick = function() {
-            goTimer (timerData);
             hideElem(playBtn);
             showElem(pauseBtn);
+            goTimer (timerData);
+            imgTimer.className = "timer";
         }
 
         stopBtn.onclick = function() {
@@ -137,18 +168,145 @@ window.onload = function() {
             showElem(cancelDisplay);
             clearInterval(timerData.timerId);
             enableMainBtns ();
+            imgTimer.className = "timer";
         }
     }
+
+    customBtn.onclick = function () {
+        showElem(customDisplay);
+        hideElem(programDisplay);
+        hideElem(doneDisplay);
+        hideElem(cancelDisplay);
+        hideElem(heatingDisplay);
+        moreClockBtn.removeAttribute("disabled","disabled");
+        lessClockBtn.removeAttribute("disabled","disabled");
+        moreTemperatureBtn.removeAttribute("disabled","disabled");
+        lessTemperatureBtn.removeAttribute("disabled","disabled");
+
+
+        var timerData = {
+            timerId: null,
+            time: custom.time,
+            timeElem: customTimeSecElem,
+            processBlock: customDisplayProcess
+        }
+
+
+        pauseCustomProgramBtn.onclick = function() {
+            clearInterval(timerData.timerId);
+            hideElem(pauseCustomProgramBtn);
+            showElem(playCustomProgramBtn);
+            imgTimer2.className = "stop-animation";
+        }
+
+
+        playCustomProgramBtn.onclick = function() {
+            clearInterval(timerData.timerId);
+            showElem(pauseCustomProgramBtn);
+            hideElem(playCustomProgramBtn);
+            goTimer (timerData);
+            imgTimer2.className = "timer";
+        }
+
+        stopCustomProgramBtn.onclick = function() {
+            hideElem(customDisplayProcess);
+            showElem(cancelDisplay);
+            clearInterval(timerData.timerId);
+            enableMainBtns ();
+            resetTempTime ();
+            imgTimer2.className = "timer";
+        }
+
+        resetBtn.onclick = function (){
+            resetTempTime ();
+        }
+
+        function resetTempTime () {
+            setTemperature.innerText = 100 + " °";
+            setClock.innerText = "01:00";
+        }
+
+        startBtn.onclick = function () {
+            hideElem(customDisplay);
+            showElem(customDisplayProcess);
+            disableMainBtns();
+            goTimer (timerData);
+            customTimeSecElem.innerHTML = showAsTime(custom.time);
+
+        }
+
+       function changeTime(step) {
+           custom.time += step;
+           var hours = Math.floor(custom.time/3600);
+           if (hours<10) hours = "0" + hours;
+
+           var minutes = Math.floor((custom.time - hours*3600)/60);
+           if (minutes<10) minutes = "0" + minutes;
+
+           var clock =  hours + ":"  + minutes;
+
+           setClock.innerText = clock;
+           if(custom.time <= 0){
+               lessClockBtn.setAttribute("disabled","disabled");
+               }
+           if(custom.time >= 36000){
+               moreClockBtn.setAttribute("disabled","disabled");
+               }
+              return custom.time;
+       }
+
+        lessClockBtn.onclick = function() {
+            moreClockBtn.removeAttribute("disabled","disabled");
+            changeTime(-300);
+        }
+
+        moreClockBtn.onclick = function() {
+            lessClockBtn.removeAttribute("disabled","disabled");
+            changeTime(300);
+        }
+
+        resetBtn.onclick = function reset(){
+            setTemperature.innerText = 100 + " °";
+            setClock.innerText = "01:00";
+            custom.time = 3600;
+            custom.temperature = 100;
+        }
+
+        lessTemperatureBtn.onclick = function() {
+            moreTemperatureBtn.removeAttribute("disabled","disabled");
+            changeTemperature(-5);
+        }
+
+        moreTemperatureBtn.onclick = function() {
+            lessTemperatureBtn.removeAttribute("disabled","disabled");
+            changeTemperature(5);
+        }
+
+        function changeTemperature (step) {
+            setTemperature.innerText = custom.temperature + step + " °";
+            custom.temperature += step;
+            if(custom.temperature >= 200){
+                moreTemperatureBtn.setAttribute("disabled","disabled");
+            }
+            else if(custom.temperature <= 0){
+                lessTemperatureBtn.setAttribute("disabled","disabled");
+            }
+        }
+   }
+
+
     function disableMainBtns () {
         heatingBtn.setAttribute("disabled","disabled");
         cookBtn.setAttribute("disabled","disabled");
-        settingsBtn.setAttribute("disabled","disabled");
+        customBtn.setAttribute("disabled","disabled");
+        lessTemperatureBtn.setAttribute("disabled","disabled");
+        moreTemperatureBtn.setAttribute("disabled","disabled");
     }
 
     function enableMainBtns () {
         heatingBtn.removeAttribute("disabled","disabled");
         cookBtn.removeAttribute("disabled","disabled");
-        settingsBtn.removeAttribute("disabled","disabled");
+        customBtn.removeAttribute("disabled","disabled");
     }
 
     function goTimer (timerData) {
