@@ -110,7 +110,6 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 
     switch (startingValues.flag) {
 
-
         case true:
 
             startingValues.speed = 70;
@@ -119,6 +118,16 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                 setBatteryColor(htmlObjects, startingValues);
                 // before new iteration, check electricity status
                 if (!htmlObjects.status.checked) {
+                    svg.classList.remove("battery-mode");
+                    // friedge was off and we have products
+                    if (document.querySelector(".svg-elem.off") && htmlObjects.products.children.length) {
+                        startingValues.status = "on";
+                        Enable(htmlObjects, startingValues, modalMessages);
+                        setColor(htmlObjects, startingValues);
+
+                    } else {
+
+                    }
                     if (startingValues.currentWidth + startingValues.stepForward < 100) {
                         startingValues.currentWidth += startingValues.stepForward;
 
@@ -144,7 +153,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 
 
         case false:
-
+            svg.classList.add("battery-mode");
             startingValues.speed = 40;
             startingValues.currentTemps = getCurrentTemps(htmlObjects);
 
@@ -230,24 +239,15 @@ function getCurrentTemps(htmlObjects) {
 
 function showModal(htmlObjects, startingValues, modalMessages) {
 
-    switch (startingValues.currentWidth) {
-        case 100:
-            htmlObjects.outputModalMessage.className = "frozen";
-            htmlObjects.modal.style.display = "block";
-            htmlObjects.outputModalMessage.innerHTML = modalMessages.frozen;
-            setTimeout(function() {
-                htmlObjects.modal.style.display = "none";
-            }, 3000);
-            break;
-        case 0:
-            htmlObjects.outputModalMessage.className = "defrozen";
-            htmlObjects.modal.style.display = "block";
-            setTimeout(function() {
-                htmlObjects.modal.style.display = "none";
-            }, 3000);
-            htmlObjects.outputModalMessage.innerHTML = modalMessages.defrozen;
-            break;
-    }
+
+    htmlObjects.modal.style.display = "block";
+
+    // start animation
+    htmlObjects.outputModalMessage.innerHTML = "Extreme frost started!";
+    setTimeout(function() {
+        htmlObjects.outputModalMessage.className = "frozen";
+        htmlObjects.outputModalMessage.innerHTML = "Frozen!";
+    }, 3000);
 
     htmlObjects.close.onclick = function() {
         htmlObjects.modal.style.display = "none";
@@ -353,7 +353,8 @@ function removeProduct(htmlObjects) {
     }
 }
 
-function frostProduct(htmlObjects) {
+function frostProduct(htmlObjects, startingValues, modalMessages) {
+    showModal(htmlObjects, startingValues, modalMessages);
     var elements = document.querySelectorAll(".products label");
     for (var i = 0; i < elements.length; i++) {
         var parents = elements[i].parentNode;
