@@ -1,14 +1,18 @@
 var model = {
-	camera: {
-		btnCamera1: '../img/def.mp4',
-		btnCamera2: '../img/def.mp4',
-		btnCamera3: '../img/def.mp4'
-		//add turn off camera indicator
-	},
+	camera: [
+		{
+			name: 'camera-1',
+			url: '../img/def.mp4',
+			isOn: true
+		}
+	],
 	garage: {
 		isClosed: true 
 	},
 	password: {
+		passwordStatus: false,
 		currentPassword: ''
 	}
+
+
 }

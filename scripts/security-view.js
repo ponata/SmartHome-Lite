@@ -31,11 +31,68 @@ var view = {
 		getCameraBlock: function() {
 			return document.querySelector('.camera-block');
 		},
+		/*getVideoContainerBlock: function() {
+			return document
+		},*/
 		getFullScreenBtn: function() {
 			return document.getElementById('full-screen-btn');
 		},
 		getVideoBtn: function() {
-			return document.getElementById('video-btn');
+			return document.querySelectorAll('.video-btn');
+		},
+		getRemoveVideoBtn: function() {
+			return document.querySelectorAll('.remove-video-btn');
+		},
+		setVideoBtnId: function() {
+			for (var i = 0; i < this.getVideoBtn().length; i++) {
+				this.getVideoBtn()[i].setAttribute('data-number', i);
+				this.getRemoveVideoBtn()[i].setAttribute('data-number-remove', i);
+			}	
+		},
+		getVideoBtnNewId: function() {
+			return document.querySelectorAll('[data-number]');
+		},
+		getRemoveCameraFormBlock: function() {
+			return document.querySelector('.remove-camera-form-block-btn');
+		},
+		getAddNewCameraBtn: function() {
+			return document.getElementById('new-camera');
+		},
+		getCameraFormBlock: function() {
+			return document.querySelector('.camera-form-block');
+		},
+		getCameraSubmitBtn: function() {
+			return document.getElementById('camera-submit');
+		},
+		showCameraFormBlock: function() {
+			var self = controller.view.camera;
+			self.getCameraFormBlock().classList.add('show');
+		},
+		hideCameraFormBlock: function() {
+			var self = controller.view.camera;
+			self.getCameraFormBlock().classList.remove('show');
+		},
+		getCameraPathValue: function() {
+			return document.getElementById('camera-path').value;
+		},
+		getCameraNameValue: function() {
+			//console.log(document.getElementById('camera-name').value);
+			return document.getElementById('camera-name').value;
+		},
+
+		addCameraInnerHTML: function() {
+			var div = document.createElement('div');
+			div.className = "video-container";
+			div.innerHTML = '<div class="screen"><video autoplay loop muted controls><source src="' + controller.view.camera.getCameraPathValue() +
+			'" type="">Your browser does not support the video tag.</video></div><button class="remove-video-btn">&#10006;</button><button id="btnCamera1" class="video-btn">&#9632;</button>';
+			this.getCameraBlock().insertBefore(div, controller.view.camera.getFullScreenBtn());
+		},
+		changeCameraBtnInner: function(target, isOn) {
+			if (isOn == true){
+				target.innerHTML = '&#9658;';
+			} else {
+				target.innerHTML = '&#9632;';
+			}
 		},
 		srcCompare: function(targetVideo, btnCamera) {
 			var video = document.getElementById(targetVideo).parentElement;
@@ -48,23 +105,6 @@ var view = {
 			}
 			video.load();
 			video.play();
-		},
-		turnOnOffCamera: function(e) {
-			var target = e.target.getAttribute('id');
-			/*self = controller.view.cameraView;
-			self = this;*/
-			// add data-attribures
-			switch(target){
-				case 'btnCamera1':
-					this.srcCompare('video1', target);
-				break;
-				case 'btnCamera2':
-					this.srcCompare('video2', target);
-				break;
-				case 'btnCamera3':
-					this.srcCompare('video3', target);
-				break;
-			}
 		},
 		getVideo: function(video) {
 			return document.getElementById(video);
@@ -109,16 +149,53 @@ var view = {
 			return document.querySelectorAll('[data-td="true"]');
 		},
 		getTable: function() {
-			return document.querySelector('.password-table');
+			return document.querySelectorAll('.password-table');
+		},
+		getUnlockSvg: function() {
+			return document.getElementById('unlocked');
+		},
+		changeUnlockSvgColor: function() {
+			document.querySelectorAll('#unlocked svg g g path')[0].setAttribute('fill', '#87C540');
+			document.querySelectorAll('#unlocked svg g g path')[1].setAttribute('fill', '#87C540');
 		},
 		getLockBtn: function() {
 			return document.getElementById('lock');
 		},
+		getChangePasswordBtn: function() {
+			return document.getElementById('change-password');
+		},
 		resetBtn: function() {
-			return document.querySelector('[data-td="reset"]');
+			return document.querySelectorAll('[data-td="reset"]');
+		},
+		getSetPasswordBlock: function() {
+			return document.querySelector('.set-password-block');
+		},
+		getPasswordBlock: function() {
+			return document.querySelector('.password-block');
+		},
+		resetLastSymbBtn: function() {
+			return document.querySelectorAll('[data-td="reset-last"]');
 		},
 		getSetPasswordBtn: function() {
 			return document.getElementById('set-password');
+		},
+		getWrongPasswordBlock: function() {
+			return document.querySelector('.wrong-password-block');
+		},
+		showWrongPasswordBlock: function() {
+			var self = controller.view.password;
+			self.getWrongPasswordBlock().classList.add('show');
+			console.log(self.getWrongPasswordBlock());
+		},
+		exitWrongPassword: function() {
+			var self = controller.view.password;
+			self.getWrongPasswordBlock().classList.remove('show');
+		},
+		showChangePasswordBlock: function() {
+			console.log('click');
+			var self = controller.view.password;
+			self.getPasswordBlock().classList.add('tab-content');
+			self.getSetPasswordBlock().classList.remove('hide');
 		},
 		generateUniqueNumbers: function() {
 			for (var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], i = a.length; i--; ) {
@@ -127,7 +204,13 @@ var view = {
 			};
 		},
 		getInputPassword: function() {
-			return document.querySelector('[type="password"]');
+			var j;
+			if (controller.getPasswordStatus()) {
+				j = 0; 
+			} else {
+				j = 1;
+			}
+			return document.querySelectorAll('[type="password"]')[j];
 		},
 		getCurrentInputValue: function() {
 			return this.getInputPassword().getAttribute('value');
@@ -141,12 +224,20 @@ var view = {
 			callback().setAttribute('value', newValue);
 		},
 		putPassword: function() {
-			this.getInputPassword().setAttribute('value', this.setCurrentPassValue());
+			var self = controller.view.password;
+			self.getInputPassword().setAttribute('value', self.setCurrentPassValue());
 		},
 		resetFunc: function() {
 			var self = controller.view.password;
 			self.getInputPassword().setAttribute('value', '');
 			var a = self.getCurrentInputValue();
+			return a = '';
+		},
+		resetLastSymbol: function() {
+			var temp = controller.view.password.getInputPassword().getAttribute('value');
+			var newVal = temp.substring(0, temp.length - 1);
+			controller.view.password.getInputPassword().setAttribute('value', newVal);
+			var a = controller.view.password.getCurrentInputValue();
 			return a = '';
 		},
 		addDisabled: function(element) {
