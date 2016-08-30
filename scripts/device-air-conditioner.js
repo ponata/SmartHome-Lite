@@ -104,41 +104,41 @@ window.onload = function() {
         }
     }
     
+    
     var temperature = document.getElementById("temperature-input");
-    var prevTemp = parseInt(temperature.value);
-    temperature.onchange = function() {
+    var currentTemperature = parseInt(temperature.value);
+    temperature.onchange = function(){
         if(!off.checked){
-            var step = Math.sign(temperature.value - prevTemp);
-            var temp = setInterval(function() {
-                prevTemp+=step;
-                if(prevTemp < 0){
+            var temperatureTransition = setInterval(function(){
+                var dirrection = Math.sign(temperature.value - currentTemperature);
+                currentTemperature+=dirrection;
+                if(currentTemperature < 0){
                     enterSymbol("-", 0);
                 } else {
                     enterSymbol("", 0);
                 }
-                enterSymbol(Math.trunc(Math.abs(prevTemp / 10)).toString(), 1);
-                enterSymbol(Math.abs(prevTemp % 10).toString(), 2);
-                if(prevTemp == temperature.value){
-                    clearInterval(temp);
+                enterSymbol(Math.trunc(Math.abs(currentTemperature / 10)).toString(), 1);
+                enterSymbol(Math.abs(currentTemperature % 10).toString(), 2);
+                if(currentTemperature == temperature.value){
+                    clearInterval(temperatureTransition);
                 }
-
             }, 600);
         }
     }
-     var humidity = document.getElementById("humidity-input");
-     var prevHumidity = parseInt(humidity.value);
-     humidity.onchange = function() {
-         if(!off.checked){
-            var step = Math.sign(humidity.value - prevHumidity);
-            var hum = setInterval(function() {
-                prevHumidity+=step;
-                enterSymbol(Math.trunc(Math.abs(prevHumidity / 10)).toString(), 8);
-                enterSymbol(Math.abs(prevHumidity % 10).toString(), 9);
-                if(prevHumidity == humidity.value){
-                    clearInterval(hum);
+    
+    var humidity = document.getElementById("humidity-input");
+    var currentHumidity = parseInt(humidity.value);
+    humidity.onchange = function(){
+        if(!off.checked){
+            var humidityTransition = setInterval(function(){
+                var dirrection = Math.sign(humidity.value - currentHumidity);
+                currentHumidity+=dirrection;
+                enterSymbol(Math.trunc(Math.abs(currentHumidity / 10)).toString(), 8);
+                enterSymbol(Math.abs(currentHumidity % 10).toString(), 9);
+                if(currentHumidity == humidity.value){
+                    clearInterval(humidityTransition);
                 }
-
             }, 600);
-         }
+        }
     }
 }
