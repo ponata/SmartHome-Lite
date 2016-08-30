@@ -301,9 +301,7 @@
             content: "";
             animation: bright 1s 2.5s 1 linear forwards;
         }
-        .circle.on {
 
-        }
         @keyframes bright {
             to {
               background: #1faeff;
