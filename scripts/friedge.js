@@ -1,116 +1,124 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     var HTML = {
-        inputFreezeTemp: document.getElementById("inputFreezeTemp"),
-        inputOverallTemp: document.getElementById("inputOverallTemp"),
-        inputsTemp: document.getElementsByClassName("temp"),
+        degFreeze: document.getElementById("degFreeze"),
+        degGeneral: document.getElementById("degGeneral"),
+        degs: document.getElementsByClassName("degree"),
         progressBar: document.getElementById("progressBar"),
-        outputPercentage: document.getElementById("outputPercentage"),
+        batteryPerc: document.getElementById("batteryPerc"),
         close: document.getElementById("close"),
         modal: document.getElementById("modal"),
-        outputModalMessage: document.getElementById("outputModalMessage"),
+        modalMessage: document.getElementById("modalMessage"),
         svg: document.getElementById("svg"),
-        status: document.getElementById("status"),
+        btnPower: document.getElementById("btnPower"),
         selectMode: document.getElementById("selectMode"),
-        products: document.getElementById("products"),
-        btnAddProducts: document.getElementById("btnAddProducts"),
-        btnRemoveProducts: document.getElementById("btnRemoveProducts"),
-        btnExtremeFrost: document.getElementById("btnExtremeFrost"),
-        newProduct: document.getElementById("newProduct"),
-        loaderPercentage: document.getElementById("loaderPercentage"),
+        prodList: document.getElementById("prodList"),
+        btnAddProduct: document.getElementById("btnAddProduct"),
+        btnRemoveProduct: document.getElementById("btnRemoveProduct"),
+        btnFrost: document.getElementById("btnFrost"),
+        newProd: document.getElementById("newProd"),
+        gifPerc: document.getElementById("gifPerc"),
         gif: document.getElementById("gif"),
-        errorExtremeFrost: document.getElementById("errorExtremeFrost")
+        errFrost: document.getElementById("errFrost")
     }
 
-    var startingValues = {
+    var Values = {
         currentWidth: 0,
         stepForward: .3,
         stepRevert: 0,
         speed: 50,
-        currentTemps: {},
+        currentDegs: {},
         flag: "true",
         status: "off",
         timeFrost: 5000
     }
 
-    var modalMessages = {
-        frozen: "Frozen!",
-        defrozen: "Defrozen!"
+    var Messages = {
+        on: "Freeze in progress...",
+        done: "Frozen!",
+        err: "No battery energy..."
+    }
+
+    HTML.btnPower.onclick = function() {
+        // is electricity
+        if (HTML.btnPower.checked) {
+            Values.flag = "true";
+            console.log(Values.stepRevert);
+
+            Battery(HTML, Values, Messages);
+
+
+        }
+        // no electricity
+        else {
+            Values.flag = "false";
+            console.log(Values.stepRevert);
+
+            Battery(HTML, Values, Messages);
+
+        }
     }
 
 
-    HTML.btnAddProducts.onclick = function(e) {
+    HTML.btnAddProduct.onclick = function(e) {
         e.preventDefault();
         addProduct(HTML);
-        if (startingValues.currentWidth > 0 && document.querySelector(".svg-elem.off") && HTML.products.children.length) {
-            startingValues.status = "on";
-            Enable(HTML, startingValues, modalMessages);
-            setColor(HTML, startingValues);
-            if (!HTML.status.checked) {
+        if (Values.currentWidth > 0 && document.querySelector(".svg-elem.off") && HTML.prodList.children.length) {
+            Values.status = "on";
+            Enable(HTML, Values, Messages);
+            setColor(HTML, Values);
+            if (!HTML.btnPower.checked) {
                 // no electricity
-                startingValues.flag = "false";
-                Battery(HTML, startingValues, modalMessages);
-
-            } else {
-                // is electr
+                Values.flag = "false";
+                Battery(HTML, Values, Messages);
 
             }
-        } else {
-
         }
 
     }
-    HTML.btnRemoveProducts.onclick = function(e) {
+    HTML.btnRemoveProduct.onclick = function(e) {
             e.preventDefault();
             removeProduct(HTML);
-            if (!HTML.products.children.length) {
-                startingValues.status = "off";
-                Enable(HTML, startingValues, modalMessages);
-            } else {}
+            if (!HTML.prodList.children.length) {
+                Values.status = "off";
+                Enable(HTML, Values, Messages);
+            }
         }
         // check input, if it was changed
-    document.getElementById('inputWrapper').addEventListener('input', function(event) {
-        var elem = event.target;
-        if (checkInput(HTML)) {
-            startingValues.currentTemps = getCurrentTemps(HTML);
-            startingValues.stepRevert = calcStep(HTML, startingValues);
-            setColor(HTML, startingValues);
+    document.getElementById('inputWrapper').addEventListener('input', function(e) {
+        var elem = e.target;
+
+        if (checkInput(elem)) {
+            Values.currentDegs = getcurrentDegs(HTML);
+            calcStep(HTML, Values);
+            setColor(HTML, Values);
         }
+        console.log(Values.stepRevert);
+
     });
 
 
     // check if mode was selected
     HTML.selectMode.onchange = function() {
         selectMode(HTML);
-        startingValues.currentTemps = getCurrentTemps(HTML);
-        setColor(HTML, startingValues);
+        Values.currentDegs = getcurrentDegs(HTML);
+        setColor(HTML, Values);
+        console.log(Values.stepRevert);
+
     }
 
     // extreme frost
-    HTML.btnExtremeFrost.onclick = function(e) {
+    HTML.btnFrost.onclick = function(e) {
         e.preventDefault();
-        frostProduct(HTML, startingValues, modalMessages);
+        frostProduct(HTML, Values, Messages);
     }
-    HTML.status.onclick = function() {
-        // is electricity
-        if (HTML.status.checked) {
-            startingValues.flag = "true";
-            Battery(HTML, startingValues, modalMessages);
 
-        }
-        // no electricity
-        else {
-            startingValues.flag = "false";
-            Battery(HTML, startingValues, modalMessages);
-
-        }
-    }
 
 });
 
-function Enable(HTML, startingValues, modalMessages) {
+function Enable(HTML, Values, Messages) {
 
-    switch (startingValues.status) {
+    switch (Values.status) {
         case "on":
             HTML.svg.classList.add("on");
             HTML.svg.classList.remove("off");
@@ -123,39 +131,39 @@ function Enable(HTML, startingValues, modalMessages) {
     }
 }
 
-function Battery(HTML, startingValues, modalMessages) {
-    // var currentTemps;
+function Battery(HTML, Values, Messages) {
+    // var currentDegs;
 
-    switch (startingValues.flag) {
+    switch (Values.flag) {
 
         case "true":
 
-            startingValues.speed = 70;
+            Values.speed = 70;
 
             var timeoutIDT = setInterval(function() {
 
-                setBatteryColor(HTML, startingValues);
+                setBatteryColor(HTML, Values);
                 // before new iteration, check electricity status
-                if (HTML.status.checked) {
+                if (HTML.btnPower.checked) {
                     svg.classList.remove("battery-mode");
                     // friedge was off and we have products
-                    if (document.querySelector(".svg-elem.off") && HTML.products.children.length) {
-                        startingValues.status = "on";
-                        Enable(HTML, startingValues, modalMessages);
-                        setColor(HTML, startingValues);
+                    if (document.querySelector(".svg-elem.off") && HTML.prodList.children.length) {
+                        Values.status = "on";
+                        Enable(HTML, Values, Messages);
+                        setColor(HTML, Values);
 
                     } else {
 
                     }
-                    if (startingValues.currentWidth + startingValues.stepForward < 100) {
-                        startingValues.currentWidth += startingValues.stepForward;
+                    if (Values.currentWidth + Values.stepForward < 100) {
+                        Values.currentWidth += Values.stepForward;
 
-                        HTML.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                        HTML.progressBar.style.width = startingValues.currentWidth + '%';
+                        HTML.batteryPerc.innerHTML = parseInt(Values.currentWidth) + '%';
+                        HTML.progressBar.style.width = Values.currentWidth + '%';
 
                     } else {
-                        startingValues.currentWidth = 100;
-                        HTML.outputPercentage.innerHTML = '100%';
+                        Values.currentWidth = 100;
+                        HTML.batteryPerc.innerHTML = '100%';
                         HTML.progressBar.style.width = '100%';
                         clearTimeout(timeoutIDT);
                         return false;
@@ -165,90 +173,64 @@ function Battery(HTML, startingValues, modalMessages) {
                     // electricity turned off
                     clearTimeout(timeoutIDT);
                     return false;
-                    // startingValues.flag = "false";
-                    // Battery(HTML, startingValues, modalMessages);
                 }
 
-            }, startingValues.speed);
+            }, Values.speed);
 
             break;
 
 
         case "false":
             svg.classList.add("battery-mode");
-            startingValues.speed = 40;
-            startingValues.currentTemps = getCurrentTemps(HTML);
+            Values.speed = 40;
+            Values.currentDegs = getcurrentDegs(HTML);
 
             var timeoutIDF = setInterval(function() {
-                setBatteryColor(HTML, startingValues);
+                setBatteryColor(HTML, Values);
 
-                    // before new iteration, check the electricity status
-                    // no electricity
-                if (!HTML.status.checked) {
+                // before new iteration, check the electricity status
+                // no electricity
+                if (!HTML.btnPower.checked) {
                     // check products
-                    if (HTML.products.children.length) {
-                        // check input, if it was changed
-                        // document.getElementById('inputWrapper').addEventListener('input', function(event) {
-                        //     var elem = event.target;
-                        //     if (checkInput(elem)) {
-                        //         startingValues.currentTemps = getCurrentTemps(HTML);
-                        //         startingValues.stepRevert = calcStep(HTML, startingValues);
-                        //         setColor(HTML, startingValues);
-                        //     }
-                        // });
-
+                    if (HTML.prodList.children.length) {
 
                         // check if mode was selected
                         HTML.selectMode.onchange = function() {
-                            selectMode(HTML);
-                            startingValues.currentTemps = getCurrentTemps(HTML);
-                            startingValues.stepRevert = calcStep(HTML, startingValues);
-                            setColor(HTML, startingValues);
-                        }
-                        if (checkInput(HTML)) {
-                            startingValues.currentTemps = getCurrentTemps(HTML);
-                            startingValues.stepRevert = calcStep(HTML, startingValues);
-                            setColor(HTML, startingValues);
-                        }
+                                selectMode(HTML);
+                                Values.currentDegs = getcurrentDegs(HTML);
+                                calcStep(HTML, Values);
+                                setColor(HTML, Values);
+                            }
+                            // if (checkInput(elem)) {
+                            //     Values.currentDegs = getcurrentDegs(HTML);
+                            //     Values.stepRevert = calcStep(HTML, Values);
+                            //     setColor(HTML, Values);
+                            // }
 
-
-                        if (startingValues.currentWidth - startingValues.stepRevert > 0) {
-                            startingValues.currentWidth -= startingValues.stepRevert;
-                            HTML.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
-                            HTML.progressBar.style.width = startingValues.currentWidth + '%';
+                        if (Values.currentWidth - Values.stepRevert > 0) {
+                            Values.currentWidth -= Values.stepRevert;
+                            HTML.batteryPerc.innerHTML = parseInt(Values.currentWidth) + '%';
+                            HTML.progressBar.style.width = Values.currentWidth + '%';
                         } else {
-                            startingValues.currentWidth = 0;
-                            HTML.outputPercentage.innerHTML = '0%';
+                            Values.currentWidth = 0;
+                            HTML.batteryPerc.innerHTML = '0%';
                             HTML.progressBar.style.width = '0%';
-                            startingValues.status = "off";
-                            Enable(HTML, startingValues, modalMessages);
+                            Values.status = "off";
+                            Enable(HTML, Values, Messages);
 
                             clearTimeout(timeoutIDF);
                             return false;
-                            // check when electricity will on
-                            // if (HTML.status.checked) {
-                            //     clearTimeout(timeoutID);
-                            //     startingValues.flag = "true";
-                            //     Battery(HTML, startingValues, modalMessages);
-                            // }
                         }
                     }
                     // no products
                     else {
                         // is electricity
-                        if (HTML.status.checked) {
+                        if (HTML.btnPower.checked) {
                             clearTimeout(timeoutIDF);
                             return false;
-                            // startingValues.flag = "true";
-                            // Battery(HTML, startingValues, modalMessages);
                         }
-                        // no electricity
-                        else {
-
-                        }
-
-                        startingValues.status = "off";
-                        Enable(HTML, startingValues, modalMessages);
+                        Values.status = "off";
+                        Enable(HTML, Values, Messages);
                         clearTimeout(timeoutIDF);
                         return false;
                     }
@@ -257,54 +239,48 @@ function Battery(HTML, startingValues, modalMessages) {
                     // electricity turned on
                     clearTimeout(timeoutIDF);
                     return false;
-                    // startingValues.flag = "true";
-                    // Battery(HTML, startingValues, modalMessages);
                 }
 
-            }, startingValues.speed);
+            }, Values.speed);
 
             break;
 
     }
 }
 
-function getCurrentTemps(HTML) {
+function getcurrentDegs(HTML) {
 
     var object = {
-        inputFreezeTemp: HTML.inputFreezeTemp.value,
-        inputOverallTemp: HTML.inputOverallTemp.value
+        degFreeze: HTML.degFreeze.value,
+        degGeneral: HTML.degGeneral.value
     }
     return object;
 }
 
-function checkInput(HTML) {
+function checkInput(elem) {
 
-    for (var i = 0, elem = HTML.inputsTemp; i < elem.length; i++) {
-
-        if (parseInt(elem[i].value) >= parseInt(elem[i].min) && parseInt(elem[i].value) <= parseInt(elem[i].max)) {
-            return true;
-        } else {
-            return false;
-        }
+    if (parseInt(elem.value) >= parseInt(elem.min) && parseInt(elem.value) <= parseInt(elem.max)) {
+        return true;
+    } else {
+        return false;
     }
 }
 
-function calcStep(HTML, startingValues) {
+function calcStep(HTML, Values) {
     var coefficient = 0;
 
-    for (var i = 0; i < HTML.inputsTemp.length; i++) {
+    for (var i = 0; i < HTML.degs.length; i++) {
 
-        if (HTML.inputsTemp[i].value > 0) {
-            coefficient += Math.pow(HTML.inputsTemp[i].value, -1);
+        if (HTML.degs[i].value > 0) {
+            coefficient += Math.pow(HTML.degs[i].value, -1);
         } else {
-            coefficient += Math.abs(HTML.inputsTemp[i].value);
+            coefficient += Math.abs(HTML.degs[i].value);
         }
     }
-
-    return coefficient / 1000;
+    Values.stepRevert = coefficient / 1000;
 }
 
-function showModal(HTML, startingValues, modalMessages) {
+function showModal(HTML, Values, Messages) {
 
     HTML.modal.style.display = "block";
 
@@ -314,7 +290,7 @@ function showModal(HTML, startingValues, modalMessages) {
     window.onclick = function(e) {
         if (e.target == HTML.modal) {
             HTML.modal.style.display = "none";
-        } else {}
+        }
 
     }
 }
@@ -323,41 +299,41 @@ function selectMode(HTML) {
 
     switch (HTML.selectMode.options[HTML.selectMode.selectedIndex].value) {
         case "standard":
-            HTML.inputFreezeTemp.value = "-18";
-            HTML.inputOverallTemp.value = "5";
-            for (var i = 0; i < HTML.inputsTemp.length; i++) {
-                HTML.inputsTemp[i].disabled = true;
+            HTML.degFreeze.value = "-18";
+            HTML.degGeneral.value = "5";
+            for (var i = 0; i < HTML.degs.length; i++) {
+                HTML.degs[i].disabled = true;
             }
             break;
         case "light":
-            HTML.inputFreezeTemp.value = "-14";
-            HTML.inputOverallTemp.value = "9";
-            for (var i = 0; i < HTML.inputsTemp.length; i++) {
-                HTML.inputsTemp[i].disabled = true;
+            HTML.degFreeze.value = "-14";
+            HTML.degGeneral.value = "9";
+            for (var i = 0; i < HTML.degs.length; i++) {
+                HTML.degs[i].disabled = true;
             }
             break;
         case "highFreeze":
-            HTML.inputFreezeTemp.value = "-27";
-            HTML.inputOverallTemp.value = "3";
-            for (var i = 0; i < HTML.inputsTemp.length; i++) {
-                HTML.inputsTemp[i].disabled = true;
+            HTML.degFreeze.value = "-27";
+            HTML.degGeneral.value = "3";
+            for (var i = 0; i < HTML.degs.length; i++) {
+                HTML.degs[i].disabled = true;
             }
             break;
         case "custom":
-            for (var i = 0; i < HTML.inputsTemp.length; i++) {
-                HTML.inputsTemp[i].disabled = false;
+            for (var i = 0; i < HTML.degs.length; i++) {
+                HTML.degs[i].disabled = false;
             }
             break;
     }
 }
 
-function setColor(HTML, startingValues) {
-    startingValues.currentTemps = getCurrentTemps(HTML);
-    var coefficient = calcStep(HTML, startingValues);
+function setColor(HTML, Values) {
+    Values.currentDegs = getcurrentDegs(HTML);
+    calcStep(HTML, Values);
     var svgColor = document.getElementById("svgColor");
-    if (coefficient * 1000 < 15) {
+    if (Values.stepRevert * 1000 < 15) {
         svgColor.className = "light";
-    } else if (coefficient * 1000 >= 27) {
+    } else if (Values.stepRevert * 1000 >= 27) {
         svgColor.className = "highFreeze";
     } else {
         svgColor.className = "standard";
@@ -366,9 +342,9 @@ function setColor(HTML, startingValues) {
 
 function addProduct(HTML) {
     var error = document.getElementById("productError");
-    HTML.errorExtremeFrost.style.opacity = "0";
+    HTML.errFrost.style.opacity = "0";
 
-    if (HTML.newProduct.value) {
+    if (HTML.newProd.value) {
         error.style.opacity = 0;
 
         var label = document.createElement("label");
@@ -377,61 +353,67 @@ function addProduct(HTML) {
         label.className = "product";
         elem.type = "checkbox";
 
-        label.innerHTML = HTML.newProduct.value;
+        label.innerHTML = HTML.newProd.value;
         label.appendChild(elem);
-        HTML.products.appendChild(label);
-        HTML.newProduct.value = "";
+        HTML.prodList.appendChild(label);
+        HTML.newProd.value = "";
     } else {
         error.style.opacity = 1;
     }
 }
 
 function removeProduct(HTML) {
-    var elements = document.querySelectorAll(".products input:checked");
-    for (var i = 0; i < elements.length; i++) {
-        var parents = elements[i].parentNode;
+    var elems = document.querySelectorAll(".products input:checked");
+    for (var i = 0; i < elems.length; i++) {
+        var parents = elems[i].parentNode;
         parents.parentNode.removeChild(parents);
 
     }
 }
 
-function frostProduct(HTML, startingValues, modalMessages) {
-    HTML.errorExtremeFrost.style.opacity = "0";
-    startingValues.speed = 50;
+function frostProduct(HTML, Values, Messages) {
+    HTML.errFrost.style.opacity = "0";
+    Values.speed = 30;
     var tmp = 0;
 
     // products for frost
-    var elements = document.querySelectorAll(".products label:not(.product-frozen)");
+    var elems = document.querySelectorAll(".products label:not(.product-frozen)");
 
-    if (elements.length) {
-        var prevTemperatures = getCurrentTemps(HTML);
+    if (elems.length) {
+        var prevTemperatures = getcurrentDegs(HTML);
 
         // set temperature to min
-        HTML.inputOverallTemp.value = HTML.inputOverallTemp.min;
-        HTML.inputFreezeTemp.value = HTML.inputFreezeTemp.min;
+        HTML.degGeneral.value = HTML.degGeneral.min;
+        HTML.degFreeze.value = HTML.degFreeze.min;
+        calcStep(HTML, Values);
+        console.log(Values.stepRevert);
 
-        showModal(HTML, startingValues, modalMessages);
+
+        showModal(HTML, Values, Messages);
 
         HTML.gif.style.display = "block";
-        HTML.outputModalMessage.innerHTML = "Freeze in progress...";
+        HTML.modalMessage.innerHTML = Messages.on;
 
         var timeoutID = setInterval(function() {
-            if (startingValues.currentWidth > 0) {
-                if (tmp + startingValues.speed < startingValues.timeFrost) {
-                    tmp += startingValues.speed;
-                    HTML.loaderPercentage.innerHTML = parseInt((tmp / startingValues.timeFrost) * 100) + '%';
+            if (Values.currentWidth > 0) {
+                if (tmp + Values.speed < Values.timeFrost) {
+                    tmp += Values.speed;
+                    HTML.gifPerc.innerHTML = parseInt((tmp / Values.timeFrost) * 100) + '%';
                 } else {
                     // set prev temp mode
-                    HTML.inputOverallTemp.value = prevTemperatures.inputOverallTemp;
-                    HTML.inputFreezeTemp.value = prevTemperatures.inputFreezeTemp;
+                    HTML.degGeneral.value = prevTemperatures.degGeneral;
+                    HTML.degFreeze.value = prevTemperatures.degFreeze;
+                    calcStep(HTML, Values);
 
-                    HTML.loaderPercentage.innerHTML = "100%";
+                    HTML.gifPerc.innerHTML = "";
                     HTML.gif.style.display = "none";
-                    HTML.outputModalMessage.innerHTML = "Frozen!";
+                    HTML.modalMessage.innerHTML = Messages.done;
+                    console.log(Values.stepRevert);
 
-                    for (var i = 0; i < elements.length; i++) {
-                        var parents = elements[i].parentNode;
-                        elements[i].classList.add("product-frozen");
+
+                    for (var i = 0; i < elems.length; i++) {
+                        var parents = elems[i].parentNode;
+                        elems[i].classList.add("product-frozen");
                     }
 
                     clearTimeout(timeoutID);
@@ -440,32 +422,28 @@ function frostProduct(HTML, startingValues, modalMessages) {
             // no battery
             else {
                 HTML.gif.style.display = "none";
-                HTML.loaderPercentage.display = "none";
-                HTML.outputModalMessage.innerHTML = "No battery energy...";
+                HTML.gifPerc.display = "none";
+                HTML.modalMessage.innerHTML = Messages.err;
                 clearTimeout(timeoutID);
                 return false;
             }
 
-
-        }, startingValues.speed);
+        }, Values.speed);
     }
     // no prod to frost
     else {
-        HTML.errorExtremeFrost.style.opacity = "1";
+        HTML.errFrost.style.opacity = "1";
         return false;
     }
-
 }
 
-function setBatteryColor(HTML, startingValues) {
-    if (startingValues.currentWidth > 70) {
+function setBatteryColor(HTML, Values) {
+    if (Values.currentWidth > 70) {
         HTML.progressBar.style.background = "#70FA70";
 
-    } else if (startingValues.currentWidth < 35) {
+    } else if (Values.currentWidth < 35) {
         HTML.progressBar.style.background = "#F54D4D";
     } else {
         HTML.progressBar.style.background = "#FEBD48";
-
     }
-
 }
