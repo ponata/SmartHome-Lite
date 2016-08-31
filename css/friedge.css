@@ -222,7 +222,7 @@ button:hover {
     position: absolute;
     top: 0;
     left: 0;
-    fill: yellow;
+    fill: #F54D4D;
 }
 
 input[name="status"] {
@@ -230,7 +230,7 @@ input[name="status"] {
 }
 
 input[name="status"]:checked+ .btn-power-bg {
-    fill: #F54D4D;
+    fill: yellow;
 }
 
 .svg-elem.on path {
@@ -374,8 +374,9 @@ input[name="status"]:checked+ .btn-power-bg {
 .loader {
     position: relative;
 }
+
 .loader img {
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
 .loader-percentage {
