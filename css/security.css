@@ -103,7 +103,7 @@ figure {
 }
 .video-container {
   width: 30%;
-  height: 160px;
+  min-height: 160px;
   display: inline-block;
   position: relative;
   margin: 2% 5%;
