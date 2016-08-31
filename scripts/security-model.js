@@ -7,12 +7,10 @@ var model = {
 		}
 	],
 	garage: {
-		isClosed: true 
+		isClosed: true
 	},
 	password: {
 		passwordStatus: false,
 		currentPassword: ''
 	}
-
-
 }
