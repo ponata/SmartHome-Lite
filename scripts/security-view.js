@@ -7,10 +7,18 @@ var view = {
 		getGarageGates: function() {
 			return document.querySelector('.garage-gates');
 		},
+		init: function() {
+				for (var key in this) {
+					if(typeof this[key] == 'function') {
+						this[key] = this[key].bind(this);
+					}
+				}
+		},
 		openGates: function() {
 			var id = setInterval(opening, 75);
 			var hght = 100;
-			var elem = controller.view.garage.getGarageGates();
+			var self = this;
+			var elem = self.getGarageGates();
 			function opening() {
 				if (hght == 0) {
 					clearInterval(id);
@@ -23,7 +31,8 @@ var view = {
 		closeGates: function() {
 			var id = setInterval(closing, 75);
 			var hght = 0;
-			var elem = controller.view.garage.getGarageGates();
+			var self = this;
+			var elem = self.getGarageGates();
 			function closing() {
 				if (hght == 100) {
 					clearInterval(id);
@@ -41,10 +50,37 @@ var view = {
 		},
 		removeDisabled: function(element) {
 			element.removeAttribute('disabled');
+		},
+		openProcessFunc: function() {
+			this.openGates();
+			this.changeBtnValue(this.getGarageBtn, 'Opening...');
+			this.addDisabled(this.getGarageBtn());
+			var self = this;
+			setTimeout(function() {
+				self.changeBtnValue(self.getGarageBtn, 'Close');
+				self.removeDisabled(self.getGarageBtn());
+			}, 7500);
+		},
+		closeProcessFunc: function() {
+			this.closeGates();
+			this.changeBtnValue(this.getGarageBtn, 'Closing...');
+			this.addDisabled(this.getGarageBtn());
+			var self = this;
+			setTimeout (function() {
+				self.changeBtnValue(self.getGarageBtn, 'Open');
+				self.removeDisabled(self.getGarageBtn());
+			}, 7500);
 		}
 	},
 	//camera block
 	camera: {
+		init: function() {
+				for (var key in this) {
+					if(typeof this[key] == 'function') {
+						this[key] = this[key].bind(this);
+					}
+				}
+		},
 		getCameraBlock: function() {
 			return document.querySelector('.camera-block');
 		},
@@ -79,12 +115,11 @@ var view = {
 			return document.getElementById('camera-submit');
 		},
 		showCameraFormBlock: function() {
-			var self = controller.view.camera;
-			self.getCameraFormBlock().classList.add('show');
+			console.log(this);
+			this.getCameraFormBlock().classList.add('show');
 		},
 		hideCameraFormBlock: function() {
-			var self = controller.view.camera;
-			self.getCameraFormBlock().classList.remove('show');
+			this.getCameraFormBlock().classList.remove('show');
 		},
 		getCameraPathValue: function() {
 			return document.getElementById('camera-path').value;
@@ -95,9 +130,9 @@ var view = {
 		addCameraInnerHTML: function() {
 			var div = document.createElement('div');
 			div.className = "video-container";
-			div.innerHTML = '<div class="screen"><video autoplay loop muted controls><source src="' + controller.view.camera.getCameraPathValue() +
+			div.innerHTML = '<div class="screen"><video autoplay loop muted controls><source src="' + this.getCameraPathValue() +
 			'" type="">Your browser does not support the video tag.</video></div><button class="remove-video-btn">&#10006;</button><button id="btnCamera1" class="video-btn">&#9632;</button>';
-			this.getCameraBlock().insertBefore(div, controller.view.camera.getFullScreenBtn());
+			this.getCameraBlock().insertBefore(div, this.getFullScreenBtn());
 		},
 		changeCameraBtnInner: function(target, isOn) {
 			if (isOn == true){
@@ -105,18 +140,6 @@ var view = {
 			} else {
 				target.innerHTML = '&#9632;';
 			}
-		},
-		srcCompare: function(targetVideo, btnCamera) {
-			var video = document.getElementById(targetVideo).parentElement;
-			var temp = document.getElementById(targetVideo);
-			var source = temp.getAttribute('src');
-			if (source === '../img/') {
-				temp.setAttribute('src', controller.model.camera[btnCamera]);
-			} else {
-				temp.setAttribute('src', '../img/');
-			}
-			video.load();
-			video.play();
 		},
 		getVideo: function(video) {
 			return document.getElementById(video);
@@ -127,24 +150,29 @@ var view = {
 			document.cancelFullScreen();
 		},
 		enterFullScreen: function() {
-			self = controller.view.camera;// bind?
-			if (self.getCameraBlock().webkitRequestFullScreen) {
-    			self.getCameraBlock().webkitRequestFullScreen();
+			if (this.getCameraBlock().webkitRequestFullScreen) {
+    			this.getCameraBlock().webkitRequestFullScreen();
 			} else {
-    			self.getCameraBlock().mozRequestFullScreen();
+    			this.getCameraBlock().mozRequestFullScreen();
 			}
-			self.getCameraBlock().classList.add('full-screen-camera-block');
-			self.getFullScreenBtn().onclick = self.exitFullScreen;
+			this.getCameraBlock().classList.add('full-screen-camera-block');
+			this.getFullScreenBtn().onclick = this.exitFullScreen.bind(this);
 		},
 		exitFullScreen: function() {
-			self = controller.view.camera;
-			self.cancelFullScreenFunc();
-			self.getCameraBlock().classList.remove('full-screen-camera-block');
-			self.getFullScreenBtn().onclick = self.enterFullScreen;
+			this.cancelFullScreenFunc();
+			this.getCameraBlock().classList.remove('full-screen-camera-block');
+			this.getFullScreenBtn().onclick = this.enterFullScreen.bind(this);
 		}
 	},
 	//password block
 	password: {
+		init: function() {
+				for (var key in this) {
+					if(typeof this[key] == 'function') {
+						this[key] = this[key].bind(this);
+					}
+				}
+		},
 		getLockedIcon: function() {
 			return document.getElementById('locked');
 		},
@@ -193,19 +221,14 @@ var view = {
 			return document.querySelector('.wrong-password-block');
 		},
 		showWrongPasswordBlock: function() {
-			var self = controller.view.password;
-			self.getWrongPasswordBlock().classList.add('show');
-			console.log(self.getWrongPasswordBlock());
+			this.getWrongPasswordBlock().classList.add('show');
 		},
 		exitWrongPassword: function() {
-			var self = controller.view.password;
-			self.getWrongPasswordBlock().classList.remove('show');
+			this.getWrongPasswordBlock().classList.remove('show');
 		},
 		showChangePasswordBlock: function() {
-			console.log('click');
-			var self = controller.view.password;
-			self.getPasswordBlock().classList.add('tab-content');
-			self.getSetPasswordBlock().classList.remove('hide');
+			this.getPasswordBlock().classList.add('tab-content');
+			this.getSetPasswordBlock().classList.remove('hide');
 		},
 		generateUniqueNumbers: function() {
 			for (var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], i = a.length; i--; ) {
@@ -234,25 +257,23 @@ var view = {
 			callback().setAttribute('value', newValue);
 		},
 		putPassword: function() {
-			var self = controller.view.password;
-			self.getInputPassword().setAttribute('value', self.setCurrentPassValue());
+			this.getInputPassword().setAttribute('value', this.setCurrentPassValue());
 		},
+
 		resetFunc: function() {
-			var self = controller.view.password;
-			self.getInputPassword().setAttribute('value', '');
-			var a = self.getCurrentInputValue();
+			this.getInputPassword().setAttribute('value', '');
+			var a = this.getCurrentInputValue();
 			return a = '';
 		},
 		resetLastSymbol: function() {
-			var temp = controller.view.password.getInputPassword().getAttribute('value');
+			var temp = this.getInputPassword().getAttribute('value');
 			var newVal = temp.substring(0, temp.length - 1);
-			controller.view.password.getInputPassword().setAttribute('value', newVal);
-			var a = controller.view.password.getCurrentInputValue();
+			this.getInputPassword().setAttribute('value', newVal);
+			var a = this.getCurrentInputValue();
 			return a = '';
 		},
 		addDisabled: function(element) {
 			element.setAttribute('disabled', '');
-			//add some interactive elements of disability
 		},
 		removeDisabled: function(element) {
 			element.removeAttribute('disabled');
@@ -261,12 +282,10 @@ var view = {
 			return document.querySelector('.close-garage-warning-block');
 		},
 		closeGarageWarningShow: function() {
-			var self = controller.view.password;
-			self.getCloseGarageWarningBlock().classList.add('show');
+			this.getCloseGarageWarningBlock().classList.add('show');
 		},
 		closeGarageWarningHide: function() {
-			var self = controller.view.password;
-			self.getCloseGarageWarningBlock().classList.remove('show');
+			this.getCloseGarageWarningBlock().classList.remove('show');
 		}
 	},
 	tabs: {
@@ -281,15 +300,15 @@ var view = {
 		},
 		getTabCont: function(event) {
 			var elem = event.currentTarget;
-			controller.view.password.getPasswordBlock().classList.add('tab-content');
-			var testTarg = controller.view.tabs.getTarget(elem);
-			var sectionLength = controller.view.tabs.getSections().length;
+			self.view.password.getPasswordBlock().classList.add('tab-content');
+			var testTarg = this.getTarget(elem);
+			var sectionLength = this.getSections().length;
 			for (var j = 0; j < sectionLength; j++) {
-				controller.view.tabs.getSections()[j].style.display = 'none';
+				this.getSections()[j].style.display = 'none';
 			}
 			document.getElementById(testTarg).style.display = 'block';
 			for (var k = 0; k < controller.tabsLength; k++) {
-				controller.view.tabs.getTabLinks()[k].removeAttribute('class');
+				this.getTabLinks()[k].removeAttribute('class');
 			}
 			elem.setAttribute('class', 'is-active');
 			return false;

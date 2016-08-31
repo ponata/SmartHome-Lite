@@ -71,6 +71,7 @@ figure {
   width: 100%;
   vertical-align: top;
   text-align: center;
+  margin-top: 3%;
 }
 .garage-button {
   display: inline-block;
@@ -103,7 +104,7 @@ figure {
 }
 .video-container {
   width: 30%;
-  min-height: 160px;
+  height: 160px;
   display: inline-block;
   position: relative;
   margin: 2% 5%;
