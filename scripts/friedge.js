@@ -70,9 +70,15 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {}
         }
         // check input, if it was changed
-    document.getElementById('inputWrapper').addEventListener('change', function(event) {
-        setColor(htmlObjects, startingValues);
+    document.getElementById('inputWrapper').addEventListener('input', function(event) {
+        var elem = event.target;
+        if (checkInput(elem)) {
+            startingValues.currentTemps = getCurrentTemps(htmlObjects);
+            startingValues.stepRevert = calcStep(htmlObjects, startingValues);
+            setColor(htmlObjects, startingValues);
+        }
     });
+
 
     // check if mode was selected
     htmlObjects.selectMode.onchange = function() {
@@ -86,6 +92,8 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         frostProduct(htmlObjects, startingValues, modalMessages);
     }
+
+
 
 });
 
@@ -164,10 +172,11 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                     // check products
                     if (htmlObjects.products.children.length) {
                         // check input, if it was changed
-                        document.getElementById('inputWrapper').addEventListener('change', function(event) {
+                        document.getElementById('inputWrapper').addEventListener('input', function(event) {
                             var elem = event.target;
                             if (checkInput(elem)) {
                                 startingValues.currentTemps = getCurrentTemps(htmlObjects);
+                                startingValues.stepRevert = calcStep(htmlObjects, startingValues);
                                 setColor(htmlObjects, startingValues);
                             }
                         });
@@ -176,10 +185,11 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                         htmlObjects.selectMode.onchange = function() {
                             selectMode(htmlObjects);
                             startingValues.currentTemps = getCurrentTemps(htmlObjects);
+                            startingValues.stepRevert = calcStep(htmlObjects, startingValues);
                             setColor(htmlObjects, startingValues);
                         }
 
-                        startingValues.stepRevert = calcStep(htmlObjects, startingValues);
+                        
                         if (startingValues.currentWidth - startingValues.stepRevert > 0) {
                             startingValues.currentWidth -= startingValues.stepRevert;
                             htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
@@ -235,6 +245,15 @@ function getCurrentTemps(htmlObjects) {
     return object;
 }
 
+function checkInput(elem) {
+
+    if (parseInt(elem.value) >= parseInt(elem.min) && parseInt(elem.value) <= parseInt(elem.max)) {
+        return true
+    } else {
+        return false;
+    }
+}
+
 function calcStep(htmlObjects, startingValues) {
     var coefficient = 0;
 
@@ -247,7 +266,7 @@ function calcStep(htmlObjects, startingValues) {
         }
     }
 
-    return coefficient/1000;
+    return coefficient / 1000;
 }
 
 function showModal(htmlObjects, startingValues, modalMessages) {
@@ -262,15 +281,6 @@ function showModal(htmlObjects, startingValues, modalMessages) {
             htmlObjects.modal.style.display = "none";
         } else {}
 
-    }
-}
-
-function checkInput(elem) {
-
-    if (parseInt(elem.value) >= parseInt(elem.min) && parseInt(elem.value) <= parseInt(elem.max)) {
-        return true
-    } else {
-        return false;
     }
 }
 
@@ -310,9 +320,9 @@ function setColor(htmlObjects, startingValues) {
     startingValues.currentTemps = getCurrentTemps(htmlObjects);
     var coefficient = calcStep(htmlObjects, startingValues);
     var svgColor = document.getElementById("svgColor");
-    if (coefficient*1000 < 15) {
+    if (coefficient * 1000 < 15) {
         svgColor.className = "light";
-    } else if (coefficient*1000 >= 27) {
+    } else if (coefficient * 1000 >= 27) {
         svgColor.className = "highFreeze";
     } else {
         svgColor.className = "standard";
