@@ -7,11 +7,6 @@
 }
 #wrap {
     display: block;
-<<<<<<< HEAD
-    height: 600px;
-=======
-/*    height: 390px;*/
->>>>>>> master
     margin: 0 auto;
     width: 1023px;
 }
@@ -126,6 +121,7 @@ label{
 }
 #reset{
     text-align: center;
+    height: 20%;
 }
 #cancel-all{
     display: block;
@@ -142,7 +138,7 @@ label{
 select{
     display:block;
     top:50%;
-    margin: -15px 0 0 220px;
+    margin: -35px 0 0 220px;
     height: 30px;
     width: 100px;
     border-radius: 5px;
@@ -194,11 +190,7 @@ select:disabled{
     color: white;
     text-shadow: none;
 }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> master
 #coffee_selected-device.sprite-coffee_0 {
     background-position: 0 0;
 }
@@ -233,7 +225,7 @@ input[type=number]{
     width: 40px;
     height: 30px;
     border-radius: 5px;
-    margin: -15px -30px 0 30px;
+    margin: -30px -30px 0 30px;
     background: black;
     color: white;
 }
