@@ -51,7 +51,7 @@ var controller = {
 		controller.model.camera.push(newCamera);
 	},
 	hideCameraHandler: function() {
-		this.view.camera.getCameraSubmitBtn().addEventListener('click', function(e) {
+		this.view.camera.getCameraSubmitBtn().addEventListener('submit', function(e) {
 			e.preventDefault();
 			controller.fillInCameraModel();
 			controller.view.camera.hideCameraFormBlock();
