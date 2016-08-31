@@ -179,8 +179,7 @@ function Frost(htmlObjects, startingValues, modalMessages) {
                             setColor(htmlObjects, startingValues);
                         }
 
-                        startingValues.currentTemps = getCurrentTemps(htmlObjects);
-                        startingValues.stepRevert = (startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) / 1000;
+                        startingValues.stepRevert = calcStep(htmlObjects, startingValues);
                         if (startingValues.currentWidth - startingValues.stepRevert > 0) {
                             startingValues.currentWidth -= startingValues.stepRevert;
                             htmlObjects.outputPercentage.innerHTML = parseInt(startingValues.currentWidth) + '%';
@@ -230,10 +229,25 @@ function Frost(htmlObjects, startingValues, modalMessages) {
 function getCurrentTemps(htmlObjects) {
 
     var object = {
-        inputFreezeTemp: Math.abs(htmlObjects.inputFreezeTemp.value),
-        inputOverallTemp: Math.abs(htmlObjects.inputOverallTemp.value)
+        inputFreezeTemp: htmlObjects.inputFreezeTemp.value,
+        inputOverallTemp: htmlObjects.inputOverallTemp.value
     }
     return object;
+}
+
+function calcStep(htmlObjects, startingValues) {
+    var coefficient = 0;
+
+    for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
+        // console.log(startingValues.currentTemps[i].value);
+        if (htmlObjects.inputsTemp[i].value > 0) {
+            coefficient += Math.pow(htmlObjects.inputsTemp[i].value, -1);
+        } else {
+            coefficient += Math.abs(htmlObjects.inputsTemp[i].value);
+        }
+    }
+
+    return coefficient/1000;
 }
 
 function showModal(htmlObjects, startingValues, modalMessages) {
@@ -252,21 +266,11 @@ function showModal(htmlObjects, startingValues, modalMessages) {
 }
 
 function checkInput(elem) {
-    if (elem.id == "inputOverallTemp") {
-        if (elem.value >= -20 && elem.value <= 0) {
-            return true
-        } else {
-            return false;
-        }
 
-    }
-    if (elem.id == "inputFreezeTemp") {
-        if (elem.value >= -50 && elem.value <= 0) {
-            return true
-        } else {
-            return false;
-        }
-
+    if (parseInt(elem.value) >= parseInt(elem.min) && parseInt(elem.value) <= parseInt(elem.max)) {
+        return true
+    } else {
+        return false;
     }
 }
 
@@ -275,21 +279,21 @@ function selectMode(htmlObjects) {
     switch (htmlObjects.selectMode.options[htmlObjects.selectMode.selectedIndex].value) {
         case "standard":
             htmlObjects.inputFreezeTemp.value = "-18";
-            htmlObjects.inputOverallTemp.value = "-6";
+            htmlObjects.inputOverallTemp.value = "5";
             for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
                 htmlObjects.inputsTemp[i].disabled = true;
             }
             break;
         case "light":
-            htmlObjects.inputFreezeTemp.value = "-9";
-            htmlObjects.inputOverallTemp.value = "-3";
+            htmlObjects.inputFreezeTemp.value = "-14";
+            htmlObjects.inputOverallTemp.value = "9";
             for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
                 htmlObjects.inputsTemp[i].disabled = true;
             }
             break;
         case "highFreeze":
             htmlObjects.inputFreezeTemp.value = "-27";
-            htmlObjects.inputOverallTemp.value = "-10";
+            htmlObjects.inputOverallTemp.value = "3";
             for (var i = 0; i < htmlObjects.inputsTemp.length; i++) {
                 htmlObjects.inputsTemp[i].disabled = true;
             }
@@ -304,10 +308,11 @@ function selectMode(htmlObjects) {
 
 function setColor(htmlObjects, startingValues) {
     startingValues.currentTemps = getCurrentTemps(htmlObjects);
+    var coefficient = calcStep(htmlObjects, startingValues);
     var svgColor = document.getElementById("svgColor");
-    if ((startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) <= 12) {
+    if (coefficient*1000 < 15) {
         svgColor.className = "light";
-    } else if ((startingValues.currentTemps.inputFreezeTemp + startingValues.currentTemps.inputOverallTemp) >= 37) {
+    } else if (coefficient*1000 >= 27) {
         svgColor.className = "highFreeze";
     } else {
         svgColor.className = "standard";

@@ -121,13 +121,13 @@
                     <div id="inputWrapper">
                         <div class="input-field">
                             <span>Overall</span>
-                            <input id="inputOverallTemp" type="number" class="input temp" min="-20" max="0" value="-6" disabled="disabled">
+                            <input id="inputOverallTemp" type="number" class="input temp" min="3" max="9" value="5" disabled="disabled">
                             <span>&deg;C</span>
                             <div class="input-error">Enter value between "-20" and "0"</div>
                         </div>
                         <div class="input-field">
                             <span>Freezer</span>
-                            <input id="inputFreezeTemp" type="number" class="input temp" min="-50" max="0" value="-18" disabled="disabled">
+                            <input id="inputFreezeTemp" type="number" class="input temp" min="-65" max="-10" value="-18" disabled="disabled">
                             <span>&deg;C</span>
                             <div class="input-error">Enter value between "-50" and "0"</div>
                         </div>
@@ -142,7 +142,7 @@
                     </div>
                     <button id="btnExtremeFrost" class="submit">Extreme Freeze</button>
                     <div id="errorExtremeFrost" class="input-error">No products to freeze!</div>
-                    
+
                 </form>
             </div>
         </div>
@@ -159,7 +159,7 @@
             <div class="modal-message">
                 <p id="outputModalMessage" class="output-modal-message"></p>
                 <div class="loader">
-                    <img id="gif" src="../img/6.gif" alt="" />
+                    <img id="gif" src="../img/loader.gif" alt="" />
                     <span id="loaderPercentage" class="loader-percentage">
                   
                     </span>

@@ -32,7 +32,7 @@
                       <div>
                           <button  id="heating-btn" class="action-button">Heating</button>
                           <button id="cook-btn" class="action-button">Cook</button>
-                          <button id="settings-btn" class="action-button">Settings</button>
+                          <button id="custom-btn" class="action-button">Custom</button>
                       </div>
                     </div>
 
@@ -77,25 +77,40 @@
                             <button id="stop" class="status"> <img src="../img/multi-stop.png"></button>
 
                             <div id="timer">
-                                <img class='timer' src="../img/multi-timer.png">
+                                <img id='img-timer' class='timer' src="../img/multi-timer.png">
                                 <p id="cook-time-sec"></p>
                             </div>
                         </div>
                     </div>
-                    <!-- <div id="setting" class="setting">
-                        <button></button>
-                        <button></button>
-                        <button></button>
-                    </div>
-
-                    <div class="setting">
-                        <button></button>
-                        <button></button>
-                        <button></button>
-                    </div> -->
+                    <div id="custom-display" class="custom-display">
+                        <img class="img-temperature" src="../img/multi-temperature.png">
+                        <div class="div-temperature">
+                            <button class="more" id="more-temperature"><img src="../img/multi-plus.png" /></button>
+                            <p id="set-temperature" class="set-temperature">100 °</p>
+                            <button class="less" id="less-temperature"><img src="../img/multi-minus.png" /></button>
+                        </div>
+                        <br>
+                        <img id="clock1" class="img-clock" src="../img/multi-clock.png">
+                        <div class="div-clock">
+                            <button class="more" id="more-clock"><img src="../img/multi-plus.png" /></button>
+                            <p id="set-clock" class="set-clock">01:00</p>
+                            <button class="less" id="less-clock"><img src="../img/multi-minus.png" /></button>
+                        </div>
+                            <button id="start" class="start"> START</button>
+                            <button id="reset" class="reset"> RESET</button>
                 </div>
 
+                <div class="custom-display-process" id ="custom-display-process">
+                    <p>Your own program</p>
+                    <button id="play-custom-program" class="status play none"> <img src="../img/play.ico"></button>
+                    <button id="pause-custom-program" class="status"> <img src="../img/multi-pause.png"></button>
+                    <button id="stop-custom-program" class="status"> <img src="../img/multi-stop.png"></button>
 
+                    <div id="timer2-custom-program">
+                        <img id='img-timer2' class='timer' src="../img/multi-timer.png">
+                        <p id="custom-time-sec"></p>
+                    </div>
+                </div>
             </main>
             <footer class="footer">
                 <div class="container copyright"> &copy; Kharkiv SoftServe ITA 2016</div>

@@ -47,7 +47,8 @@ button:focus {
 }
 
 .heating-display,
-.program-display{
+.program-display,
+.custom-display{
     text-align: center;
     background: black;
     opacity: 0.6;
@@ -58,7 +59,8 @@ button:focus {
 
 
 .heating-display,
-.program-display {
+.program-display,
+.custom-display {
   animation-duration: 1s;
 }
 
@@ -107,6 +109,29 @@ button:focus {
   }
 }
 
+.custom-display {
+  animation-duration: 1s;
+  animation-name: custom-slidein;
+}
+
+@keyframes custom-slidein {
+  0% {
+    width:0;
+    height: 0;
+  }
+
+  50% {
+    width: 400px;
+    height: 0;
+  }
+
+  100% {
+    width: 400px;
+    height: 294px;
+  }
+}
+
+
 .program-display>button {
     cursor: pointer;
     border-radius: 10%;
@@ -123,6 +148,7 @@ button:focus {
 
 .heating-display>*,
 .program-display>*,
+.custom-display>*,
 .done>*,
 .cancel>* {
     animation-duration: 2s;
@@ -205,7 +231,12 @@ button:focus {
     -o-animation: timer 5s infinite linear;
     animation: timer 5s infinite linear;
     display: inline-block;
+}
 
+.stop-animation{
+    width: 30px;
+    height: 55px;
+    display: inline-block;
 }
 
 @keyframes timer {
@@ -316,6 +347,7 @@ button:focus {
     display: inline-block;
     vertical-align: top;
     margin: 30px 0px;
+    width: 120px;
 }
 
 #stop-heat{
@@ -331,12 +363,8 @@ button:focus {
     display: inline-block;
     vertical-align: top;
     margin: 20px 0px;
+    width: 120px;
 }
-
-
-
-
-
 .cancel{
     display: none;
     color: white;
@@ -378,4 +406,165 @@ button:focus {
     width: 300px;
     height: 372px;
   }
+}
+
+
+.start {
+    width: 100px;
+    height: 50px;
+    background-color: #FF0000;
+    border: 3px solid white;
+    border: none;
+    color: white;
+    font-size: 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 0 20px 90px;
+
+}
+.reset {
+    width: 100px;
+    height: 50px;
+    background-color: green;
+    border: 3px solid white;
+    border: none;
+    color: white;
+    font-size: 25px;
+    border-radius: 10px;
+
+}
+
+
+
+
+.custom-display{
+    display: none;
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    background: black;
+    opacity: 0.6;
+    border: 2px solid #0099FF;
+    border-radius: 10%;
+    text-align: left;
+    vertical-align: super;
+    width: 400px;
+}
+
+.custom-display>img{
+    display: inline-block;
+    height: 80px;
+    margin: 5px 10px 10px 20px;
+}
+.custom-display>img:first-child{
+    margin-top: 20px;
+}
+
+
+.img-clock{
+    margin-left: -5px;
+    display: inline-block;
+}
+
+.more,
+.less{
+    border: none;
+    background: none;
+    display: inline-block;
+
+}
+
+.more>img,
+.less>img{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+}
+
+
+.set-temperature,
+.set-clock{
+    display: inline-block;
+    margin-top: 0px;
+    width: 110px;
+    text-align: center;
+}
+.set-temperature{
+    padding: 0 10px;
+    width: 150px;
+}
+
+.set-clock{
+    width: 150px;
+}
+
+
+div.p-clock,
+div.p-temperature{
+    margin: 20px 0;
+    width: 250px;
+}
+
+
+#clock1{
+    width: 80px;
+    height: 70px;
+}
+
+
+.div-temperature {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0px;
+    width: 250px;
+}
+.div-clock{
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0px;
+    width: 250px;
+}
+
+.custom-display-process{
+    display: none;
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    background: black;
+    opacity: 0.6;
+    border: 2px solid #0099FF;
+    border-radius: 10%;
+    text-align: left;
+    vertical-align: super;
+    width: 400px;
+}
+
+.custom-display-process>p{
+    padding: 15px;
+    text-align: center;
+}
+
+#custom-time-sec{
+    display: inline-block;
+}
+
+#timer2{
+    height: 100px;
+    padding: 5px;
+    margin-top: 55px;
+    margin: 55px auto auto 70px;
+}
+
+#timer2-custom-program{
+    margin: 40px 70px;
+}
+
+.custom-display-process>button{
+    margin: 0px 45px;
+}
+.custom-display-process button:hover,
+.heating-display button:hover,
+#set-program-display button:hover,
+.custom-display button:hover{
+    cursor: pointer;
 }
