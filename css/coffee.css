@@ -59,12 +59,14 @@ button:hover {
     margin-top: 20px;
     width: 33%;
     border-radius: 50px;
-    opacity: 0.9;
+    opacity: 0.7;
+    background: black;
 }
 #coffee_selected-device{
     background: url(../img/coffee_sprite.png)no-repeat center;
     float: left;
-    margin-left: 5px;
+    width: 260px;
+    margin-left: 40px;
 }
 .coffee_menu{
     float: left;
