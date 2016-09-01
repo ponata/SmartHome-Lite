@@ -52,25 +52,28 @@ figure {
 }
 .block {
   width: 70%;
-  margin: 50px auto 0;
+  margin: 0 auto;;
   overflow: hidden;
-  min-height: 300px;
+  height: 100%;
 }
 .block h2 {
   color: #fff;
   text-align: center;
   font-size: 20px;
+  text-transform: uppercase;
 }
 .password-block {
   width: 100%;
   text-align: center;
   vertical-align: top;
   position: relative;
+  padding: 20px 0;
 }
 .garage-block {
   width: 100%;
   vertical-align: top;
   text-align: center;
+  margin-top: 3%;
 }
 .garage-button {
   display: inline-block;
@@ -88,22 +91,29 @@ figure {
 .set-password-block {
   display: block;
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  padding-top: 30px;
-  padding: 15%;
+  top: 50%;
+  left: 50%;
+  margin-left: -180px;
+  margin-top: -180px;
+  padding: 30px 0;
   text-align: center;
-/*  background: rgba(0, 0, 0, 0.4);*/
+  border: 2px solid #000;
+  box-shadow: 0 0 10px 5px #000;
+  border-radius: 50%;
+  background: rgba(0,0,0,.4);
+}
+.set-password-block h2 {
+  font-size: 16px;
+  font-weight: normal;
 }
 .camera-object,
 .garage-object {
   display: block;
 }
 .video-container {
-  width: 30%;
-  height: 160px;
+  width: 32%;
+  min-height: 180px;
+  height: 32%;
   display: inline-block;
   position: relative;
   margin: 2% 5%;
@@ -156,6 +166,9 @@ figure {
   top: 100px;
   border-color: #0099FF;
 }
+.hide-video {
+  visibility: hidden;
+}
 #full-screen-btn {
   display: block;
   position: absolute;
@@ -175,16 +188,20 @@ figure {
 .full-screen-camera-block {
   width: 100%;
   height: 100%;
-  background: #003046;
+  background: #001929;
 }
 .full-screen-camera-block .camera-object,
 .full-screen-camera-block #new-camera {
   display: none;
 }
 .full-screen-camera-block .video-container {
-  width: 40%;
+  width: 36%;
   float: left;
-  height: 40%;
+  height: 36%;
+}
+
+.full-screen-camera-block .video-container .screen{
+  background: #003046;
 }
 .full-screen-camera-block #video-btn li {
   width: 50%;
@@ -311,6 +328,7 @@ input[type=button] {
 input[type=submit] {
   height: 40px;
   width: 100px;
+  display: block;
 }
 input[type=button]:hover,
 input[type=submit]:hover {
@@ -322,7 +340,6 @@ form #set-password {
 #set-password {
   font-size: 12px;
   width: 110px;
-  margin: 10px;
 }
 #change-password {
   font-size: 16px;
@@ -426,5 +443,8 @@ object:active {
   background: none;
   color: #0099FF;
   border: none;
+}
+input[disabled]:hover {
+  box-shadow: none;
 }
 /*# sourceMappingURL=security.css.map */
