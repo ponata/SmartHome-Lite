@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 setColor(html, values);
                 if (!html.btnPower.checked) {
                     // no electricity
-                    values.flag = "false";
+                    values.flag = false;
                     Battery(html, values, messages);
                 }
             }
