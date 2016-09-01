@@ -31,6 +31,7 @@ window.onload = function() {
     var customDisplayProcess = document.getElementById('custom-display-process');
     var imgTimer = document.getElementById('img-timer');
     var imgTimer2 = document.getElementById('img-timer2');
+    var parImg = document.getElementById('par');
 
 
 
@@ -105,6 +106,10 @@ window.onload = function() {
         hideElem(cancelDisplay);
         hideElem(customDisplay);
         disableMainBtns();
+        parImg.className = "par-img";
+
+
+
         var t = heating.time;
         heatTimeSecElem.innerHTML = showAsTime(t);
         var timerData = {
@@ -120,8 +125,17 @@ window.onload = function() {
             showElem(cancelDisplay);
             clearInterval(timerData.timerId);
             enableMainBtns ();
+            stopPar();
+            function stopPar() {
+                parImg.className = "";
+            }
         }
+
+
     }
+
+
+
 
 
     for(var programName in programs) {
@@ -134,6 +148,7 @@ window.onload = function() {
         disableMainBtns();
         spanDishName.innerText = programName + ' ';
         printTime(programName);
+        parImg.className = "par-img";
     }
 
     function printTime(programName) {
@@ -152,6 +167,10 @@ window.onload = function() {
             hideElem(pauseBtn);
             showElem(playBtn);
             imgTimer.className = "stop-animation";
+            stopPar();
+            function stopPar() {
+                parImg.className = "";
+            }
         }
 
         playBtn.onclick = function() {
@@ -159,6 +178,8 @@ window.onload = function() {
             showElem(pauseBtn);
             goTimer (timerData);
             imgTimer.className = "timer";
+            parImg.className = "par-img";
+
         }
 
         stopBtn.onclick = function() {
@@ -169,6 +190,10 @@ window.onload = function() {
             clearInterval(timerData.timerId);
             enableMainBtns ();
             imgTimer.className = "timer";
+            stopPar()
+            function stopPar() {
+                parImg.className = "";
+            }
         }
     }
 
@@ -197,6 +222,11 @@ window.onload = function() {
             hideElem(pauseCustomProgramBtn);
             showElem(playCustomProgramBtn);
             imgTimer2.className = "stop-animation";
+            
+            function stopPar() {
+                parImg.className = "";
+            }
+            stopPar();
         }
 
 
@@ -206,6 +236,7 @@ window.onload = function() {
             hideElem(playCustomProgramBtn);
             goTimer (timerData);
             imgTimer2.className = "timer";
+            parImg.className = "par-img";
         }
 
         stopCustomProgramBtn.onclick = function() {
@@ -217,6 +248,11 @@ window.onload = function() {
             enableMainBtns ();
             resetTempTime ();
             imgTimer2.className = "timer";
+            stopPar()
+            function stopPar() {
+                parImg.className = "";
+            }
+
         }
 
         resetBtn.onclick = function (){
@@ -236,6 +272,7 @@ window.onload = function() {
             disableMainBtns();
             goTimer (timerData);
             customTimeSecElem.innerHTML = showAsTime(timerData.time);
+            parImg.className = "par-img";
 
         }
 
@@ -246,6 +283,7 @@ window.onload = function() {
 
         moreClockBtn.onclick = function() {
             lessClockBtn.removeAttribute("disabled","disabled");
+            startBtn.removeAttribute("disabled","disabled");
             changeTime(300);
         }
 
@@ -256,6 +294,7 @@ window.onload = function() {
 
         moreTemperatureBtn.onclick = function() {
             lessTemperatureBtn.removeAttribute("disabled","disabled");
+            startBtn.removeAttribute("disabled","disabled");
             changeTemperature(5);
         }
 
@@ -272,6 +311,7 @@ window.onload = function() {
             setClock.innerText = clock;
             if(timerData.time <= 0){
                 lessClockBtn.setAttribute("disabled","disabled");
+                startBtn.setAttribute("disabled","disabled");
                 }
             if(timerData.time >= 36000){
                 moreClockBtn.setAttribute("disabled","disabled");
@@ -286,6 +326,7 @@ window.onload = function() {
             }
             else if(custom.temperature <= 0){
                 lessTemperatureBtn.setAttribute("disabled","disabled");
+                startBtn.setAttribute("disabled","disabled");
             }
         }
    }
@@ -311,7 +352,18 @@ window.onload = function() {
                 enableMainBtns ();
                 clearInterval(timerData.timerId);
                 hideElem(timerData.processBlock);
+                hideElem(setProgramDisplay);
+                hideElem(customDisplayProcess);
+                hideElem(heatingDisplay);
                 showElem(doneDisplay);
+
+                function stopPar() {
+                    parImg.className = "";
+                }
+
+
+                stopPar();
+
             }
             timerData.time--;
             timerData.timeElem.innerHTML = showAsTime(timerData.time);
@@ -339,4 +391,9 @@ function showAsTime (seconds) {
     if (seconds<10) seconds = "0" + seconds;
 
     return hours + ":"  + minutes + ":" +  seconds;
+}
+
+
+function stopPar() {
+    parImg.className = "";
 }
