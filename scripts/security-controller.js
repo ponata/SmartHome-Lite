@@ -68,11 +68,11 @@ var controller = {
 				var video = target.previousElementSibling.previousElementSibling.firstElementChild;
 				if (self.model.camera[dataNumber].isOn == true){
 					self.model.camera[dataNumber].isOn = false;
-					video.classList.add('tab-content');
+					video.classList.add('hide-video');
 					self.view.camera.changeCameraBtnInner(target, true);
 				} else{
 					self.model.camera[dataNumber].isOn = true;
-					video.classList.remove('tab-content');
+					video.classList.remove('hide-video');
 					self.view.camera.changeCameraBtnInner(target, false);
 				}
 			} else if (target.hasAttribute('data-number-remove')) {
@@ -139,11 +139,13 @@ var controller = {
 		this.view.password.getSetPasswordBtn().addEventListener('click', function() {
 			self.setPassword();
 			self.inputPassHandler();
+			self.view.password.getPasswordBlock().classList.remove('hide');
 		}, false);
 	},
 	changePasswordBlockHandler: function() {
 		var self = this;
 		this.view.password.getChangePasswordBtn().addEventListener('click', function() {
+			self.view.password.getPasswordBlock().classList.add('hide');
 			self.view.password.showChangePasswordBlock();
 			self.model.password.passwordStatus = false;
 			self.model.password.currentPassword= '';
