@@ -34,7 +34,7 @@ var controller = {
 		this.view.camera.getAddNewCameraBtn().onclick = this.view.camera.showCameraFormBlock.bind(this.view.camera);
 	},
 	removeCameraHandler: function() {
-		this.view.camera.getRemoveCameraFormBlock().onclick = this.view.camera.hideCameraFormBlock;
+		this.view.camera.getRemoveCameraFormBlock().onclick = this.view.camera.hideCameraFormBlock.bind(this.view.camera);
 	},
 	fillInCameraModel: function() {
 		var newCamera = new controller.NewCameraConstructor(this.view.camera.getCameraNameValue(), this.view.camera.getCameraPathValue());
