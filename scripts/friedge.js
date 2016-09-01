@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    var HTML = {
+    var html = {
         degFreeze: document.getElementById("degFreeze"),
         degGeneral: document.getElementById("degGeneral"),
         degs: document.getElementsByClassName("degree"),
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         errFrost: document.getElementById("errFrost")
     }
 
-    var Values = {
+    var values = {
         currentWidth: 0,
         stepForward: .3,
         stepRevert: 0,
@@ -33,47 +33,47 @@ document.addEventListener("DOMContentLoaded", function() {
         timeFrost: 5000
     }
 
-    var Messages = {
+    var messages = {
             on: "Freeze in progress...",
             done: "Frozen!",
             err: "No battery energy..."
         }
         // click power btn
-    HTML.btnPower.onclick = function() {
+    html.btnPower.onclick = function() {
         // is electricity
-        if (HTML.btnPower.checked) {
-            Values.flag = "true";
-            Battery(HTML, Values, Messages);
+        if (html.btnPower.checked) {
+            values.flag = true;
+            Battery(html, values, messages);
         }
         // no electricity
         else {
-            Values.flag = "false";
-            Battery(HTML, Values, Messages);
+            values.flag = false;
+            Battery(html, values, messages);
         }
     }
 
     // add product
-    HTML.btnAddProduct.onclick = function(e) {
+    html.btnAddProduct.onclick = function(e) {
             e.preventDefault();
-            addProduct(HTML);
-            if (Values.currentWidth > 0 && document.querySelector(".svg-elem.off") && HTML.prodList.children.length) {
-                Values.status = "on";
-                Enable(HTML, Values, Messages);
-                setColor(HTML, Values);
-                if (!HTML.btnPower.checked) {
+            addProduct(html);
+            if (values.currentWidth > 0 && document.querySelector(".svg-elem.off") && html.prodList.children.length) {
+                values.status = "on";
+                Enable(html, values, messages);
+                setColor(html, values);
+                if (!html.btnPower.checked) {
                     // no electricity
-                    Values.flag = "false";
-                    Battery(HTML, Values, Messages);
+                    values.flag = "false";
+                    Battery(html, values, messages);
                 }
             }
         }
         // remove product
-    HTML.btnRemoveProduct.onclick = function(e) {
+    html.btnRemoveProduct.onclick = function(e) {
             e.preventDefault();
-            removeProduct(HTML);
-            if (!HTML.prodList.children.length) {
-                Values.status = "off";
-                Enable(HTML, Values, Messages);
+            removeProduct(html);
+            if (!html.prodList.children.length) {
+                values.status = "off";
+                Enable(html, values, messages);
             }
         }
         // check input, if it was changed
@@ -81,77 +81,71 @@ document.addEventListener("DOMContentLoaded", function() {
         var elem = e.target;
 
         if (checkInput(elem)) {
-            Values.currentDegs = getcurrentDegs(HTML);
-            calcStep(HTML, Values);
-            setColor(HTML, Values);
+            values.currentDegs = getcurrentDegs(html);
+            calcStep(html, values);
+            setColor(html, values);
         }
     });
 
-
     // check if mode was selected
-    HTML.selectMode.onchange = function() {
-        selectMode(HTML);
-        Values.currentDegs = getcurrentDegs(HTML);
-        setColor(HTML, Values);
+    html.selectMode.onchange = function() {
+        selectMode(html);
+        values.currentDegs = getcurrentDegs(html);
+        setColor(html, values);
     }
 
     // extreme frost
-    HTML.btnFrost.onclick = function(e) {
+    html.btnFrost.onclick = function(e) {
         e.preventDefault();
-        frostProduct(HTML, Values, Messages);
+        frostProduct(html, values, messages);
     }
 
 });
 
-function Enable(HTML, Values, Messages) {
+function Enable(html, values, messages) {
 
-    switch (Values.status) {
+    switch (values.status) {
         case "on":
-            HTML.svg.classList.add("on");
-            HTML.svg.classList.remove("off");
+            html.svg.classList.add("on");
+            html.svg.classList.remove("off");
             break;
 
         case "off":
-            HTML.svg.classList.add("off");
-            HTML.svg.classList.remove("on");
+            html.svg.classList.add("off");
+            html.svg.classList.remove("on");
             break;
     }
 }
 
-function Battery(HTML, Values, Messages) {
+function Battery(html, values, messages) {
     // var currentDegs;
 
-    switch (Values.flag) {
+    switch (values.flag) {
 
-        case "true":
+        case true:
 
-            Values.speed = 70;
-
+            values.speed = 70;
             var timeoutIDT = setInterval(function() {
-
-                setBatteryColor(HTML, Values);
+                setBatteryColor(html, values);
                 // before new iteration, check electricity status
-                if (HTML.btnPower.checked) {
+                if (html.btnPower.checked) {
                     svg.classList.remove("battery-mode");
                     // friedge was off and we have products
-                    if (document.querySelector(".svg-elem.off") && HTML.prodList.children.length) {
-                        Values.status = "on";
-                        Enable(HTML, Values, Messages);
-                        setColor(HTML, Values);
-
+                    if (document.querySelector(".svg-elem.off") && html.prodList.children.length) {
+                        values.status = "on";
+                        Enable(html, values, messages);
+                        setColor(html, values);
                     } else {
 
                     }
-                    if (Values.currentWidth + Values.stepForward < 100) {
-                        Values.currentWidth += Values.stepForward;
-
-                        HTML.batteryPerc.innerHTML = parseInt(Values.currentWidth) + '%';
-                        HTML.progressBar.style.width = Values.currentWidth + '%';
-
+                    if (values.currentWidth + values.stepForward < 100) {
+                        values.currentWidth += values.stepForward;
+                        html.batteryPerc.innerHTML = parseInt(values.currentWidth) + '%';
+                        html.progressBar.style.width = values.currentWidth + '%';
                     } else {
-                        Values.currentWidth = 100;
-                        HTML.batteryPerc.innerHTML = '100%';
-                        HTML.progressBar.style.width = '100%';
+                        values.currentWidth = 100;
+                        html.batteryPerc.innerHTML = '100%';
+                        html.progressBar.style.width = '100%';
                         clearTimeout(timeoutIDT);
                         return false;
                     }
@@ -162,43 +156,42 @@ function Battery(HTML, Values, Messages) {
                     return false;
                 }
 
-            }, Values.speed);
+            }, values.speed);
 
             break;
 
-
-        case "false":
+        case false:
             svg.classList.add("battery-mode");
-            Values.speed = 40;
-            Values.currentDegs = getcurrentDegs(HTML);
+            values.speed = 40;
+            values.currentDegs = getcurrentDegs(html);
 
             var timeoutIDF = setInterval(function() {
-                setBatteryColor(HTML, Values);
+                setBatteryColor(html, values);
 
                 // before new iteration, check the electricity status
                 // no electricity
-                if (!HTML.btnPower.checked) {
+                if (!html.btnPower.checked) {
                     // check products
-                    if (HTML.prodList.children.length) {
+                    if (html.prodList.children.length) {
 
                         // check if mode was selected
-                        HTML.selectMode.onchange = function() {
-                            selectMode(HTML);
-                            Values.currentDegs = getcurrentDegs(HTML);
-                            calcStep(HTML, Values);
-                            setColor(HTML, Values);
+                        html.selectMode.onchange = function() {
+                            selectMode(html);
+                            values.currentDegs = getcurrentDegs(html);
+                            calcStep(html, values);
+                            setColor(html, values);
                         }
 
-                        if (Values.currentWidth - Values.stepRevert > 0) {
-                            Values.currentWidth -= Values.stepRevert;
-                            HTML.batteryPerc.innerHTML = parseInt(Values.currentWidth) + '%';
-                            HTML.progressBar.style.width = Values.currentWidth + '%';
+                        if (values.currentWidth - values.stepRevert > 0) {
+                            values.currentWidth -= values.stepRevert;
+                            html.batteryPerc.innerHTML = parseInt(values.currentWidth) + '%';
+                            html.progressBar.style.width = values.currentWidth + '%';
                         } else {
-                            Values.currentWidth = 0;
-                            HTML.batteryPerc.innerHTML = '0%';
-                            HTML.progressBar.style.width = '0%';
-                            Values.status = "off";
-                            Enable(HTML, Values, Messages);
+                            values.currentWidth = 0;
+                            html.batteryPerc.innerHTML = '0%';
+                            html.progressBar.style.width = '0%';
+                            values.status = "off";
+                            Enable(html, values, messages);
 
                             clearTimeout(timeoutIDF);
                             return false;
@@ -207,12 +200,12 @@ function Battery(HTML, Values, Messages) {
                     // no products
                     else {
                         // is electricity
-                        if (HTML.btnPower.checked) {
+                        if (html.btnPower.checked) {
                             clearTimeout(timeoutIDF);
                             return false;
                         }
-                        Values.status = "off";
-                        Enable(HTML, Values, Messages);
+                        values.status = "off";
+                        Enable(html, values, messages);
                         clearTimeout(timeoutIDF);
                         return false;
                     }
@@ -222,19 +215,16 @@ function Battery(HTML, Values, Messages) {
                     clearTimeout(timeoutIDF);
                     return false;
                 }
-
-            }, Values.speed);
-
+            }, values.speed);
             break;
-
     }
 }
 
-function getcurrentDegs(HTML) {
+function getcurrentDegs(html) {
 
     var object = {
-        degFreeze: HTML.degFreeze.value,
-        degGeneral: HTML.degGeneral.value
+        degFreeze: html.degFreeze.value,
+        degGeneral: html.degGeneral.value
     }
     return object;
 }
@@ -248,85 +238,84 @@ function checkInput(elem) {
     }
 }
 
-function calcStep(HTML, Values) {
+function calcStep(html, values) {
     var coefficient = 0;
 
-    for (var i = 0; i < HTML.degs.length; i++) {
+    for (var i = 0; i < html.degs.length; i++) {
 
-        if (HTML.degs[i].value > 0) {
-            coefficient += Math.pow(HTML.degs[i].value, -1);
+        if (html.degs[i].value > 0) {
+            coefficient += Math.pow(html.degs[i].value, -1);
         } else {
-            coefficient += Math.abs(HTML.degs[i].value);
+            coefficient += Math.abs(html.degs[i].value);
         }
     }
-    Values.stepRevert = coefficient / 1000;
+    values.stepRevert = coefficient / 1000;
 }
 
-function showModal(HTML, Values, Messages) {
+function showModal(html, values, messages) {
 
-    HTML.modal.style.display = "block";
+    html.modal.style.display = "block";
 
-    HTML.close.onclick = function() {
-        HTML.modal.style.display = "none";
+    html.close.onclick = function() {
+        html.modal.style.display = "none";
     }
     window.onclick = function(e) {
-        if (e.target == HTML.modal) {
-            HTML.modal.style.display = "none";
+        if (e.target == html.modal) {
+            html.modal.style.display = "none";
         }
-
     }
 }
 
-function selectMode(HTML) {
+function selectMode(html) {
 
-    switch (HTML.selectMode.options[HTML.selectMode.selectedIndex].value) {
+    switch (html.selectMode.options[html.selectMode.selectedIndex].value) {
         case "standard":
-            HTML.degFreeze.value = "-18";
-            HTML.degGeneral.value = "5";
-            for (var i = 0; i < HTML.degs.length; i++) {
-                HTML.degs[i].disabled = true;
+            html.degFreeze.value = "-18";
+            html.degGeneral.value = "5";
+            for (var i = 0; i < html.degs.length; i++) {
+                html.degs[i].disabled = true;
             }
             break;
         case "light":
-            HTML.degFreeze.value = "-14";
-            HTML.degGeneral.value = "9";
-            for (var i = 0; i < HTML.degs.length; i++) {
-                HTML.degs[i].disabled = true;
+            html.degFreeze.value = "-14";
+            html.degGeneral.value = "9";
+            for (var i = 0; i < html.degs.length; i++) {
+                html.degs[i].disabled = true;
             }
             break;
         case "highFreeze":
-            HTML.degFreeze.value = "-27";
-            HTML.degGeneral.value = "3";
-            for (var i = 0; i < HTML.degs.length; i++) {
-                HTML.degs[i].disabled = true;
+            html.degFreeze.value = "-27";
+            html.degGeneral.value = "3";
+            for (var i = 0; i < html.degs.length; i++) {
+                html.degs[i].disabled = true;
             }
             break;
         case "custom":
-            for (var i = 0; i < HTML.degs.length; i++) {
-                HTML.degs[i].disabled = false;
+            for (var i = 0; i < html.degs.length; i++) {
+                html.degs[i].disabled = false;
             }
             break;
     }
 }
 
-function setColor(HTML, Values) {
-    Values.currentDegs = getcurrentDegs(HTML);
-    calcStep(HTML, Values);
+function setColor(html, values) {
+    values.currentDegs = getcurrentDegs(html);
+    calcStep(html, values);
     var svgColor = document.getElementById("svgColor");
-    if (Values.stepRevert * 1000 < 15) {
+    if (values.stepRevert * 1000 < 15) {
         svgColor.className = "light";
-    } else if (Values.stepRevert * 1000 >= 27) {
+    } else if (values.stepRevert * 1000 >= 27) {
         svgColor.className = "highFreeze";
     } else {
         svgColor.className = "standard";
     }
 }
 
-function addProduct(HTML) {
+function addProduct(html) {
     var error = document.getElementById("productError");
-    HTML.errFrost.style.opacity = "0";
+    html.errFrost.style.opacity = "0";
 
-    if (HTML.newProd.value) {
+    if (html.newProd.value) {
         error.style.opacity = 0;
 
         var label = document.createElement("label");
@@ -335,59 +324,58 @@ function addProduct(HTML) {
         label.className = "product";
         elem.type = "checkbox";
 
-        label.innerHTML = HTML.newProd.value;
+        label.innerHTML = html.newProd.value;
         label.appendChild(elem);
-        HTML.prodList.appendChild(label);
-        HTML.newProd.value = "";
+        html.prodList.appendChild(label);
+        html.newProd.value = "";
     } else {
         error.style.opacity = 1;
     }
 }
 
-function removeProduct(HTML) {
+function removeProduct(html) {
     var elems = document.querySelectorAll(".products input:checked");
     for (var i = 0; i < elems.length; i++) {
         var parents = elems[i].parentNode;
         parents.parentNode.removeChild(parents);
-
     }
 }
 
-function frostProduct(HTML, Values, Messages) {
-    HTML.errFrost.style.opacity = "0";
-    Values.speed = 30;
+function frostProduct(html, values, messages) {
+    html.errFrost.style.opacity = "0";
+    values.speed = 30;
     var tmp = 0;
 
     // products for frost
     var elems = document.querySelectorAll(".products label:not(.product-frozen)");
 
     if (elems.length) {
-        var prevTemperatures = getcurrentDegs(HTML);
+        var prevTemperatures = getcurrentDegs(html);
 
         // set temperature to min
-        HTML.degGeneral.value = HTML.degGeneral.min;
-        HTML.degFreeze.value = HTML.degFreeze.min;
-        calcStep(HTML, Values);
+        html.degGeneral.value = html.degGeneral.min;
+        html.degFreeze.value = html.degFreeze.min;
+        calcStep(html, values);
 
-        showModal(HTML, Values, Messages);
+        showModal(html, values, messages);
 
-        HTML.gif.style.display = "block";
-        HTML.modalMessage.innerHTML = Messages.on;
+        html.gif.style.display = "block";
+        html.modalMessage.innerHTML = messages.on;
 
         var timeoutID = setInterval(function() {
-            if (Values.currentWidth > 0) {
-                if (tmp + Values.speed < Values.timeFrost) {
-                    tmp += Values.speed;
-                    HTML.gifPerc.innerHTML = parseInt((tmp / Values.timeFrost) * 100) + '%';
+            if (values.currentWidth > 0) {
+                if (tmp + values.speed < values.timeFrost) {
+                    tmp += values.speed;
+                    html.gifPerc.innerHTML = parseInt((tmp / values.timeFrost) * 100) + '%';
                 } else {
                     // set prev temp mode
-                    HTML.degGeneral.value = prevTemperatures.degGeneral;
-                    HTML.degFreeze.value = prevTemperatures.degFreeze;
-                    calcStep(HTML, Values);
+                    html.degGeneral.value = prevTemperatures.degGeneral;
+                    html.degFreeze.value = prevTemperatures.degFreeze;
+                    calcStep(html, values);
 
-                    HTML.gifPerc.innerHTML = "";
-                    HTML.gif.style.display = "none";
-                    HTML.modalMessage.innerHTML = Messages.done;
+                    html.gifPerc.innerHTML = "";
+                    html.gif.style.display = "none";
+                    html.modalMessage.innerHTML = messages.done;
 
                     for (var i = 0; i < elems.length; i++) {
                         var parents = elems[i].parentNode;
@@ -398,29 +386,29 @@ function frostProduct(HTML, Values, Messages) {
             }
             // no battery
             else {
-                HTML.gif.style.display = "none";
-                HTML.gifPerc.display = "none";
-                HTML.modalMessage.innerHTML = Messages.err;
+                html.gif.style.display = "none";
+                html.gifPerc.display = "none";
+                html.modalMessage.innerHTML = messages.err;
                 clearTimeout(timeoutID);
                 return false;
             }
 
-        }, Values.speed);
+        }, values.speed);
     }
     // no prod to frost
     else {
-        HTML.errFrost.style.opacity = "1";
+        html.errFrost.style.opacity = "1";
         return false;
     }
 }
 
-function setBatteryColor(HTML, Values) {
-    if (Values.currentWidth > 70) {
-        HTML.progressBar.style.background = "#70FA70";
+function setBatteryColor(html, values) {
+    if (values.currentWidth > 70) {
+        html.progressBar.style.background = "#70FA70";
 
-    } else if (Values.currentWidth < 35) {
-        HTML.progressBar.style.background = "#F54D4D";
+    } else if (values.currentWidth < 35) {
+        html.progressBar.style.background = "#F54D4D";
     } else {
-        HTML.progressBar.style.background = "#FEBD48";
+        html.progressBar.style.background = "#FEBD48";
     }
 }
