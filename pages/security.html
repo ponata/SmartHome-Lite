@@ -3,7 +3,7 @@
 <head>
     <title>SmartHome</title>
     <link rel="shortcut icon" href="../img/icon.ico" />
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/security.css">
     <script type="text/javascript" src="../scripts/security-model.js"></script>
     <script type="text/javascript" src="../scripts/security-view.js"></script>
@@ -19,11 +19,10 @@
                     <h1 class="name">SmartHome<sup class="">light</sup></h1>
                 </a>
             </div>
-
             <object data-tabholder='#tab1' data="" type="" id="unlocked" class="is-active">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 47 47" style="enable-background:new 0 0 47 47;" xml:space="preserve">
-<g>
-    <g>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 47 47" style="enable-background:new 0 0 47 47;" xml:space="preserve">
+                  <g>
+                    <g>
         <path d="M35.517,16.514V9.597c0-5.294-4.304-9.596-9.595-9.597v1.666l-1.414,3.367c0.449-0.14,0.917-0.236,1.412-0.236    c2.641,0,4.793,2.156,4.793,4.8v6.917h-4.791v2.094l1.938,1.896l-5.109,5.418l2.722,5.938l-1.847,2.869l6.352,2.614l-4.579,3.599    l0.474,4.605h14.566V16.514H35.517z" fill="#008bde"/>
         <path d="M18.779,36.182l1.848-2.869l-2.722-5.938l5.109-5.418l-1.938-1.896v-2.093h-4.794v-6.917c0-2.149,1.429-3.955,3.38-4.563    l1.414-3.368V1.453c0,0-0.001,0-0.002,0c-5.29,0-9.594,4.303-9.594,9.598v6.917h-4.92V47h14.467l-0.474-4.605l4.577-3.599    L18.779,36.182z" fill="#008bde"/>
     </g>
@@ -32,10 +31,9 @@
 <g></g><g></g><g></g><g></g>
 <g></g><g></g><g></g><g></g><g></g><g></g>
 </svg>
-
             </object>
             <object data-tabholder='#tab1' data="" type="" id="locked">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 47 47" style="enable-background:new 0 0 47 47;" xml:space="preserve">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 47 47" style="enable-background:new 0 0 47 47;" xml:space="preserve">
 <g>
     <path d="M34.451,18.851v-7.893C34.451,4.915,29.539,0,23.497,0c-6.04,0-10.952,4.915-10.952,10.958v7.893H7.471V47h32.059V18.851   H34.451z M18.026,10.958c0-3.023,2.452-5.481,5.47-5.481s5.47,2.458,5.47,5.481v7.893h-10.94V10.958z M21.817,41.934l-10.171-7.216   l3.188-5.985l7.277,6.119l10.479-10.27l2.761,4.82L21.817,41.934z" fill="#8E1C26"/>
 </g><g></g>
@@ -114,10 +112,10 @@
         <div class="block">
         <div class="camera-form-block">
             <h3>Enter camera data</h3>
-            <form action="" class="camera-form">
+            <form action="" class="camera-form" id="camera-submit">
                 <input type="text" placeholder="name" required="required" id="camera-name">
                 <input type="text" value="../img/def.mp4" placeholder="enter camera path" id="camera-path" required="required">
-                <input type="submit" value = "OK" id="camera-submit">
+                <input type="submit" value = "OK" >
             </form>
             <button class = "remove-camera-form-block-btn"> &#10006;</button>
         </div>
@@ -144,36 +142,8 @@
     <path d="M124.394,184.395l-94.39,94.39L30,224.999c0-8.284-6.717-14.999-15.001-14.999S0,216.717,0,225.001l0.006,90   c0,8.284,6.716,14.999,15,14.999H105c8.284,0,15-6.716,15-15s-6.716-15-15-15H51.215l94.392-94.392   c5.858-5.858,5.858-15.355,0-21.213C139.749,178.537,130.251,178.537,124.394,184.395z" fill="#008bde"/>
     <path d="M195,149.997c3.839,0,7.678-1.464,10.606-4.394l94.39-94.39L300,105.001c0.001,8.284,6.717,15,15.001,14.999   c8.284-0.001,15-6.717,14.999-15.001l-0.006-90C329.993,6.715,323.278,0,314.994,0H225c-8.284,0-15,6.716-15,15s6.716,15,15,15   h53.784l-94.391,94.391c-5.858,5.858-5.858,15.355,0,21.213C187.322,148.533,191.161,149.997,195,149.997z" fill="#008bde"/>
 </g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
+<g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>
+<g></g><g></g><g></g><g></g><g></g><g></g><g></g>
 </svg>
             </a>
         <button id="new-camera">
@@ -182,7 +152,7 @@
         </div>
 
         <div class="password-block tab-content" id="tab1">
-            <form class="password-form" action="">  
+            <form class="password-form" action="">
                 <input type="password" value="" disabled="disabled">
             </form>
             <table class="password-table">
@@ -250,17 +220,19 @@
                 Wrong password!
             </div>
         </div>
+        <div class="close-garage-warning-block">
+            <div class="close-garage-warning">
+              Close your garage first!
+            </div>
+        </div>
         <div class="garage-block tab-content" id="tab3">
-             
             <div class="garage">
                 <div class="garage-gates" >
                 </div>
             </div>
             <form action="">
-             <input type="button" id="garage-btn" value = "Unlock">
+             <input type="button" id="garage-btn" value = "Open">
             </form>
-           
-
         </div>
     </main>
     <footer class="footer">

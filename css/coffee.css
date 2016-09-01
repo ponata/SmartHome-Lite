@@ -7,7 +7,6 @@
 }
 #wrap {
     display: block;
-    height: 390px;
     margin: 0 auto;
     width: 1023px;
 }
@@ -23,15 +22,14 @@ button{
     text-transform: uppercase;
     font-family: 'DigitalSansEFMedium';
     font-size: 14px;
-    text-shadow: 1px 1px 1px #fff;
     border-width: 2px;
     height: 50px;
     width: 120px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background: #fff;
-    color: black;
+    background: black;
+    color: white;
 }
 button:hover {
     -webkit-box-shadow:
@@ -75,11 +73,6 @@ button:hover {
 #coffee{
     float: right;
 }
-#myButton:hover{
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
 .coffee_menu button{
     height: 30px;
     width: 80px;
@@ -110,7 +103,6 @@ button:hover {
     margin: 20px 0 0 20px;
 }
 input[type=range]{
-    /*left: 180px;*/
     width: 90px;
     margin-left: 60px;
 }
@@ -124,11 +116,12 @@ label{
     margin-left: 10px;
 }
 .scheduled-task{
-    margin-top: 30px;
-    vertical-align: middle;!important;
+    vertical-align: middle;
+    height: 20%;
 }
 #reset{
     text-align: center;
+    height: 20%;
 }
 #cancel-all{
     display: block;
@@ -138,16 +131,37 @@ label{
     border-radius: 5px;
     margin: 10px auto;
 }
+#cancel-all:disabled{
+    background:gray;
+    box-shadow: none;
+}
 select{
-    display: block;
-    margin: -45px 0 0 200px;
+    display:block;
+    top:50%;
+    margin: -30px 0 0 220px;
     height: 30px;
     width: 100px;
     border-radius: 5px;
     text-transform: none;
     font-size: 14px;
-    color: #0E0E0E;
+    color: white;
     font-family: DigitalSansEFMedium;
+    background: black;
+}
+select:hover{
+    -webkit-box-shadow:
+            0 0 20px rgba(255,255,255,.6),
+            inset 0 0 20px rgba(255,255,255,1);
+    -moz-box-shadow:
+            0 0 20px rgba(255,255,255,.6),
+            inset 0 0 20px rgba(255,255,255,1);
+    box-shadow:
+            0 0 20px rgba(255,255,255,.6),
+            inset 0 0 20px rgba(255,255,255,1);
+}
+select:disabled{
+    background:gray;
+    box-shadow: none;
 }
 #execute{
     position: relative;
@@ -176,9 +190,7 @@ select{
     color: white;
     text-shadow: none;
 }
-.copyright{
-    margin-top: 170px;
-}
+
 #coffee_selected-device.sprite-coffee_0 {
     background-position: 0 0;
 }
@@ -207,16 +219,27 @@ select{
     background-position: -2720px 0;
 }
 input[type=number]{
+    display:inline-block;
+    top:50%;
+    position: relative;
     width: 40px;
     height: 30px;
     border-radius: 5px;
-    margin: 0px -30px 10px 30px;
+    margin: -30px -30px 0 30px;
+    background: black;
+    color: white;
 }
-.scheduled-task>button{
+input[type=number]:disabled{
+    background:gray;
+    box-shadow: none;
+}
+.scheduled-task > button{
     display: inline-block;
+    top:50%;
+    margin-top: -15px;!important;
     width: 60px;
     height: 30px;
-    margin:-10px 0 0 0;
+    vertical-align: bottom;
 }
 
 

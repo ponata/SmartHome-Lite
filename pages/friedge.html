@@ -25,22 +25,21 @@
         <div class="container aligner center">
             <div class="width-25 dp-ib text-center">
                 <form action="" class="form">
-                    <p>Products</p>
-                    <div id="products" class="products">
-                    </div>
                     <div class="input-field">
-                        <span>Name</span>
-                        <input id="newProduct" type="text" class="input new-product">
+                        <span>Add new product</span>
+                        <input id="newProd" type="text" class="input new-product">
                         <div id="productError" class="input-error">Enter text!</div>
                     </div>
-                    <button id="btnAddProducts" class="submit">Add Products</button>
-                    <button id="btnRemoveProducts" class="submit remove">Remove Products</button>
+                    <button id="btnAddProduct" class="submit">Add Products</button>
+                    <button id="btnRemoveProduct" class="submit remove">Remove Products</button>
+                    <div id="prodList" class="products">
+                    </div>
                 </form>
             </div>
             <div class="width-50 dp-ib text-center">
                 <div class="container">
-                    <label id="btnPower" class="btn-power">
-                        <input id="status" type="checkbox" name="status">
+                    <label class="btn-power">
+                        <input id="btnPower" type="checkbox" name="status">
                         <?xml version="1.0" standalone="no"?>
                         <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet" class="btn-power-bg">
                             <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)">
@@ -111,7 +110,7 @@
                 <p>Battery</p>
                 <div class="battery">
                     <div class="outer-progress-bar">
-                        <div id="outputPercentage" class="percentage">0%</div>
+                        <div id="batteryPerc" class="percentage">0%</div>
                         <div id="progressBar" class="progress-bar"></div>
                     </div>
                 </div>
@@ -120,16 +119,16 @@
                 <form action="" class="form">
                     <div id="inputWrapper">
                         <div class="input-field">
-                            <span>Overall</span>
-                            <input id="inputOverallTemp" type="number" class="input temp" min="-20" max="0" value="-6" disabled="disabled">
+                            <span>General</span>
+                            <input id="degGeneral" type="number" class="input degree" min="3" max="9" value="5" disabled="disabled">
                             <span>&deg;C</span>
-                            <div class="input-error">Enter value between "-20" and "0"</div>
+                            <div class="input-error">Enter value between "3" and "9"</div>
                         </div>
                         <div class="input-field">
                             <span>Freezer</span>
-                            <input id="inputFreezeTemp" type="number" class="input temp" min="-50" max="0" value="-18" disabled="disabled">
+                            <input id="degFreeze" type="number" class="input degree" min="-65" max="-10" value="-18" disabled="disabled">
                             <span>&deg;C</span>
-                            <div class="input-error">Enter value between "-50" and "0"</div>
+                            <div class="input-error">Enter value between "-65" and "-10"</div>
                         </div>
                     </div>
                     <div class="input-field">
@@ -140,7 +139,8 @@
                             <option value="custom">Custom</option>
                         </select>
                     </div>
-                    <button id="btnExtremeFrost" class="submit">Extreme Freeze</button>
+                    <button id="btnFrost" class="submit">Extreme Freeze</button>
+                    <div id="errFrost" class="input-error">No products to freeze!</div>
                 </form>
             </div>
         </div>
@@ -155,7 +155,13 @@
                 <button id="close" class="close">x</button>
             </div>
             <div class="modal-message">
-                <p id="outputModalMessage"></p>
+                <p id="modalMessage" class="output-modal-message"></p>
+                <div class="loader">
+                    <img id="gif" src="../img/loader.gif" alt="" />
+                    <span id="gifPerc" class="loader-percentage">
+                  
+                    </span>
+                </div>
             </div>
         </div>
     </div>

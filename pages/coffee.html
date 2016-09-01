@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="shortcut icon" href="../img/icon.ico" />
-        <link rel="stylesheet" href="../css/main.css">
-        <link rel="stylesheet" href="../css/coffee.css">
-        <script src="../scripts/coffee.js"></script>
-        <title>Smart Home</title>
-    </head>
-    <body class="coffee_body">
-        <header class="header">
-            <div class="container aligner">
-                <div class="dp-ib">
-                    <a href="../index.html">
-                        <img src="../img/logo.png" alt="" class="logo small">
-                        <h1 class="name">SmartHome<sup class="">light</sup></h1>
-                    </a>
-                </div>
-                <h2 class="promo">Make your home smarter!</h2>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../img/icon.ico" />
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/coffee.css">
+    <script src="../scripts/coffee.js"></script>
+    <title>Smart Home</title>
+</head>
+
+<body class="coffee_body">
+    <header class="header">
+        <div class="container aligner">
+            <div class="dp-ib">
+                <a href="../index.html">
+                    <img src="../img/logo.png" alt="" class="logo small">
+                    <h1 class="name">SmartHome<sup class="">light</sup></h1>
+                </a>
             </div>
-        </header>
-        <div class="bg-global blured"></div>
+            <h2 class="promo">Make your home smarter!</h2>
+        </div>
+    </header>
+    <div class="bg-global blured"></div>
+    <main class="main aligner">
         <div id="wrap">
             <div class="coffee_menu" id="control-menu">
                 <div id="change-recipe">
@@ -40,8 +43,7 @@
                         Milk
                     </button>
                     <input type=range id="milk" min=5 value=10 max=20 step=1>
-                    <label for=milk class="percent" id ="label-milk-percentage">10%</label>
-
+                    <label for=milk class="percent" id="label-milk-percentage">10%</label>
                 </div>
                 <div class="selected-product">
                     <button class="choose-component" id="component-chocolate" value="1">
@@ -49,7 +51,6 @@
                     </button>
                     <input type=range id="chocolate" min=5 value=10 max=20 step=1>
                     <label for=chocolate class="percent" id="label-chocolate-percentage">10%</label>
-
                 </div>
                 <div class="selected-product">
                     <button class="choose-component" id="component-cocoa" value="2">
@@ -57,7 +58,6 @@
                     </button>
                     <input type=range id="cocoa" min=5 value=10 max=20 step=1>
                     <label for=cocoa class="percent" id="label-cocoa-percentage">10%</label>
-
                 </div>
                 <div class="selected-product">
                     <button class="choose-component" id="component-cognac" value="3">
@@ -65,7 +65,6 @@
                     </button>
                     <input type=range id="cognac" min=5 value=10 max=20 step=1>
                     <label for="cognac" class="percent" id="label-cognac-percentage">10%</label>
-
                 </div>
             </div>
             <div class="blured sprite-coffee_0" id="coffee_selected-device">
@@ -79,8 +78,8 @@
                     <input id="hour0" type="number" min="00" max="23" step="1" value="6">
                     <input id="minute0" type="number" min="00" max="60" step="1" value="00">
                     <select id="recipe0">
-                        <option>Late</option>
                         <option>Espresso</option>
+                        <option>Late</option>
                         <option>Macchiato</option>
                         <option>Hard</option>
                         <option>Coffee</option>
@@ -88,10 +87,10 @@
                         <option>Custom 2</option>
                     </select>
                 </div>
-                 <div class="scheduled-task">
+                <div class="scheduled-task">
                     <button id="1"></button>
-                     <input id="hour1" type="number" min="00" max="23" step="1" value="12">
-                     <input id="minute1" type="number" min="00" max="60" step="1" value="00">
+                    <input id="hour1" type="number" min="00" max="23" step="1" value="12">
+                    <input id="minute1" type="number" min="00" max="60" step="1" value="00">
                     <select id="recipe1">
                         <option>Late</option>
                         <option>Espresso</option>
@@ -103,11 +102,11 @@
                     </select>
                 </div>
                 <div class="scheduled-task">
-                    <button id="2" ></button>
+                    <button id="2"></button>
                     <input id="hour2" type="number" min="00" max="23" step="1" value="15">
                     <input id="minute2" type="number" min="00" max="60" step="1" value="30">
                     <select id="recipe2">
-                        <option>Espresso</option>
+                        <option>Macchiato</option>
                         <option>Late</option>
                         <option>Macchiato</option>
                         <option>Hard</option>
@@ -121,10 +120,10 @@
                     <input id="hour3" type="number" min="00" max="23" step="1" value="22">
                     <input id="minute3" type="number" min="00" max="60" step="1" value="00">
                     <select id="recipe3">
-                        <option>Late</option>
+                        <option>Hard</option>
                         <option>Espresso</option>
                         <option>Macchiato</option>
-                        <option>Hard</option>
+                        <option>Late</option>
                         <option>Coffee</option>
                         <option>Custom 1</option>
                         <option>Custom 2</option>
@@ -140,9 +139,10 @@
                 Make coffee
             </button>
         </div>
+    </main>
+    <footer class="container footer">
+        <div class="copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
+    </footer>
+</body>
 
-        <footer class="container footer">
-            <div class="copyright"> &copy; Kharkiv SoftServe ITA 2016</div>
-        </footer>
-    </body>
 </html>
