@@ -34,48 +34,40 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     var Messages = {
-        on: "Freeze in progress...",
-        done: "Frozen!",
-        err: "No battery energy..."
-    }
-
+            on: "Freeze in progress...",
+            done: "Frozen!",
+            err: "No battery energy..."
+        }
+        // click power btn
     HTML.btnPower.onclick = function() {
         // is electricity
         if (HTML.btnPower.checked) {
             Values.flag = "true";
-            console.log(Values.stepRevert);
-
             Battery(HTML, Values, Messages);
-
-
         }
         // no electricity
         else {
             Values.flag = "false";
-            console.log(Values.stepRevert);
-
             Battery(HTML, Values, Messages);
-
         }
     }
 
-
+    // add product
     HTML.btnAddProduct.onclick = function(e) {
-        e.preventDefault();
-        addProduct(HTML);
-        if (Values.currentWidth > 0 && document.querySelector(".svg-elem.off") && HTML.prodList.children.length) {
-            Values.status = "on";
-            Enable(HTML, Values, Messages);
-            setColor(HTML, Values);
-            if (!HTML.btnPower.checked) {
-                // no electricity
-                Values.flag = "false";
-                Battery(HTML, Values, Messages);
-
+            e.preventDefault();
+            addProduct(HTML);
+            if (Values.currentWidth > 0 && document.querySelector(".svg-elem.off") && HTML.prodList.children.length) {
+                Values.status = "on";
+                Enable(HTML, Values, Messages);
+                setColor(HTML, Values);
+                if (!HTML.btnPower.checked) {
+                    // no electricity
+                    Values.flag = "false";
+                    Battery(HTML, Values, Messages);
+                }
             }
         }
-
-    }
+        // remove product
     HTML.btnRemoveProduct.onclick = function(e) {
             e.preventDefault();
             removeProduct(HTML);
@@ -93,8 +85,6 @@ document.addEventListener("DOMContentLoaded", function() {
             calcStep(HTML, Values);
             setColor(HTML, Values);
         }
-        console.log(Values.stepRevert);
-
     });
 
 
@@ -103,8 +93,6 @@ document.addEventListener("DOMContentLoaded", function() {
         selectMode(HTML);
         Values.currentDegs = getcurrentDegs(HTML);
         setColor(HTML, Values);
-        console.log(Values.stepRevert);
-
     }
 
     // extreme frost
@@ -112,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         frostProduct(HTML, Values, Messages);
     }
-
 
 });
 
@@ -196,16 +183,11 @@ function Battery(HTML, Values, Messages) {
 
                         // check if mode was selected
                         HTML.selectMode.onchange = function() {
-                                selectMode(HTML);
-                                Values.currentDegs = getcurrentDegs(HTML);
-                                calcStep(HTML, Values);
-                                setColor(HTML, Values);
-                            }
-                            // if (checkInput(elem)) {
-                            //     Values.currentDegs = getcurrentDegs(HTML);
-                            //     Values.stepRevert = calcStep(HTML, Values);
-                            //     setColor(HTML, Values);
-                            // }
+                            selectMode(HTML);
+                            Values.currentDegs = getcurrentDegs(HTML);
+                            calcStep(HTML, Values);
+                            setColor(HTML, Values);
+                        }
 
                         if (Values.currentWidth - Values.stepRevert > 0) {
                             Values.currentWidth -= Values.stepRevert;
@@ -386,8 +368,6 @@ function frostProduct(HTML, Values, Messages) {
         HTML.degGeneral.value = HTML.degGeneral.min;
         HTML.degFreeze.value = HTML.degFreeze.min;
         calcStep(HTML, Values);
-        console.log(Values.stepRevert);
-
 
         showModal(HTML, Values, Messages);
 
@@ -408,14 +388,11 @@ function frostProduct(HTML, Values, Messages) {
                     HTML.gifPerc.innerHTML = "";
                     HTML.gif.style.display = "none";
                     HTML.modalMessage.innerHTML = Messages.done;
-                    console.log(Values.stepRevert);
-
 
                     for (var i = 0; i < elems.length; i++) {
                         var parents = elems[i].parentNode;
                         elems[i].classList.add("product-frozen");
                     }
-
                     clearTimeout(timeoutID);
                 }
             }
