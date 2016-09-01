@@ -99,12 +99,12 @@ button:focus {
   }
 
   50% {
-    width: 467px;
+    width: 544.8px;
     height: 0;
   }
 
   100% {
-    width: 467px;
+    width: 544.8px;
     height: 445px;
   }
 }
@@ -177,7 +177,7 @@ button:focus {
     border: 2px solid #0099FF;
     border-radius: 10%;
     display: none;
-    width: 445px;
+    width: 558.8px;
     height: 467px;
 }
 
