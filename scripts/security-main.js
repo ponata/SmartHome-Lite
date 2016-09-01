@@ -2,7 +2,8 @@ window.onload = function () {
 
   controller.model = model;
   controller.view = view;
-
+  controller.view.password.init();
+  controller.view.garage.init();
   controller.tabsHandler();
   controller.garageHandler();
 
