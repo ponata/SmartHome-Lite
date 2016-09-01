@@ -4,59 +4,50 @@ var controller = {
 	//tabs block
 	tabsHandler: function() {
 		var tabsLength = this.view.tabs.getTabLinks().length;
+		var self = this;
 		for (var i = 0; i < tabsLength; i++) {
-			this.view.tabs.getTabLinks()[i].addEventListener('click', function(event) {
-				controller.view.tabs.getTabCont(event);
+			self.view.tabs.getTabLinks()[i].addEventListener('click', function(event) {
+				self.view.tabs.getTabCont(event);
 			}, false);
 		}
 	},
 	//garage block
 	garageHandler: function() {
+		var self = this;
 		this.view.garage.getGarageBtn().addEventListener ('click',
 		function(event) {
 			event.preventDefault();
-			if (controller.model.garage.isClosed == true) {
-				controller.model.garage.isClosed = false;
-				controller.view.garage.openGates();
-				controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Opening...');
-				controller.view.garage.addDisabled(controller.view.garage.getGarageBtn());
-				setTimeout(function() {
-					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Close');
-					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
-				}, 7500);
+			if (self.model.garage.isClosed == true) {
+				self.model.garage.isClosed = false;
+				self.view.garage.openProcessFunc();
 			} else {
-				controller.model.garage.isClosed = true;
-				controller.view.garage.closeGates();
-				controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Closing...');
-				controller.view.garage.addDisabled(controller.view.garage.getGarageBtn());
-				setTimeout (function() {
-					controller.view.garage.changeBtnValue(controller.view.garage.getGarageBtn, 'Open');
-					controller.view.garage.removeDisabled(controller.view.garage.getGarageBtn());
-				}, 7500);
+				self.model.garage.isClosed = true;
+				self.view.garage.closeProcessFunc();
 			}
 		}, false);
 	},
 	//camera block
 	cameraHandler: function() {
-		this.view.camera.getFullScreenBtn().onclick = this.view.camera.enterFullScreen.bind(controller.view.camera);
+		this.view.camera.getFullScreenBtn().onclick = this.view.camera.enterFullScreen.bind(this.view.camera);
 	},
 	addCameraHandler: function() {
-		this.view.camera.getAddNewCameraBtn().onclick = this.view.camera.showCameraFormBlock;
+		this.view.camera.getAddNewCameraBtn().onclick = this.view.camera.showCameraFormBlock.bind(this.view.camera);
 	},
 	removeCameraHandler: function() {
 		this.view.camera.getRemoveCameraFormBlock().onclick = this.view.camera.hideCameraFormBlock;
 	},
 	fillInCameraModel: function() {
-		var newCamera = new controller.NewCameraConstructor(controller.view.camera.getCameraNameValue(), controller.view.camera.getCameraPathValue());
-		controller.model.camera.push(newCamera);
+		var newCamera = new controller.NewCameraConstructor(this.view.camera.getCameraNameValue(), this.view.camera.getCameraPathValue());
+		this.model.camera.push(newCamera);
 	},
 	hideCameraHandler: function() {
-		this.view.camera.getCameraSubmitBtn().addEventListener('click', function(e) {
+		var self = this;
+		this.view.camera.getCameraSubmitBtn().addEventListener('submit', function(e) {
 			e.preventDefault();
-			controller.fillInCameraModel();
-			controller.view.camera.hideCameraFormBlock();
-			controller.view.camera.addCameraInnerHTML();
-			controller.setVideoBtnIdHandler();
+			self.fillInCameraModel();
+			self.view.camera.hideCameraFormBlock();
+			self.view.camera.addCameraInnerHTML();
+			self.setVideoBtnIdHandler();
 		}, false);
 	},
 	NewCameraConstructor: function NewCameraConstructor(name, url) {
@@ -68,30 +59,29 @@ var controller = {
 		this.view.camera.setVideoBtnId();
 	},
 	hideShowVideoTagHandler: function() {
-		//Comment Added
+		var self = this;
 		this.view.camera.getCameraBlock().addEventListener('click', function(e) {
 			var target = e.target;
 			var dataNumber = target.getAttribute('data-number');
 			var dataNumberRemove = target.getAttribute('data-number-remove');
 			if (target.hasAttribute('data-number')){
 				var video = target.previousElementSibling.previousElementSibling.firstElementChild;
-				if (controller.model.camera[dataNumber].isOn == true){
-					controller.model.camera[dataNumber].isOn = false;
-					video.classList.add('tab-content');
-					controller.view.camera.changeCameraBtnInner(target, true);
+				if (self.model.camera[dataNumber].isOn == true){
+					self.model.camera[dataNumber].isOn = false;
+					video.classList.add('hide-video');
+					self.view.camera.changeCameraBtnInner(target, true);
 				} else{
-					controller.model.camera[dataNumber].isOn = true;
-					video.classList.remove('tab-content');
-					controller.view.camera.changeCameraBtnInner(target, false);
+					self.model.camera[dataNumber].isOn = true;
+					video.classList.remove('hide-video');
+					self.view.camera.changeCameraBtnInner(target, false);
 				}
 			} else if (target.hasAttribute('data-number-remove')) {
 				var block = target.parentElement;
-				controller.model.camera.splice([dataNumberRemove],1);
+				self.model.camera.splice([dataNumberRemove],1);
 				block.remove();
 			} else {
 				return;
 			}
-
 		}, false);
 	},
 	//password block
@@ -110,32 +100,27 @@ var controller = {
 	//set password
 	i: null,
 	inputPassHandlerFunc: function(e) {
-		self = controller;
-		if (event.target.getAttribute('data-td') === 'true'){
+		if (e.target.getAttribute('data-td') === 'true'){
 		self.view.password.setCurrentPassValue();
 		self.view.password.putPassword();
 		}
 	},
-
 	getPasswordStatus: function(){
 		var status = this.model.password.passwordStatus;
 		return status;
 	},
 	inputPassHandler: function() {
-		if (this.model.password.passwordStatus === false) {
+		if (this.model.password.passwordStatus == false) {
 			this.i = 1;
 		} else {
 			this.i = 0;
 		};
-
+		var self = this;
 		this.view.password.getTable()[this.i].removeEventListener('click',
-				this.inputPassHandlerFunc);
-
+				self.inputPassHandlerFunc);
 		this.view.password.getTable()[this.i].addEventListener('click',
-			this.inputPassHandlerFunc, false);
-
+			self.inputPassHandlerFunc, false);
 	},
-
 	setPassword: function() {
 		if (this.model.password.currentPassword === '' || this.model.password.currentPassword !== '') {
 			this.model.password.currentPassword = this.view.password.getCurrentInputValue();
@@ -154,38 +139,39 @@ var controller = {
 		this.view.password.getSetPasswordBtn().addEventListener('click', function() {
 			self.setPassword();
 			self.inputPassHandler();
+			self.view.password.getPasswordBlock().classList.remove('hide');
 		}, false);
 	},
-
 	changePasswordBlockHandler: function() {
-		controller.view.password.getChangePasswordBtn().addEventListener('click', function() {
-			controller.view.password.showChangePasswordBlock();
-			controller.model.password.passwordStatus = false;
-			controller.model.password.currentPassword= '';
-
+		var self = this;
+		this.view.password.getChangePasswordBtn().addEventListener('click', function() {
+			self.view.password.getPasswordBlock().classList.add('hide');
+			self.view.password.showChangePasswordBlock();
+			self.model.password.passwordStatus = false;
+			self.model.password.currentPassword= '';
 		}, false);
 	},
 	//lock/unlock process
 	lockHandler: function() {
+		var self = this;
 		this.view.password.getLockBtn().addEventListener('click',
 			function(event) {
-				var self = controller;
 				if (self.model.garage.isClosed == true) {
 					if(self.view.password.getCurrentInputValue() === self.model.password.currentPassword
 						&& self.view.password.getLockBtn().getAttribute('value') === 'Lock') {
 							self.view.password.resetFunc();
 							self.view.password.changeBtnValue(self.view.password.getLockBtn,'Unlock');
-							self.view.password.addDisabled(controller.view.garage.getGarageBtn());
-							self.view.password.addDisabled(controller.view.password.getSetPasswordBtn());
-							self.view.password.toggleVisibility(controller.view.password.getUnlockedIcon(),controller.view.password.getLockedIcon());
+							self.view.password.addDisabled(self.view.garage.getGarageBtn());
+							self.view.password.addDisabled(self.view.password.getSetPasswordBtn());
+							self.view.password.toggleVisibility(self.view.password.getUnlockedIcon(),self.view.password.getLockedIcon());
 							self.view.password.getChangePasswordBtn().classList.add('hide');
 					} else if (self.view.password.getCurrentInputValue() === self.model.password.currentPassword
 						&& self.view.password.getLockBtn().getAttribute('value') === 'Unlock') {
 							self.view.password.resetFunc();
 							self.view.password.changeBtnValue(self.view.password.getLockBtn, 'Lock');
-							self.view.password.removeDisabled(controller.view.garage.getGarageBtn());
-							self.view.password.removeDisabled(controller.view.password.getSetPasswordBtn());
-							self.view.password.toggleVisibility(controller.view.password.getLockedIcon(),controller.view.password.getUnlockedIcon());
+							self.view.password.removeDisabled(self.view.garage.getGarageBtn());
+							self.view.password.removeDisabled(self.view.password.getSetPasswordBtn());
+							self.view.password.toggleVisibility(self.view.password.getLockedIcon(),self.view.password.getUnlockedIcon());
 							self.view.password.getChangePasswordBtn().classList.remove('hide');
 					} else {
 						self.view.password.showWrongPasswordBlock();
