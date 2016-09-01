@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
         stepRevert: 0,
         speed: 50,
         currentDegs: {},
-        flag: "true",
+        flag: true,
         status: "off",
         timeFrost: 5000
     }
