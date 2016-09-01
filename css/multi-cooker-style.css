@@ -76,7 +76,7 @@ button:focus {
   }
 
   50% {
-    width: 302px;
+    width: 269px;
     height: 0;
 
   }
@@ -99,12 +99,12 @@ button:focus {
   }
 
   50% {
-    width: 544.8px;
+    width: 558.8px;
     height: 0;
   }
 
   100% {
-    width: 544.8px;
+    width: 558.8px;
     height: 445px;
   }
 }
@@ -127,7 +127,7 @@ button:focus {
 
   100% {
     width: 400px;
-    height: 294px;
+    height: 309px;
   }
 }
 
@@ -177,7 +177,7 @@ button:focus {
     border: 2px solid #0099FF;
     border-radius: 10%;
     display: none;
-    width: 558.8px;
+    width: 556px;
     height: 467px;
 }
 
@@ -362,7 +362,7 @@ button:focus {
 .p-clock{
     display: inline-block;
     vertical-align: top;
-    margin: 20px 0px;
+    margin: 20px 0px 20px -10px;
     width: 120px;
 }
 .cancel{
@@ -596,12 +596,12 @@ div.p-temperature{
 
   80% {
     opacity: 1;
-    top:-150px;
+    top:-100px;
 
   }
 
   100% {
     opacity: 0;
-    top:-150px;
+    top:-100px;
   }
 }

@@ -33,12 +33,12 @@ window.onload = function() {
     var imgTimer2 = document.getElementById('img-timer2');
     var parImg = document.getElementById('par');
 
-
-
-
-
+    /**
+        config modes objects
+    */
     var heating = {
-        time: 420
+        time: 420,
+        temperature: 65
     };
 
     var programs = {
@@ -91,14 +91,9 @@ window.onload = function() {
         temperature: 100
     };
 
-    cookBtn.onclick = function() {
-        showElem(programDisplay);
-        hideElem(heatingDisplay);
-        hideElem(doneDisplay);
-        hideElem(cancelDisplay);
-        hideElem(customDisplay);
-    }
-
+    /**
+        heating button click handler
+    */
     heatingBtn.onclick = function() {
         showElem(heatingDisplay);
         hideElem(programDisplay);
@@ -108,16 +103,16 @@ window.onload = function() {
         disableMainBtns();
         parImg.className = "par-img";
 
-
-
         var t = heating.time;
         heatTimeSecElem.innerHTML = showAsTime(t);
+
         var timerData = {
             timerId: null,
             time: t,
             timeElem: heatTimeSecElem,
             processBlock: programDisplay
         }
+
         goTimer (timerData);
 
         stopHeatBtn.onclick = function() {
@@ -126,21 +121,23 @@ window.onload = function() {
             clearInterval(timerData.timerId);
             enableMainBtns ();
             stopPar();
-            function stopPar() {
-                parImg.className = "";
-            }
         }
-
-
     }
 
-
-
-
+    /**
+        cook button click handler
+    */
+    cookBtn.onclick = function() {
+        showElem(programDisplay);
+        hideElem(heatingDisplay);
+        hideElem(doneDisplay);
+        hideElem(cancelDisplay);
+        hideElem(customDisplay);
+    }
 
     for(var programName in programs) {
         document.getElementById(programName).onclick = programs[programName].action;
-    }
+    };
 
     function commonActions (programName) {
         hideElem(programDisplay);
@@ -149,17 +146,19 @@ window.onload = function() {
         spanDishName.innerText = programName + ' ';
         printTime(programName);
         parImg.className = "par-img";
-    }
+    };
 
     function printTime(programName) {
         var t = programs[programName].time;
         cookTimeSecElem.innerHTML = showAsTime(t);
+
         var timerData = {
             timerId: null,
             time: t,
             timeElem: cookTimeSecElem,
             processBlock: setProgramDisplay
         };
+
         goTimer (timerData);
 
         pauseBtn.onclick = function() {
@@ -168,9 +167,6 @@ window.onload = function() {
             showElem(playBtn);
             imgTimer.className = "stop-animation";
             stopPar();
-            function stopPar() {
-                parImg.className = "";
-            }
         }
 
         playBtn.onclick = function() {
@@ -179,7 +175,6 @@ window.onload = function() {
             goTimer (timerData);
             imgTimer.className = "timer";
             parImg.className = "par-img";
-
         }
 
         stopBtn.onclick = function() {
@@ -191,12 +186,12 @@ window.onload = function() {
             enableMainBtns ();
             imgTimer.className = "timer";
             stopPar()
-            function stopPar() {
-                parImg.className = "";
-            }
         }
     }
 
+    /**
+        custom button click handler
+    */
     customBtn.onclick = function () {
         showElem(customDisplay);
         hideElem(programDisplay);
@@ -208,7 +203,6 @@ window.onload = function() {
         moreTemperatureBtn.removeAttribute("disabled","disabled");
         lessTemperatureBtn.removeAttribute("disabled","disabled");
 
-
         var timerData = {
             timerId: null,
             time: custom.time,
@@ -216,19 +210,13 @@ window.onload = function() {
             processBlock: customDisplayProcess
         }
 
-
         pauseCustomProgramBtn.onclick = function() {
             clearInterval(timerData.timerId);
             hideElem(pauseCustomProgramBtn);
             showElem(playCustomProgramBtn);
             imgTimer2.className = "stop-animation";
-            
-            function stopPar() {
-                parImg.className = "";
-            }
             stopPar();
         }
-
 
         playCustomProgramBtn.onclick = function() {
             clearInterval(timerData.timerId);
@@ -248,11 +236,7 @@ window.onload = function() {
             enableMainBtns ();
             resetTempTime ();
             imgTimer2.className = "timer";
-            stopPar()
-            function stopPar() {
-                parImg.className = "";
-            }
-
+            stopPar();
         }
 
         resetBtn.onclick = function (){
@@ -273,7 +257,6 @@ window.onload = function() {
             goTimer (timerData);
             customTimeSecElem.innerHTML = showAsTime(timerData.time);
             parImg.className = "par-img";
-
         }
 
         lessClockBtn.onclick = function() {
@@ -324,14 +307,15 @@ window.onload = function() {
             if(custom.temperature >= 200){
                 moreTemperatureBtn.setAttribute("disabled","disabled");
             }
-            else if(custom.temperature <= 0){
+            else if(custom.temperature <= 45){
                 lessTemperatureBtn.setAttribute("disabled","disabled");
-                startBtn.setAttribute("disabled","disabled");
             }
         }
-   }
+    }
 
-
+    /**
+        common functions
+    */
     function disableMainBtns () {
         heatingBtn.setAttribute("disabled","disabled");
         cookBtn.setAttribute("disabled","disabled");
@@ -356,44 +340,36 @@ window.onload = function() {
                 hideElem(customDisplayProcess);
                 hideElem(heatingDisplay);
                 showElem(doneDisplay);
-
-                function stopPar() {
-                    parImg.className = "";
-                }
-
-
                 stopPar();
-
             }
             timerData.time--;
             timerData.timeElem.innerHTML = showAsTime(timerData.time);
         }, 1000);
     }
-}
-
-function showElem(element) {
-    element.style.display = "inline-block";
-};
-function hideElem(element) {
-    element.style.display = "none";
-};
 
 
+    function showElem(element) {
+        element.style.display = "inline-block";
+    };
 
-function showAsTime (seconds) {
-    var hours = Math.floor(seconds/3600);
-    if (hours<10) hours = "0" + hours;
+    function hideElem(element) {
+        element.style.display = "none";
+    };
 
-    var minutes = Math.floor((seconds - hours*3600)/60);
-    if (minutes<10) minutes = "0" + minutes;
+    function stopPar() {
+        parImg.className = "";
+    }
 
-    var seconds = seconds - hours*3600-minutes*60;
-    if (seconds<10) seconds = "0" + seconds;
+    function showAsTime (seconds) {
+        var hours = Math.floor(seconds/3600);
+        if (hours<10) hours = "0" + hours;
 
-    return hours + ":"  + minutes + ":" +  seconds;
-}
+        var minutes = Math.floor((seconds - hours*3600)/60);
+        if (minutes<10) minutes = "0" + minutes;
 
+        var seconds = seconds - hours*3600-minutes*60;
+        if (seconds<10) seconds = "0" + seconds;
 
-function stopPar() {
-    parImg.className = "";
+        return hours + ":"  + minutes + ":" +  seconds;
+    }
 }
