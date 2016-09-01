@@ -441,4 +441,7 @@ object:active {
   color: #0099FF;
   border: none;
 }
+input[disabled]:hover {
+  box-shadow: none;
+}
 /*# sourceMappingURL=security.css.map */
