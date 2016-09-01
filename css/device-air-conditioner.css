@@ -54,3 +54,17 @@ body {
     border-color: #BBCCDD;
     border-radius: 20px;
 }
+
+#temperature-input, #speed-input, #humidity-input{
+	float: right;
+	margin-right: 50px;
+	width: 50px;
+	font-size: 18px;
+	border:none;
+	border-radius: 3px;
+	padding: 0 5px;
+}
+
+label{
+	font-size: 24px;
+}
