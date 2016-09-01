@@ -186,19 +186,18 @@ figure {
 .full-screen-camera-block {
   width: 100%;
   height: 100%;
-  background: #003046;
-  background: url(../img/bg-wallpaper3.jpg);
+  background: #001929;
 }
 .full-screen-camera-block .camera-object,
 .full-screen-camera-block #new-camera {
   display: none;
 }
 .full-screen-camera-block .video-container {
-  width: 40%;
+  width: 36%;
   float: left;
-  height: 40%;
+  height: 36%;
 }
-}
+
 .full-screen-camera-block .video-container .screen{
   background: #003046;
 }
@@ -441,5 +440,8 @@ object:active {
   background: none;
   color: #0099FF;
   border: none;
+}
+input[disabled]:hover {
+  box-shadow: none;
 }
 /*# sourceMappingURL=security.css.map */
