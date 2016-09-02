@@ -90,6 +90,7 @@ input[type='radio']:checked:after {
     box-shadow: 0 1px 4px hsla(0,0%,0%,.05);
     background-image: -webkit-linear-gradient(top,  hsla(0,0%,100%,.2) 0%,hsla(0,0%,100%,.1) 100%); 
     color: #fff;
+    cursor: pointer;
 }
 .button:disabled,
 input:disabled,
