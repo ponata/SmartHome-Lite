@@ -1,5 +1,7 @@
 
 objectWashingOptions.prototype.updateActiveteObjectFormsView = function () {
+    
+    washMachineModel.statusOnOf = this.node.checked;
     var svgClassName = this.node.name;
     var svgControl = this.svg.getElementsByClassName(svgClassName);
     var svgControlSwitch = this.svg.getElementsByClassName('switch');
@@ -27,7 +29,7 @@ objectWashingOptions.prototype.updateActiveteObjectFormsView = function () {
 
 }
 
-objectWashingOptions.prototype.updateSwitchView = function () {
+objectWashingOptions.prototype.updatePowderBoxView = function () {
     var svgClassName = this.node.name;
     var svgControl = this.svg.getElementsByClassName(svgClassName);
 
@@ -89,26 +91,28 @@ objectWashingOptions.updateAnimateView = function () {
 
 
 objectWashingOptions.prototype.popupMasterView = function () {
+    
 
-	var popupWrapper = document.createElement('div');
-	popupWrapper.classList.add('popupPageFill');
-	var actionsElements = '<div class="actions-wrapper"> <input class="button" type="button" name="disagree" value="No"  /><input class="button green" type="button" name="agree" value="Yes"  /></div>'
-	popupWrapper.innerHTML = '<div class="popupBorder"><div class="popupContainer"><h2 class="popupHeader"></h2><div class="popupContent">Do you want start washing without washing powder?' + actionsElements + '</div></div><div class="popupExit">X</div></div>';
-	document.body.appendChild(popupWrapper);
-
+        var popupWrapper = document.createElement('div');
+        popupWrapper.classList.add('popupPageFill');
+        var actionsElements = '<div class="actions-wrapper"> <input class="button" type="button" name="disagree" value="No"  /><input class="button green" type="button" name="agree" value="Yes"  /></div>'
+        popupWrapper.innerHTML = '<div class="popupBorder"><div class="popupContainer"><h2 class="popupHeader"></h2><div class="popupContent">Do you want start washing without washing powder?' + actionsElements + '</div></div><div class="popupExit">X</div></div>';
+        document.body.appendChild(popupWrapper);
+  
 }
 
-objectWashingOptions.prototype.popupHide = function () {
 
-	document.body.querySelector('.popupPageFill').classList.add('hide');
+objectWashingOptions.prototype.popupHide = function () {    
 
+   document.body.querySelector('.popupPageFill').classList.add('hide');
 }
+
 
 /*default view */
 
 objectWashingOptions.prototype.defaultView = function () {
 
-    var svgActiveControls = this.svg.querySelectorAll('path');
+    var svgActiveControls = this.svg.querySelectorAll('path')
     var svgActiveControlsLength = svgActiveControls.length;
 
     if (washMachineModel.animate) {
@@ -116,9 +120,9 @@ objectWashingOptions.prototype.defaultView = function () {
     }
 
     for (var i = 0; i < svgActiveControlsLength; i++) {
-        if (!washMachineModel.status) {
-            svgActiveControls[i].classList.remove("active");
-        }
+       if (!washMachineModel.statusOnOf) {
+           svgActiveControls[i].classList.remove("active");
+       }
     }
 
    

@@ -90,6 +90,7 @@ input[type='radio']:checked:after {
     box-shadow: 0 1px 4px hsla(0,0%,0%,.05);
     background-image: -webkit-linear-gradient(top,  hsla(0,0%,100%,.2) 0%,hsla(0,0%,100%,.1) 100%); 
     color: #fff;
+    cursor: pointer;
 }
 .button:disabled,
 input:disabled,
@@ -146,27 +147,30 @@ input[type="radio"]:checked + .time{
 
 .switch input[type="checkbox"] {
     margin:5px 0 0 10px;
+    visibility: hidden;
 }
 
 /* The slider */
-.slider {
+ .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: red;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
-input:disabled + .slider {
+.panel .slider {
   background-color: #ccc;
 }
 
 .control .slider{
     background-color: red;
+}
+.panel.on .slider {  
+  background-color: red;
 }
 
 .slider:before {
@@ -181,15 +185,15 @@ input:disabled + .slider {
   transition: .4s;
 }
 
-input:checked + .slider {
+.panel.on input:checked + .slider {
   background-color: #87C540;
 }
 
-input:focus + .slider {
+.panel.on  input:focus + .slider {
   box-shadow: 0 0 1px #87C540;
 }
 
-input:checked + .slider:before {
+.panel input:checked + .slider:before {
   -webkit-transform: translateX(46px);
   -ms-transform: translateX(46px);
   transform: translateX(46px);
@@ -269,4 +273,19 @@ h2.popupHeader {
 .status.active.pause{
     fill: yellow;
 }
+svg path {
+    fill: #32B4FD;
+    fill-opacity: 0;
+    stroke: #32B4FD;
+    stroke-width: 1;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: show 2s linear alternate forwards;
+}
 
+
+@keyframes show {
+    to {
+        fill-opacity: 1;
+    }
+}
