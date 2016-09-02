@@ -272,4 +272,19 @@ h2.popupHeader {
 .status.active.pause{
     fill: yellow;
 }
+svg path {
+    fill: #32B4FD;
+    fill-opacity: 0;
+    stroke: #32B4FD;
+    stroke-width: 1;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: show 2s linear alternate forwards;
+}
 
+
+@keyframes show {
+    to {
+        fill-opacity: 1;
+    }
+}
