@@ -2,7 +2,7 @@ var washMachineModel = {
     statusOnOf: false,
     statusWashing: 'choose',
     statusInProcess: false,
-	stausSwitch: false,
+	stausPowderBox: false,
 	modalStatus: false,
     washingOptions: {
         Sport: {

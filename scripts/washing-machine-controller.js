@@ -34,10 +34,10 @@ objectWashingOptions.prototype.init = function () {
 		this.restoreTimer();
 		
 	} else if (this.node.name === 'agree') {
-		this.actionModal();
+		this.actionModalAgree();
 		
 	} else if (this.node.name === 'disagree') {
-		this.popupHide();	
+       	this.actionModalDisagree();	
 	}
 
 }
@@ -57,6 +57,7 @@ objectWashingOptions.prototype.initValue = function (node) {
 objectWashingOptions.prototype.activeteObjectForms = function () {
 	
 	var elements = document.querySelectorAll('#panel input:not([name="status"])');
+    var elementsWrapper =   document.getElementById('panel');
 	washMachineModel.status = document.forms.washingOptions.status;
 
 	for (var i = 0; i < elements.length; i++) {
@@ -68,17 +69,27 @@ objectWashingOptions.prototype.activeteObjectForms = function () {
 			elements[i].disabled = true;
 		}
 	}
+    
+    if (this.node.checked){
+        elementsWrapper.classList.add('on');
+    }else{
+        elementsWrapper.classList.remove('on')
+        
+    }
 
 	this.updateActiveteObjectFormsView();
 }
 
+
 objectWashingOptions.prototype.activateSwitch = function () {
 
-	washMachineModel.stausSwitch = this.node.checked;
-
+	washMachineModel.stausPowderBox = this.node.checked;  
 	this.updateSwitchView();
 
 }
+
+
+
 
 objectWashingOptions.prototype.SelectProgram = function () {
 
@@ -96,18 +107,18 @@ objectWashingOptions.prototype.SelectProgram = function () {
 
 
 objectWashingOptions.prototype.submitForm = function () {
-	event.preventDefault();
-
-	
-	if (!washMachineModel.stausSwitch) {
-		this.actionModal();
+    
+	event.preventDefault();     
+		
+	if (!washMachineModel.stausPowderBox) {
+		this.actionModalMaster();
 
 	} else {
 		this.submitFormAllOptions();
 	}
 
-
 }
+
 objectWashingOptions.prototype.submitFormAllOptions = function () {
 	var outputTimer = document.getElementById('panel');
 	var outputActions = document.getElementById('panel-in-process');
@@ -127,7 +138,6 @@ objectWashingOptions.prototype.submitFormAllOptions = function () {
 	timerHours.innerHTML = arrayHoursMinutes[0];
 	timerMinutes.innerHTML = arrayHoursMinutes[1];
 	washMachineModel.statusWashing = 'process';
-
 
 	setTimeout(window.timerGlobal, 1000);
 	objectWashingOptions.updateAnimateView()
@@ -149,11 +159,12 @@ objectWashingOptions.prototype.stopTimer = function () {
 objectWashingOptions.prototype.restoreTimer = function () {
 
 	washMachineModel.animate = false;
+   washMachineModel.statusOnOf = document.querySelector('input[name="status"]').checked;
 	this.node.disabled = true;
 	document.querySelector('input[name="pause"]').disabled = false;
 	washMachineModel.statusWashing = 'process';
 
-	this.updateStatusView();
+    this.updateStatusView();
 	objectWashingOptions.updateAnimateView()
 	window.timerGlobal()
 }
@@ -163,7 +174,6 @@ objectWashingOptions.prototype.restoreTimer = function () {
 objectWashingOptions.prototype.restoreObjectForms = function () {
 
 	var message = document.querySelector('p.message');
-
 	washMachineModel.animate = false;
 	message.parentNode.removeChild(message);
 	document.getElementById('panel-in-process').classList.add('hide');
@@ -171,7 +181,9 @@ objectWashingOptions.prototype.restoreObjectForms = function () {
 	document.querySelector('input[name="startNew"]').classList.add('hide');
 	document.querySelector('input[name="pause"]').classList.remove('hide');
 	document.querySelector('input[name="restore"]').classList.remove('hide');
-
+    
+    
+    this.updateSwitchView();
 	this.defaultView();
 }
 
@@ -188,22 +200,37 @@ objectWashingOptions.statusOnChange = function () {
 		this.updateAnimateView();
 
 	}
+    
 
 }
 
 
+objectWashingOptions.prototype.actionModalAgree = function () {
+    
+    washMachineModel.modalStatus = false;
+    
+    this.popupHide();
+    this.submitFormAllOptions();
+}
 
-objectWashingOptions.prototype.actionModal = function () {
+objectWashingOptions.prototype.actionModalDisagree = function () {
+    
+    washMachineModel.modalStatus = false;
+    
+    this.popupHide();
+}
 
-	if (!washMachineModel.modalStatus) {
-		this.popupMasterView();
-		
-	}else{
-		this.popupHide();		
-		this.submitFormAllOptions();
-	}
+objectWashingOptions.prototype.actionModalMaster = function () {
+    
+    washMachineModel.modalStatus = true;
+    var popupWrapper = document.body.querySelector('.popupPageFill');
+    if(popupWrapper == null){
+        this.popupMasterView();
 
-
+    }else{
+       popupWrapper.classList.remove('hide');
+    }
+    
 }
 
 
