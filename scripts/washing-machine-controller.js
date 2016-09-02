@@ -18,7 +18,7 @@ objectWashingOptions.prototype.init = function () {
 		this.activeteObjectForms();
 
 	} else if (this.node.name === 'switch') {
-		this.activateSwitch();
+		this.activatePowderBox();
 	} else if (this.node.name === 'program') {
 		this.SelectProgram();
 	} else if (this.node.name === 'submit') {
@@ -81,10 +81,10 @@ objectWashingOptions.prototype.activeteObjectForms = function () {
 }
 
 
-objectWashingOptions.prototype.activateSwitch = function () {
+objectWashingOptions.prototype.activatePowderBox = function () {
 
 	washMachineModel.stausPowderBox = this.node.checked;  
-	this.updateSwitchView();
+	this.updatePowderBoxView();
 
 }
 
@@ -183,7 +183,7 @@ objectWashingOptions.prototype.restoreObjectForms = function () {
 	document.querySelector('input[name="restore"]').classList.remove('hide');
     
     
-    this.updateSwitchView();
+    this.updatePowderBoxView();
 	this.defaultView();
 }
 

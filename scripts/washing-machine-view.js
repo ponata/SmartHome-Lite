@@ -29,7 +29,7 @@ objectWashingOptions.prototype.updateActiveteObjectFormsView = function () {
 
 }
 
-objectWashingOptions.prototype.updateSwitchView = function () {
+objectWashingOptions.prototype.updatePowderBoxView = function () {
     var svgClassName = this.node.name;
     var svgControl = this.svg.getElementsByClassName(svgClassName);
 
