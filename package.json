@@ -4,7 +4,8 @@
   "description": "First demo project of Web UI group ITAcademy Soft Serve.Smart functionality of following devices: - air conditioner;- friedge;- multi cooker;- security;- washing machine;- coffee machin",
   "main": "index.js",
   "scripts": {
-    "start": "http-server ./ -a localhost -p 8000 -c-1"
+    "start": "http-server ./ -a localhost -p 8000 -c-1",
+    "test": "echo \"All is ok\" && exit 0"
   },
   "repository": {
     "type": "git",
